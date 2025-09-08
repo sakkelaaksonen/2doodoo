@@ -1,0 +1,38 @@
+<h1>2doodoo</h1>
+<p>Todo ^ 2. A JS Todo of todos</p>
+<h2>TODO for 2doodoo</h2>
+<ul>
+<li>tech stack</li>
+<li>testing</li>
+<li>Data model</li>
+<li>UI</li>
+<li>UI testing?</li>
+<li>Prod notes</li>
+<li>a18y</li>
+<li>visual design</li>
+</ul>
+<h2>Tech Stack</h2>
+<p>Browser based as much as possible. Publish to github pages and share repository.
+JS or TS?</p>
+<h2>QUnit</h2>
+<p>Use browser based qunit testing framework to allow instant review without installation.</p>
+<h2>App and Data model</h2>
+<ul>
+<li>state machine?: todo, doing , done</li>
+<li>weak map of todos.</li>
+<li>weak map of items.</li>
+<li>store in localstorage, find useful microlib?</li>
+<li>custom events: addList, updateList, removeList, addItem, updateItem, removeItem</li>
+<li>happycase validation, considering task scope.</li>
+<li>App frameworks if needed: SolidJs, hybridjs, svelte</li>
+<li>Or, KISS, store data in html attributes and persist in local storage.  Avoid library browsing, focus on markup first. App is trivial.</li>
+</ul>
+<h2>UI</h2>
+<ul>
+<li>prototype with Tailwind, transfer to custom classes when layout proto is screentested.</li>
+<li>Mobile first, stickymenu with logo and list-button and +button: list of lists, selected todolist. Nothing quirky. Also, two accordions might work, KISS.</li>
+<li>confirmation on delete if task is not done.</li>
+<li></li>
+<li>Semantic to a degree. Application scope, not document scope. Look for reasonable markup solution, not showing off.</li>
+<li>A18y: WGAC 2.2 Primary concern: Tab navigation and titles. Consider emulating Screen reader but within reasonable effort, considering the scope.</li>
+</ul>

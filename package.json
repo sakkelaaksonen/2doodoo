@@ -1,0 +1,28 @@
+{
+  "name": "2doodoo",
+  "version": "1.0.0",
+  "description": "A todo demo",
+  "keywords": [
+    "demo"
+  ],
+  "homepage": "https://github.com/sakkelaaksonen/2doodoo#readme",
+  "bugs": {
+    "url": "https://github.com/sakkelaaksonen/2doodoo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sakkelaaksonen/2doodoo.git"
+  },
+  "license": "ISC",
+  "author": "Sakari Laaksonen",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "qunit \"src/**/*.test.js\"",
+    "dev": "npx @11ty/eleventy --serve"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "qunit": "^2.24.1"
+  }
+}
