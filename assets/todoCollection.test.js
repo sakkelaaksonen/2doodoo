@@ -1,5 +1,5 @@
 import Qunit from 'qunit';
-import { TodoCollection } from './todoCollection.js';
+import TodoCollection  from './todoCollection.js';
 
 Qunit.module('TodoCollection', function() {
     Qunit.test('constructor initializes lists array', function(assert) {

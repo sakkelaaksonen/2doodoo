@@ -1,6 +1,6 @@
-import { TodoList } from './todo.js';
+import { TodoList } from './todoList.js';
 
-export class TodoCollection {
+export default class TodoCollection {
     constructor() {
         this.lists = [];
     }

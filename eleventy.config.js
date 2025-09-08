@@ -1,9 +1,7 @@
  export default function(eleventyConfig) {
     
     // Copy static assets
-    eleventyConfig.addPassthroughCopy("main.css");
-
-
-    eleventyConfig.addPassthroughCopy("main.js");
+    eleventyConfig.addPassthroughCopy("assets/main.css");
+    eleventyConfig.addPassthroughCopy("assets/*.js");
 
 };

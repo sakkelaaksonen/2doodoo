@@ -1,5 +1,5 @@
 import QUnit from 'qunit';
-import { TodoItem, TodoList } from './todo.js';
+import { TodoItem, TodoList } from './todoList.js';
 
 QUnit.module('TodoItem', function() {
     QUnit.test('constructor sets text and default status', function(assert) {
