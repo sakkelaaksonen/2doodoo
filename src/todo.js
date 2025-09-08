@@ -1,11 +1,22 @@
 class TodoItem {
     constructor(text) {
         this.text = text;
-        this.status = 'todo'; // 'todo', 'doing', 'done'
+        this.status = TodoList.STATUS_TODO;
     }
 }
 
 class TodoList {
+
+    static STATUS_TODO = 'todo';
+    static STATUS_DOING = 'doing';
+    static STATUS_DONE = 'done';    
+
+    static VALID_STATUSES = [
+        TodoList.STATUS_TODO,
+        TodoList.STATUS_DOING,
+        TodoList.STATUS_DONE
+    ];
+
     constructor(name) {
         this.name = name;
         this.items = [];
@@ -20,11 +31,11 @@ class TodoList {
         }
     }
     setItemStatus(index, status) {
-        const validStatuses = ['todo', 'doing', 'done'];
+      
         if (
             index >= 0 &&
             index < this.items.length &&
-            validStatuses.includes(status)
+            TodoList.VALID_STATUSES.includes(status)
         ) {
             this.items[index].status = status;
         }
