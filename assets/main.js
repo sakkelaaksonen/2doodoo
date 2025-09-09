@@ -5,7 +5,7 @@ import App from './app.js';
 
 function main() {      
 
-    new App();
+    window.todoApp = new App();
 
     
   

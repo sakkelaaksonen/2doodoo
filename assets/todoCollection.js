@@ -11,6 +11,7 @@ export default class TodoCollection {
         // Only Unicode letters and numbers, max 60 chars.
         //  By spec, spaces are not allowed? 
         // TODO: check with task assigner
+        console.error('TODO allow white spaces')
         const validName = typeof newName === 'string' &&
             newName.length > 0 &&
             newName.length <= 60 &&

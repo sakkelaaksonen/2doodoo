@@ -20,6 +20,9 @@ export default class App {
               <span>Done</span>
             </label>
           </div>
+          <div class="button-group">
+            <button type="button" class="delete-button" value="delete" data-index="{{index}}" aria-label="Delete todo">Remove</button
+          </div>
         </div>
       </div></form>{{/items}}`;
 
@@ -28,12 +31,9 @@ export default class App {
       // this.loadFromLocalStorage();  
       this.collection = new TodoCollection();
       //demo setup
-      const added = this.collection.addList('SampleList');
       
-      this.collection.getList(0).addItem('Sample Task 1');
-      this.collection.getList(0).addItem('Sample Task 2');
-      this.collection.getList(0).setItemStatus(1, TodoList.STATUS_DOING);
       this.setupEventListeners();
+      this.loadFromLocalStorage();
       this.render();
 
         
@@ -41,7 +41,7 @@ export default class App {
 
     setupEventListeners() {
         const itemForm = document.getElementById('new-item-form');
-
+      // Event listener for adding new todo item
         const listener = (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -59,6 +59,7 @@ export default class App {
 
         // Delegated event listener for status change
         const todosContainer = document.getElementById('current-todos');
+        
         const statusListener = (e) => {
           let targetInput;
             if (
@@ -74,12 +75,27 @@ export default class App {
                 }
             }
         };
-
+        
         todosContainer.addEventListener('change', statusListener);
+      
+        //Delegated event listener for delete button
+        const deleteListener = (e) => {
+          if (e.target.matches('button.delete-button')) {
+            e.preventDefault();
+            const index = e.target.getAttribute('data-index');
+            if (index) {
+              this.collection.getList(0).removeItem(index);
+              this.render();
+            }
+          }
+        };
+        
+        todosContainer.addEventListener('click', deleteListener);
+        
+        // Save to localStorage on page unload
+        window.addEventListener('beforeunload', () => this.saveToLocalStorage()); 
     }
 
-
- 
 
     render() {
       const data = this.collection.getList(0).getTemplateData();
@@ -89,5 +105,52 @@ export default class App {
             App.TODO_TEMPLATE,
             data
         );
+    }
+
+    saveToLocalStorage() {
+      try {
+        const data = JSON.stringify(this.collection);
+        localStorage.setItem('todoCollection', data);
+    } catch(e) {
+        console.error('Failed to save to localStorage', e);
+        alert('Failed to save data. Your changes may be lost.');
+      } 
+    }
+
+    loadFromLocalStorage() {
+        const data = localStorage.getItem('todoCollection');
+        if (data) {
+          try {
+            const obj = JSON.parse(data);
+           //check for empty or malformed data
+            if (!obj || !Array.isArray(obj.lists)) {
+              console.error('Load Error: Empty store or malformed data');
+              throw new Error('Empty store or malformed data');
+            }
+           
+            // Reconstruct TodoCollection and its lists/items
+            this.collection = new TodoCollection();
+            obj.lists.forEach(listData => {
+                this.collection.addList(listData.listName);
+                const list = this.collection.getList(this.collection.lists.length - 1);
+                listData.items.forEach(itemData => {
+                    list.addItem(itemData.desc);
+                    list.setItemStatus(list.items.length - 1, itemData.status);
+                });
+            });
+        } catch(e) {
+            console.error('Failed to load from localStorage', e);
+            alert('Failed to load saved data. Starting with a new list.');
+            //Setup demo data if loading fails
+            this.collection = new TodoCollection();
+            const added = this.collection.addList('SampleList');
+            this.collection.getList(0).addItem('Sample Task 1');
+            this.collection.getList(0).addItem('Sample Task 2');
+            this.collection.getList(0).setItemStatus(1, TodoList.STATUS_DOING);
+            this.saveToLocalStorage
+            this.render();
+
+          }
+      } 
     }
 };

@@ -72,4 +72,32 @@ QUnit.module('TodoList', function() {
             { desc: 'Task 2', todo: false, doing: false, done: true, index:1}
         ]}, 'getTemplateData returns correct status flags for each item');
     });
+
+    QUnit.test('editItem updates item description for valid index and non-empty string', function(assert) {
+        const list = new TodoList('List');
+        list.addItem('Old Task');
+        list.editItem(0, 'New Task');
+        assert.equal(list.items[0].desc, 'New Task', 'Item description updated');
+    });
+
+    QUnit.test('editItem does nothing for invalid index', function(assert) {
+        const list = new TodoList('List');
+        list.addItem('Task');
+        list.editItem(5, 'New Task');
+        assert.equal(list.items[0].desc, 'Task', 'Description unchanged for invalid index');
+    });
+
+    QUnit.test('editItem does nothing for empty string', function(assert) {
+        const list = new TodoList('List');
+        list.addItem('Task');
+        list.editItem(0, '');
+        assert.equal(list.items[0].desc, 'Task', 'Description unchanged for empty string');
+    });
+
+    QUnit.test('editItem does nothing for non-string description', function(assert) {
+        const list = new TodoList('List');
+        list.addItem('Task');
+        list.editItem(0, 12345);
+        assert.equal(list.items[0].desc, 'Task', 'Description unchanged for non-string description');
+    });
 });

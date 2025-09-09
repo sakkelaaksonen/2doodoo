@@ -40,6 +40,13 @@ class TodoList {
             this.items[index].status = status;
         }
     }
+    editItem(index, newDesc) {
+        if (index >= 0 && index < this.items.length && typeof newDesc === 'string' && newDesc.length > 0) {
+            this.items[index].desc = newDesc;
+        } else {
+          console.error('Invalid index or description for editItem');
+        }
+    }
     getTemplateData() {
         const items =  this.items.map(({desc,status},index) => ({
             desc,
