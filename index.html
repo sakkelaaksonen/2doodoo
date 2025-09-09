@@ -1,24 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Accessible Mobile-Friendly Template</title>
-    <meta name="description" content="A production-ready, accessible, mobile-friendly HTML template with one button and input.">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap">
-    <link rel="stylesheet" href="/assets/main.css">
+    <meta
+      name="description"
+      content="A production-ready, accessible, mobile-friendly HTML template with one button and input."
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap"
+    />
+    <link rel="stylesheet" href="/assets/main.css" />
     <script type="module" src="/assets/main.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <main>
-        <section class="container" aria-labelledby="form-title">
-            <h1 id="form-title" style="font-size:1.5rem; margin:0 0 1rem 0;">Enter Information</h1>
-            <form action="#" method="post" autocomplete="off">
-                <label for="user-input">Your Input</label>
-                <input type="text" id="user-input" name="user-input" required aria-required="true" aria-label="Your Input">
-                <button type="submit" aria-label="Submit Input">Submit</button>
-            </form>
-        </section>
+      <section class="container" aria-labelledby="form-title">
+        <h1 id="form-title">Todos: name of list</h1>
+        <form action="#" method="post" autocomplete="off">
+          <div class="input-group">
+            <label for="todo-input">Add todo</label>
+            <div class="input-row">
+              <input
+                id="todo-input"
+                type="text"
+                name="user-input"
+                required
+                aria-required="true"
+                aria-label="Your Input"
+              />
+              <button type="submit" aria-label="Submit Input">Add</button>
+            </div>
+          </div>
+        </form>
+        <form>
+          <div id="current-todos" class="todo-list" aria-live="polite">
+            <!-- Todo items will be dynamically added here -->
+            <fieldset>
+              <legend>Sample Todo Item with extralong text and 12346 numbers</legend>
+              <div class="button-group">
+                <label>
+                  <input
+                    type="radio"
+                    name="todo-1-status"
+                    value="todo"
+                    checked
+                  />
+                  <span>Todo</span>
+                </label>
+                <label>
+                  <input type="radio" name="todo-1-status" value="doing" />
+                  <span>Doing</span>
+                </label>
+                <label>
+                  <input type="radio" name="todo-1-status" value="done" />
+                  <span>Done</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </form>
+      </section>
     </main>
-</body>
+  </body>
 </html>

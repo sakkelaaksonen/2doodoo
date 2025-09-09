@@ -1,6 +1,6 @@
 class TodoItem {
-    constructor(text) {
-        this.text = text;
+    constructor(desc) {
+        this.desc = desc;
         this.status = TodoList.STATUS_TODO;
     }
 }
@@ -17,12 +17,12 @@ class TodoList {
         TodoList.STATUS_DONE
     ];
 
-    constructor(name) {
-        this.name = name;
+    constructor(listName) {
+        this.listName = listName;
         this.items = [];
     }
-    addItem(text) {
-        const item = new TodoItem(text);
+    addItem(desc) {
+        const item = new TodoItem(desc);
         this.items.push(item);
     }
     removeItem(index) {

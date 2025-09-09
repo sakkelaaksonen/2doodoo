@@ -1,10 +1,10 @@
 import QUnit from 'qunit';
-import { TodoItem, TodoList } from './todoList.js';
+import { TodoItem, TodoList } from '../assets/todoList.js';
 
 QUnit.module('TodoItem', function() {
     QUnit.test('constructor sets text and default status', function(assert) {
         const item = new TodoItem('Test task');
-        assert.equal(item.text, 'Test task', 'Text is set correctly');
+        assert.equal(item.desc, 'Test task', 'Text is set correctly');
         assert.equal(item.status, 'todo', 'Default status is todo');
     });
 });
@@ -12,7 +12,7 @@ QUnit.module('TodoItem', function() {
 QUnit.module('TodoList', function() {
     QUnit.test('constructor sets name and initializes items', function(assert) {
         const list = new TodoList('My List');
-        assert.equal(list.name, 'My List', 'Name is set correctly');
+        assert.equal(list.listName, 'My List', 'Name is set correctly');
         assert.deepEqual(list.items, [], 'Items array is initialized empty');
     });
 
@@ -20,7 +20,7 @@ QUnit.module('TodoList', function() {
         const list = new TodoList('List');
         list.addItem('Task 1');
         assert.equal(list.items.length, 1, 'Item added');
-        assert.equal(list.items[0].text, 'Task 1', 'Item text is correct');
+        assert.equal(list.items[0].desc, 'Task 1', 'Item text is correct');
     });
 
     QUnit.test('removeItem removes item at valid index', function(assert) {
@@ -29,7 +29,7 @@ QUnit.module('TodoList', function() {
         list.addItem('Task 2');
         list.removeItem(0);
         assert.equal(list.items.length, 1, 'Item removed');
-        assert.equal(list.items[0].text, 'Task 2', 'Correct item remains');
+        assert.equal(list.items[0].desc, 'Task 2', 'Correct item remains');
     });
 
     QUnit.test('removeItem does nothing for invalid index', function(assert) {
@@ -59,4 +59,6 @@ QUnit.module('TodoList', function() {
         list.setItemStatus(0, 'invalid');
         assert.equal(list.items[0].status, 'todo', 'Status unchanged for invalid status');
     });
+
+    
 });
