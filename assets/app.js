@@ -2,10 +2,10 @@ import mustache from './mustache.mjs';
 import  TodoCollection  from './todoCollection.js';
 import { TodoList } from './todoList.js';
 export default class App {
-
+    static STORAGE_KEY = 'todoCollection';
     static TODO_TEMPLATE  = `{{#items}}<form> <div class="input-group">
         <div class="input-row">
-          <span class="desc">{{desc}}</span>
+          <input type="text" class="desc" value="{{desc}}"/>
           <div class="button-group" role="radiogroup" aria-label="Set status">
             <label>
               <input type="radio" data-index={{index}} name="status" value="todo" {{#todo}} checked{{/todo}} />
@@ -28,52 +28,56 @@ export default class App {
 
 
     constructor() {
-      // this.loadFromLocalStorage();  
       this.collection = new TodoCollection();
-      //demo setup
-      
       this.setupEventListeners();
       this.loadFromLocalStorage();
       this.render();
 
-        
+      // Listen for changes in the collection and re-render
+      this.collection.addEventListener(TodoCollection.CHANGE_EVENT, () => {
+        this.render();
+        this.saveToLocalStorage();
+      });
     }
 
     setupEventListeners() {
-        const listForm = document.getElementById('new-list-form');
-        const input = document.getElementById('list-name-input');
-        const errorDiv = document.getElementById('list-name-error');
+      
+      // const listForm = document.getElementById('new-list-form');
+        // const input = document.getElementById('list-name-input');
+        // const errorDiv = document.getElementById('list-name-error');
+        //  Custom event for rendering upon list changes
 
-        listForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const value = input.value.trim();
-            let errorMsg = '';
 
-            if (!value) {
-                errorMsg = 'List name is required.';
-            } else if (!/^[\p{L}\p{N}]+$/u.test(value)) {
-                errorMsg = 'List name must only contain letters and numbers.';
-            } else if (value.length > 60) {
-                errorMsg = 'List name must be at most 60 characters.';
-            } else if (this.collection.lists.some(list => list.listName === value)) {
-                errorMsg = 'A list with this name already exists.';
-            }
+        // listForm.addEventListener('submit', (e) => {
+        //     e.preventDefault();
+        //     const value = input.value.trim();
+        //     let errorMsg = '';
 
-            if (errorMsg) {
-                errorDiv.textContent = errorMsg;
-                input.setAttribute('aria-invalid', 'true');
-                input.focus();
-            } else {
-                errorDiv.textContent = '';
-                input.setAttribute('aria-invalid', 'false');
-                this.collection.addList(value);
-                input.value = '';
-                this.render();
-            }
-        });
+        //     if (!value) {
+        //         errorMsg = 'List name is required.';
+        //     } else if (!/^[\p{L}\p{N}]+$/u.test(value)) {
+        //         errorMsg = 'List name must only contain letters and numbers.';
+        //     } else if (value.length > 60) {
+        //         errorMsg = 'List name must be at most 60 characters.';
+        //     } else if (this.collection.lists.some(list => list.listName === value)) {
+        //         errorMsg = 'A list with this name already exists.';
+        //     }
+
+        //     if (errorMsg) {
+        //         errorDiv.textContent = errorMsg;
+        //         input.setAttribute('aria-invalid', 'true');
+        //         input.focus();
+        //     } else {
+        //         errorDiv.textContent = '';
+        //         input.setAttribute('aria-invalid', 'false');
+        //         this.collection.addList(value);
+        //         input.value = '';
+                
+        //     }
+        // });
 
         const itemForm = document.getElementById('new-item-form');
-      // Event listener for adding new todo item
+        // Event listener for adding new todo item
         const listener = (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -82,7 +86,6 @@ export default class App {
             if (value) {
                 this.collection.getList(0).addItem(value);
                 input.value = '';
-                this.render();
             }
             return false;
         };
@@ -91,25 +94,40 @@ export default class App {
 
         // Delegated event listener for status change
         const todosContainer = document.getElementById('current-todos');
-        
         const statusListener = (e) => {
           let targetInput;
             if (
                 e.target.matches('input[type="radio"][name="status"]')
-                
             ) {
-                // Find the index of the form (each todo item is a form)
-              targetInput = e.target;
-              const index = targetInput.getAttribute('data-index');
-              if (index) {
-                  this.collection.getList(0).setItemStatus(index, e.target.value);
-                  this.render();
+                targetInput = e.target;
+                const index = targetInput.getAttribute('data-index');
+                if (index) {
+                    this.collection.getList(0).setItemStatus(index, e.target.value);
                 }
             }
         };
-        
         todosContainer.addEventListener('change', statusListener);
-      
+
+          // Delegated event listener for editing todo item description
+          const descListener = (e) => {
+            if (e.target.matches('input.desc')) {
+              // Find the index from the closest form's radio input
+              const form = e.target.closest('form');
+              let index = null;
+              if (form) {
+                const radio = form.querySelector('input[type="radio"][name="status"]');
+                if (radio) {
+                  index = radio.getAttribute('data-index');
+                }
+              }
+              const newDesc = e.target.value;
+              if (index !== null && index !== undefined && newDesc.trim().length > 0) {
+                this.collection.getList(0).editItem(Number(index), newDesc.trim());
+              }
+            }
+          };
+          todosContainer.addEventListener('change', descListener);
+
         //Delegated event listener for delete button
         const deleteListener = (e) => {
           if (e.target.matches('button.delete-button')) {
@@ -117,23 +135,19 @@ export default class App {
             const index = e.target.getAttribute('data-index');
             if (index) {
               this.collection.getList(0).removeItem(index);
-              this.render();
             }
           }
         };
-        
         todosContainer.addEventListener('click', deleteListener);
-        
+
         // Save to localStorage on page unload
         window.addEventListener('beforeunload', () => this.saveToLocalStorage()); 
     }
 
-
     render() {
       const data = this.collection.getList(0).getTemplateData();
-      console.log(data, 'data');  
       const container =  document.getElementById('current-todos');
-        container.innerHTML = mustache.render(
+      container.innerHTML = mustache.render(
             App.TODO_TEMPLATE,
             data
         );
@@ -142,25 +156,22 @@ export default class App {
     saveToLocalStorage() {
       try {
         const data = JSON.stringify(this.collection);
-        localStorage.setItem('todoCollection', data);
-    } catch(e) {
+        localStorage.setItem(App.STORAGE_KEY, data);
+      } catch(e) {
         console.error('Failed to save to localStorage', e);
         alert('Failed to save data. Your changes may be lost.');
       } 
     }
 
     loadFromLocalStorage() {
-        const data = localStorage.getItem('todoCollection');
+        const data = localStorage.getItem(App.STORAGE_KEY);
         if (data) {
           try {
             const obj = JSON.parse(data);
-           //check for empty or malformed data
             if (!obj || !Array.isArray(obj.lists)) {
               console.error('Load Error: Empty store or malformed data');
               throw new Error('Empty store or malformed data');
             }
-           
-            // Reconstruct TodoCollection and its lists/items
             this.collection = new TodoCollection();
             obj.lists.forEach(listData => {
                 this.collection.addList(listData.listName);
@@ -170,18 +181,15 @@ export default class App {
                     list.setItemStatus(list.items.length - 1, itemData.status);
                 });
             });
-        } catch(e) {
+          } catch(e) {
             console.error('Failed to load from localStorage', e);
             alert('Failed to load saved data. Starting with a new list.');
-            //Setup demo data if loading fails
             this.collection = new TodoCollection();
-            const added = this.collection.addList('SampleList');
+            this.collection.addList('SampleList');
             this.collection.getList(0).addItem('Sample Task 1');
             this.collection.getList(0).addItem('Sample Task 2');
             this.collection.getList(0).setItemStatus(1, TodoList.STATUS_DOING);
-            this.saveToLocalStorage
-            this.render();
-
+            this.saveToLocalStorage();
           }
       } 
     }
