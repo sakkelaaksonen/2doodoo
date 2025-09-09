@@ -1,5 +1,6 @@
 import { TodoList } from './todoList.js';
 
+// Global mustache added in index.html
 export default class TodoCollection {
     constructor() {
         this.lists = [];
@@ -19,13 +20,18 @@ export default class TodoCollection {
         // Check for duplicate names
         const duplicate = this.lists.some(({listName}) => listName === newName);
 
-        //TODO return error message or throw exception
-        if (!validName || duplicate) {
-            return false;
+        if(!validName) {
+            throw new Error('List name must only contain Unicode letters and numbers and be at most 60 characters long.');
+        }
+        
+        if(duplicate) {
+            throw new Error('A list with this name already exists.');
         }
 
         const list = new TodoList(newName);
+
         this.lists.push(list);
+        console.log(this.lists,'listss')
         return true;
     }
     removeList(index) {

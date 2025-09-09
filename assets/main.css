@@ -78,11 +78,6 @@ body {
   outline-offset: 2px; */
 }
 
-fieldset {
-  border: none;
-  margin: 1rem 0 0 0;
-  padding: 0;
-}
 
 legend {
   font-weight: 500;
@@ -94,21 +89,37 @@ fieldset label {
   display: inline-block;
   margin: 0;
 }
-
+/* 
 .todo-list fieldset {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  border: none;
+  margin: 1rem 0 0 0;
+  padding: 0;
+}
+
+.todo-list legend {
+  margin-bottom: 0;
+  min-width: 0;
+  flex: 3;
+  font-size: 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .todo-list .button-group {
   display: flex;
+  flex-basis:5rem;
+  margin-bottom: 0;
 }
 
 .button-group label {
   position: relative;
-  flex: 1 1 0;
-  
+   gap: 0;
 }
 
 .button-group input[type="radio"] {
@@ -137,11 +148,12 @@ fieldset label {
 
 .button-group label:first-child span{
   border-radius: 0.5rem 0 0 0.5rem;
+  border-right: none;
 
 }
 .button-group label:last-child span {
   border-radius:0 0.5rem 0.5rem 0;
-
+  border-left: none;
 }
 
 
@@ -153,7 +165,7 @@ fieldset label {
 }
 
 .button-group input[type="radio"]:focus + span {
-  /* outline: 2px solid #005fa3; */
+
   
   border-color: #005fa3;
-}
+} */

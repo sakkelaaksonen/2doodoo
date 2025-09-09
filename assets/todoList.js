@@ -40,6 +40,14 @@ class TodoList {
             this.items[index].status = status;
         }
     }
+    getTemplateData() {
+        return this.items.map(({desc,status}) => ({
+            desc,todo: status === TodoList.STATUS_TODO,
+            doing: status === TodoList.STATUS_DOING,
+            done: status === TodoList.STATUS_DONE
+        }));
+    }
 }
+
 
 export { TodoItem, TodoList };

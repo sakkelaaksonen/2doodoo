@@ -51,14 +51,14 @@ Qunit.module('TodoCollection', function() {
         assert.ok(collection.addList('List123'), 'Valid name: letters and numbers');
         assert.ok(collection.addList('ÄäÖö123'), 'Valid name: Unicode letters');
         // Invalid names
-        assert.notOk(collection.addList('List!@#'), 'Invalid name: contains symbols');
-        assert.notOk(collection.addList('List With Spaces'), 'Invalid name: contains spaces');
-        assert.notOk(collection.addList('A'.repeat(61)), 'Invalid name: too long');
+        assert.throws(() => collection.addList('List!@#'), /must only contain Unicode letters and numbers/, 'Invalid name: contains symbols throws error');
+        assert.throws(() => collection.addList('List With Spaces'), /must only contain Unicode letters and numbers/, 'Invalid name: contains spaces throws error');
+        assert.throws(() => collection.addList('A'.repeat(61)), /must only contain Unicode letters and numbers/, 'Invalid name: too long throws error');
     });
 
     Qunit.test('cannot add two lists with the same name', function(assert) {
         const collection = new TodoCollection();
         assert.ok(collection.addList('UniqueName'), 'First list added');
-        assert.notOk(collection.addList('UniqueName'), 'Duplicate list not added');
+        assert.throws(() => collection.addList('UniqueName'), /already exists/, 'Duplicate list name throws error');
     });
  });
