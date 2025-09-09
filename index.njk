@@ -20,7 +20,7 @@
     <main>
       <section class="container" aria-labelledby="form-title">
         <h1 id="form-title">Todos: name of list</h1>
-        <form action="#" method="post" autocomplete="off">
+        <form  id="new-item-form" action="#" method="post" autocomplete="off">
           <div class="input-group">
             <label for="todo-input">Add todo</label>
             <div class="input-row">
@@ -29,6 +29,10 @@
                 type="text"
                 name="user-input"
                 required
+                minlength="1"
+                maxlength="60"
+                placeholder="Max 60 letters and numbers"
+                aria-errormessage="Only letters and numbers are allowed."
                 aria-required="true"
                 aria-label="Your Input"
               />

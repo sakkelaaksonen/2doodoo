@@ -67,9 +67,9 @@ QUnit.module('TodoList', function() {
         list.setItemStatus(0, 'doing');
         list.setItemStatus(1, 'done');
         const data = list.getTemplateData();
-        assert.deepEqual(data, [
+        assert.deepEqual(data,{items: [
             { desc: 'Task 1', todo: false, doing: true, done: false },
             { desc: 'Task 2', todo: false, doing: false, done: true }
-        ], 'getTemplateData returns correct status flags for each item');
+        ]}, 'getTemplateData returns correct status flags for each item');
     });
 });
