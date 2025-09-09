@@ -8,15 +8,15 @@ export default class App {
           <span class="desc">{{desc}}</span>
           <div class="button-group" role="radiogroup" aria-label="Set status">
             <label>
-              <input type="radio" name="status" value="todo" {{#todo}} checked{{/todo}} />
+              <input type="radio" data-index={{index}} name="status" value="todo" {{#todo}} checked{{/todo}} />
               <span>Todo</span>
             </label>
             <label>
-              <input type="radio" name="status" value="doing" {{#doing}} checked{{/doing}} />
+              <input type="radio" data-index={{index}} name="status" value="doing" {{#doing}} checked{{/doing}} />
               <span>Doing</span>
             </label>
             <label>
-              <input type="radio" name="status" value="done" {{#done}} checked{{/done}} />
+              <input type="radio" data-index={{index}}  name="status" value="done" {{#done}} checked{{/done}} />
               <span>Done</span>
             </label>
           </div>
@@ -40,29 +40,42 @@ export default class App {
     }
 
     setupEventListeners() {
-     
-     const itemForm = document.getElementById('new-item-form');
+        const itemForm = document.getElementById('new-item-form');
 
-      const listener = (e) => {
-        
-        e.preventDefault();
-        e.stopPropagation();
-        const input = document.getElementById('todo-input');
-        const value = input.value.trim();
-        if (value) {
-            this.collection.getList(0).addItem(value);
-            input.value = '';
-            this.render();
-        }
-        return false;
-        
-      };
+        const listener = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const input = document.getElementById('todo-input');
+            const value = input.value.trim();
+            if (value) {
+                this.collection.getList(0).addItem(value);
+                input.value = '';
+                this.render();
+            }
+            return false;
+        };
 
-      itemForm.addEventListener('submit', listener);
+        itemForm.addEventListener('submit', listener);
 
-      document.addEventListener('onBeforeUnload', () => {
-         itemForm.removeEventListener('submit', listener);
-      });
+        // Delegated event listener for status change
+        const todosContainer = document.getElementById('current-todos');
+        const statusListener = (e) => {
+          let targetInput;
+            if (
+                e.target.matches('input[type="radio"][name="status"]')
+                
+            ) {
+                // Find the index of the form (each todo item is a form)
+              targetInput = e.target;
+              const index = targetInput.getAttribute('data-index');
+              if (index) {
+                  this.collection.getList(0).setItemStatus(index, e.target.value);
+                  this.render();
+                }
+            }
+        };
+
+        todosContainer.addEventListener('change', statusListener);
     }
 
 

@@ -41,11 +41,12 @@ class TodoList {
         }
     }
     getTemplateData() {
-        const items =  this.items.map(({desc,status}) => ({
+        const items =  this.items.map(({desc,status},index) => ({
             desc,
             todo: status === TodoList.STATUS_TODO,
             doing: status === TodoList.STATUS_DOING,
-            done: status === TodoList.STATUS_DONE
+            done: status === TodoList.STATUS_DONE,
+            index
         }));
         return {items}
     }
