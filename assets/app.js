@@ -40,6 +40,38 @@ export default class App {
     }
 
     setupEventListeners() {
+        const listForm = document.getElementById('new-list-form');
+        const input = document.getElementById('list-name-input');
+        const errorDiv = document.getElementById('list-name-error');
+
+        listForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const value = input.value.trim();
+            let errorMsg = '';
+
+            if (!value) {
+                errorMsg = 'List name is required.';
+            } else if (!/^[\p{L}\p{N}]+$/u.test(value)) {
+                errorMsg = 'List name must only contain letters and numbers.';
+            } else if (value.length > 60) {
+                errorMsg = 'List name must be at most 60 characters.';
+            } else if (this.collection.lists.some(list => list.listName === value)) {
+                errorMsg = 'A list with this name already exists.';
+            }
+
+            if (errorMsg) {
+                errorDiv.textContent = errorMsg;
+                input.setAttribute('aria-invalid', 'true');
+                input.focus();
+            } else {
+                errorDiv.textContent = '';
+                input.setAttribute('aria-invalid', 'false');
+                this.collection.addList(value);
+                input.value = '';
+                this.render();
+            }
+        });
+
         const itemForm = document.getElementById('new-item-form');
       // Event listener for adding new todo item
         const listener = (e) => {
