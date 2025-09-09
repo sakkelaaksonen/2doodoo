@@ -1,5 +1,9 @@
 import Qunit from 'qunit';
 import TodoCollection  from '../assets/todoCollection.js';
+import { JSDOM } from 'jsdom';
+const { window } = new JSDOM('');
+global.document = window.document;
+global.CustomEvent = window.CustomEvent;
 
 Qunit.module('TodoCollection', function() {
     Qunit.test('constructor initializes lists array', function(assert) {

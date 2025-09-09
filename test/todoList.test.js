@@ -1,5 +1,10 @@
 import QUnit from 'qunit';
 import { TodoItem, TodoList } from '../assets/todoList.js';
+import { JSDOM } from 'jsdom';
+
+const { window } = new JSDOM('');
+global.document = window.document;
+global.CustomEvent = window.CustomEvent;
 
 QUnit.module('TodoItem', function() {
     QUnit.test('constructor sets text and default status', function(assert) {
