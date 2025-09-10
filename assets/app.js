@@ -18,15 +18,15 @@ export default class App {
                 aria-label="New Todo item"
                 value="{{desc}}"/>
           <div class="toggle-button" role="radiogroup" aria-label="Set status">
-            <label>
+            <label class="toggle-buttonlabel">
               <input type="radio" data-index={{index}} name="status" value="todo" {{#todo}} checked{{/todo}} />
               <span>Todo</span>
             </label>
-            <label>
+            <label class="toggle-buttonlabel">
               <input type="radio" data-index={{index}} name="status" value="doing" {{#doing}} checked{{/doing}} />
               <span>Doing</span>
             </label>
-            <label>
+            <label class="toggle-buttonlabel">
               <input type="radio" data-index={{index}}  name="status" value="done" {{#done}} checked{{/done}} />
               <span>Done</span>
             </label>
