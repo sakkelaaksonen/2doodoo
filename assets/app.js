@@ -2,6 +2,8 @@ import mustache from './mustache.mjs';
 import  TodoCollection  from './todoCollection.js';
 import { TodoList } from './todoList.js';
 export default class App {
+
+    static DEFAULT_FILTER = 'all';
     static STORAGE_KEY = 'todoCollection';
     static TODO_TEMPLATE  = `{{#items}}<form> <div class="input-group">
         <div class="input-row">
@@ -35,11 +37,16 @@ export default class App {
             <button type="button" class="delete-button" value="delete" data-index="{{index}}" aria-label="Delete todo">Remove</button
           </div>
         </div>
-      </div></form>{{/items}}`;
+      </div></form>{{/items}}
+      
+      {{^items}}<p>{{#filter}} No items yet with status "{{filter}}"{{/filter}} 
+      {{^filter}}No items yet{{/filter}} 
+      </p>{{/items}}`;
 
 
     constructor() {
       this.collection = new TodoCollection();
+      this.filter = App.DEFAULT_FILTER;
       this.setupEventListeners();
       this.loadFromLocalStorage();
       this.render();
@@ -52,6 +59,15 @@ export default class App {
     }
 
     setupEventListeners() {
+      // Listen for filter changes
+      const filterGroup = document.querySelector('.toggle-button[role="radiogroup"][aria-label="Set status"]');
+      if (filterGroup) {
+        filterGroup.addEventListener('change', (e) => {
+          if (e.target.matches('input[type="radio"][name="filter"]')) {
+            this.setFilter(e.target.value);
+          }
+        });
+      }
       
       const listForm = document.getElementById('new-list-form');
       const input = document.getElementById('list-name-input');
@@ -154,9 +170,23 @@ export default class App {
         window.addEventListener('beforeunload', () => this.saveToLocalStorage()); 
     }
 
+    setFilter(newFilter) {
+      this.filter = newFilter;
+      this.render();
+    }
     render() {
-
-      const data = this.collection.getList(0)?.getTemplateData() ?? {items: []};
+      let data = this.collection.getList(0)?.getTemplateData() ?? {items: []};
+      
+      
+      // Filter items if filter is set
+      if (this.filter && this.filter !== App.DEFAULT_FILTER && TodoList.isValidStatus(this.filter)) {
+        data = {
+          ...data,
+          filter: this.filter,
+          items: data.items.filter(item => item[this.filter])
+        };
+      } 
+      
       const container =  document.getElementById('current-todos');
       container.innerHTML = mustache.render(
             App.TODO_TEMPLATE,

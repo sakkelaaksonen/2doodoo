@@ -17,12 +17,15 @@ class TodoList {
     ];
 
     static CHANGE_EVENT = 'item-changed';
-
+    static isValidStatus(status) {
+      return TodoList.VALID_STATUSES.includes(status);
+    }
     constructor(listName) {
         this.listName = listName;
         this.items = [];
         this._eventTarget = document.createElement('span');
     }
+    
     addItem(desc) {
         const item = new TodoItem(desc);
         this.items.push(item);
@@ -38,7 +41,7 @@ class TodoList {
         if (
             index >= 0 &&
             index < this.items.length &&
-            TodoList.VALID_STATUSES.includes(status)
+            TodoList.isValidStatus(status)
         ) {
             this.items[index].status = status;
             this._dispatchChange('status', { index, status });
@@ -55,6 +58,7 @@ class TodoList {
     getTemplateData() {
         const items =  this.items.map(({desc,status},index) => ({
             desc,
+            status,
             todo: status === TodoList.STATUS_TODO,
             doing: status === TodoList.STATUS_DOING,
             done: status === TodoList.STATUS_DONE,

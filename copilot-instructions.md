@@ -62,7 +62,7 @@ edit a task's description (/)
 change a tasks status (/)
 
 filter a task list to show only tasks with
-given status
+given status (/)
 
 ## 02 Definitions of entities:
 
