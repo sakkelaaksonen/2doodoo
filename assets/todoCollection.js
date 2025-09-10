@@ -62,6 +62,7 @@ export default class TodoCollection {
         const list = new TodoList(newName);
         // Listen for item changes and bubble up
         list.addEventListener(TodoList.CHANGE_EVENT, (e) => {
+          console.log('Item changed in list', newName, e.detail);
             this._dispatchChange('item', { listName: newName, item: e.detail });
         });
         this.lists.push(list);
@@ -109,6 +110,7 @@ export default class TodoCollection {
      * @param {Object|boolean} [options] - Optional options.
      */
     removeEventListener(...args) {
+        //Not needed atm but keeping for symmetry
         this._eventTarget.removeEventListener(...args);
     }
 

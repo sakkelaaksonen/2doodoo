@@ -6,20 +6,22 @@ export default class App {
     static DEFAULT_FILTER = 'all';
     static STORAGE_KEY = 'todoCollection';
     static TODO_TEMPLATE  = `{{#items}}<form> <div class="input-group">
-        <div class="input-row">
-          <input 
-           class="text-input"
-                type="text"
-                name="user-input"
-                required
-                minlength="1"
-                maxlength="60"
-                placeholder="Max 60 letters and numbers"
-                aria-errormessage="Only letters and numbers are allowed."
-                aria-required="true"
-                aria-label="New Todo item"
-                value="{{desc}}"/>
-          <div class="toggle-button" role="radiogroup" aria-label="Set status">
+      <div class="input-row">
+        <input 
+          class="text-input"
+              type="text"
+              name="user-input"
+              required
+              minlength="1"
+              maxlength="60"
+              placeholder="Max 60 letters and numbers"
+              aria-errormessage="Only letters and numbers are allowed."
+              aria-required="true"
+              aria-label="New Todo item"
+              value="{{desc}}"/>
+      </div>
+      <div class="input-row">
+        <div class="toggle-button" role="radiogroup" aria-label="Set status">
             <label class="toggle-buttonlabel">
               <input type="radio" data-index={{index}} name="status" value="todo" {{#todo}} checked{{/todo}} />
               <span>Todo</span>
@@ -52,8 +54,23 @@ export default class App {
       this.render();
 
       // Listen for changes in the collection and re-render
-      this.collection.addEventListener(TodoCollection.CHANGE_EVENT, () => {
-        this.render();
+      this.collection.addEventListener(TodoCollection.CHANGE_EVENT, (e) => {
+        // Set of conditions to ignore rendering when not needed
+        // This allows controls to maintain focus/state better without the need
+        // manually re-focusing them
+        let skipRender = false;
+        
+        if(e.detail.item.type === 'status' &&
+            this.filter === App.DEFAULT_FILTER 
+          ) {
+            console.log('Skipping render for status change'); 
+          skipRender  = true;
+        }
+
+        if(!skipRender) {
+          this.render();
+        }
+       
         this.saveToLocalStorage();
       });
     }
@@ -73,42 +90,44 @@ export default class App {
       const input = document.getElementById('list-name-input');
       const errorDiv = document.getElementById('list-name-error');
 
+      // New todolist form submission 
+      // TODO refactor this to a separate class
+      listForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const value = input.value.trim();
+          let errorMsg = '';
 
-        listForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const value = input.value.trim();
-            let errorMsg = '';
+          if (!value) {
+              errorMsg = 'List name is required.';
+          } else if (!/^[\p{L}\p{N}]+$/u.test(value)) {
+              errorMsg = 'List name must only contain letters and numbers.';
+          } else if (value.length > 60) {
+              errorMsg = 'List name must be at most 60 characters.';
+          } else if (this.collection.lists.some(list => list.listName === value)) {
+              errorMsg = 'A list with this name already exists.';
+          }
 
-            if (!value) {
-                errorMsg = 'List name is required.';
-            } else if (!/^[\p{L}\p{N}]+$/u.test(value)) {
-                errorMsg = 'List name must only contain letters and numbers.';
-            } else if (value.length > 60) {
-                errorMsg = 'List name must be at most 60 characters.';
-            } else if (this.collection.lists.some(list => list.listName === value)) {
-                errorMsg = 'A list with this name already exists.';
-            }
-
-            if (errorMsg) {
-                errorDiv.textContent = errorMsg;
-                input.setAttribute('aria-invalid', 'true');
-                input.focus();
-            } else {
-                errorDiv.textContent = '';
-                input.setAttribute('aria-invalid', 'false');
-                this.collection.addList(value);
-                input.value = '';
-                
-            }
+          if (errorMsg) {
+              errorDiv.textContent = errorMsg;
+              input.setAttribute('aria-invalid', 'true');
+              input.focus();
+          } else {
+              errorDiv.textContent = '';
+              input.setAttribute('aria-invalid', 'false');
+              this.collection.addList(value);
+              input.value = '';
+              
+          }
         });
 
         const itemForm = document.getElementById('new-item-form');
         // Event listener for adding new todo item
-        const listener = (e) => {
+        const newListListener = (e) => {
             e.preventDefault();
             e.stopPropagation();
             const input = document.getElementById('todo-input');
             const value = input.value.trim();
+            
             if (value) {
                 this.collection.getList(0).addItem(value);
                 input.value = '';
@@ -116,7 +135,7 @@ export default class App {
             return false;
         };
 
-        itemForm.addEventListener('submit', listener);
+        itemForm.addEventListener('submit', newListListener);
 
         // Delegated event listener for status change
         const todosContainer = document.getElementById('current-todos');
@@ -132,6 +151,7 @@ export default class App {
                 }
             }
         };
+
         todosContainer.addEventListener('change', statusListener);
 
           // Delegated event listener for editing todo item description

@@ -43,10 +43,10 @@
   z-index: 1;
 }
 
-.toggle-buttonlabel:first-child span {
+.toggle-button label:first-child span {
   border-radius: 0.5rem 0 0 0.5rem;
 }
-.toggle-buttonlabel:last-child span {
+.toggle-button label:last-child span {
   border-radius: 0 0.5rem 0.5rem 0;
 }
 

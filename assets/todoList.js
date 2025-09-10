@@ -70,6 +70,7 @@ class TodoList {
         this._eventTarget.addEventListener(...args);
     }
     removeEventListener(...args) {
+      //Not needed atm but keeping for symmetry
         this._eventTarget.removeEventListener(...args);
     }
     _dispatchChange(type, detail) {
