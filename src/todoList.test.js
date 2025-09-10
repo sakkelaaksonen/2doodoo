@@ -1,4 +1,5 @@
 import { TodoItem, TodoList } from "./todoList.js";
+
 export default function TodoCollectionTests() {
 
 QUnit.module('TodoItem', function() {
@@ -68,8 +69,8 @@ QUnit.module('TodoList', function() {
         list.setItemStatus(1, 'done');
         const data = list.getTemplateData();
         assert.deepEqual(data,{items: [
-            { desc: 'Task 1', todo: false, doing: true, done: false ,index:0},
-            { desc: 'Task 2', todo: false, doing: false, done: true, index:1}
+            { desc: 'Task 1', status:'doing', todo: false, doing: true, done: false ,index:0},
+            { desc: 'Task 2', status:'done', todo: false, doing: false, done: true, index:1}
         ]}, 'getTemplateData returns correct status flags for each item');
     });
 

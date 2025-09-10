@@ -18,7 +18,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "qunit \"./assets/nodetest_setup.js\"",
+    "test": "qunit \"./src/nodetest_setup.js\"",
     "dev": "npx @11ty/eleventy --serve"
   },
   "dependencies": {
