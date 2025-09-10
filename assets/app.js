@@ -145,7 +145,8 @@ export default class App {
     }
 
     render() {
-      const data = this.collection.getList(0).getTemplateData();
+
+      const data = this.collection.getList(0)?.getTemplateData() ?? {items: []};
       const container =  document.getElementById('current-todos');
       container.innerHTML = mustache.render(
             App.TODO_TEMPLATE,
@@ -155,7 +156,7 @@ export default class App {
 
     saveToLocalStorage() {
       try {
-        const data = JSON.stringify(this.collection);
+        const data = this.collection.stringify();
         localStorage.setItem(App.STORAGE_KEY, data);
       } catch(e) {
         console.error('Failed to save to localStorage', e);
@@ -168,12 +169,13 @@ export default class App {
         if (data) {
           try {
             const obj = JSON.parse(data);
+            console.log('Loaded from localStorage', obj);
             if (!obj || !Array.isArray(obj.lists)) {
               console.error('Load Error: Empty store or malformed data');
               throw new Error('Empty store or malformed data');
             }
             this.collection = new TodoCollection();
-            obj.lists.forEach(listData => {
+            obj.lists?.forEach(listData => {
                 this.collection.addList(listData.listName);
                 const list = this.collection.getList(this.collection.lists.length - 1);
                 listData.items.forEach(itemData => {
@@ -183,7 +185,6 @@ export default class App {
             });
           } catch(e) {
             console.error('Failed to load from localStorage', e);
-            alert('Failed to load saved data. Starting with a new list.');
             this.collection = new TodoCollection();
             this.collection.addList('SampleList');
             this.collection.getList(0).addItem('Sample Task 1');

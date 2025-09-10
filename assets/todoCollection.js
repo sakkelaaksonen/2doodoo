@@ -7,6 +7,9 @@ export default class TodoCollection {
         this.lists = [];
         this._eventTarget = document.createElement('span');
     }
+    stringify() {
+      return JSON.stringify({lists: this.lists});
+    }
     addList(newName) {
         // Only Unicode letters and numbers, max 60 chars.
         const validName = typeof newName === 'string' &&

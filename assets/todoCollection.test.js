@@ -1,5 +1,5 @@
 import Qunit from 'qunit';
-import TodoCollection  from '../assets/todoCollection.js';
+import TodoCollection  from './todoCollection.js';
 import { JSDOM } from 'jsdom';
 const { window } = new JSDOM('');
 global.document = window.document;
