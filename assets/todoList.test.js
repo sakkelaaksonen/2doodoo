@@ -1,10 +1,5 @@
-import QUnit from 'qunit';
-import { TodoItem, TodoList } from './todoList.js';
-import { JSDOM } from 'jsdom';
-
-const { window } = new JSDOM('');
-global.document = window.document;
-global.CustomEvent = window.CustomEvent;
+import { TodoItem, TodoList } from "./todoList.js";
+export default function TodoCollectionTests() {
 
 QUnit.module('TodoItem', function() {
     QUnit.test('constructor sets text and default status', function(assert) {
@@ -106,3 +101,4 @@ QUnit.module('TodoList', function() {
         assert.equal(list.items[0].desc, 'Task', 'Description unchanged for non-string description');
     });
 });
+}
