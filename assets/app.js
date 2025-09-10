@@ -5,8 +5,19 @@ export default class App {
     static STORAGE_KEY = 'todoCollection';
     static TODO_TEMPLATE  = `{{#items}}<form> <div class="input-group">
         <div class="input-row">
-          <input type="text" class="desc" value="{{desc}}"/>
-          <div class="button-group" role="radiogroup" aria-label="Set status">
+          <input 
+           class="text-input"
+                type="text"
+                name="user-input"
+                required
+                minlength="1"
+                maxlength="60"
+                placeholder="Max 60 letters and numbers"
+                aria-errormessage="Only letters and numbers are allowed."
+                aria-required="true"
+                aria-label="New Todo item"
+                value="{{desc}}"/>
+          <div class="toggle-button" role="radiogroup" aria-label="Set status">
             <label>
               <input type="radio" data-index={{index}} name="status" value="todo" {{#todo}} checked{{/todo}} />
               <span>Todo</span>
@@ -42,39 +53,38 @@ export default class App {
 
     setupEventListeners() {
       
-      // const listForm = document.getElementById('new-list-form');
-        // const input = document.getElementById('list-name-input');
-        // const errorDiv = document.getElementById('list-name-error');
-        //  Custom event for rendering upon list changes
+      const listForm = document.getElementById('new-list-form');
+      const input = document.getElementById('list-name-input');
+      const errorDiv = document.getElementById('list-name-error');
 
 
-        // listForm.addEventListener('submit', (e) => {
-        //     e.preventDefault();
-        //     const value = input.value.trim();
-        //     let errorMsg = '';
+        listForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const value = input.value.trim();
+            let errorMsg = '';
 
-        //     if (!value) {
-        //         errorMsg = 'List name is required.';
-        //     } else if (!/^[\p{L}\p{N}]+$/u.test(value)) {
-        //         errorMsg = 'List name must only contain letters and numbers.';
-        //     } else if (value.length > 60) {
-        //         errorMsg = 'List name must be at most 60 characters.';
-        //     } else if (this.collection.lists.some(list => list.listName === value)) {
-        //         errorMsg = 'A list with this name already exists.';
-        //     }
+            if (!value) {
+                errorMsg = 'List name is required.';
+            } else if (!/^[\p{L}\p{N}]+$/u.test(value)) {
+                errorMsg = 'List name must only contain letters and numbers.';
+            } else if (value.length > 60) {
+                errorMsg = 'List name must be at most 60 characters.';
+            } else if (this.collection.lists.some(list => list.listName === value)) {
+                errorMsg = 'A list with this name already exists.';
+            }
 
-        //     if (errorMsg) {
-        //         errorDiv.textContent = errorMsg;
-        //         input.setAttribute('aria-invalid', 'true');
-        //         input.focus();
-        //     } else {
-        //         errorDiv.textContent = '';
-        //         input.setAttribute('aria-invalid', 'false');
-        //         this.collection.addList(value);
-        //         input.value = '';
+            if (errorMsg) {
+                errorDiv.textContent = errorMsg;
+                input.setAttribute('aria-invalid', 'true');
+                input.focus();
+            } else {
+                errorDiv.textContent = '';
+                input.setAttribute('aria-invalid', 'false');
+                this.collection.addList(value);
+                input.value = '';
                 
-        //     }
-        // });
+            }
+        });
 
         const itemForm = document.getElementById('new-item-form');
         // Event listener for adding new todo item

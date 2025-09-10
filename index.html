@@ -21,19 +21,22 @@
         <h1 id="form-title">Todos: name of list</h1>
         <form id="new-list-form" autocomplete="off">
           <div class="input-group">
-            <label for="list-name-input">Task list name</label>
+            <label for="list-name-input">Add a new TodoList</label>
             <div class="input-row">
               <input
                 id="list-name-input"
+                class="text-input"
                 type="text"
                 maxlength="60"
                 aria-describedby="list-name-error"
                 aria-invalid="false"
                 required
-                pattern="[\p{L}\p{N}]+"
+                title="Only letters and numbers are allowed for the list name."
+                placeholder="Max 60 letters and numbers"
+                aria-label="List Name"
                 name="list-name"
               />
-              <button type="submit">Add List</button>
+              <button type="submit">Add</button>
             </div>
             <div
               id="list-name-error"
@@ -47,6 +50,7 @@
             <label for="todo-input">Add todo</label>
             <div class="input-row">
               <input
+                class="text-input"
                 id="todo-input"
                 type="text"
                 name="user-input"
@@ -56,7 +60,7 @@
                 placeholder="Max 60 letters and numbers"
                 aria-errormessage="Only letters and numbers are allowed."
                 aria-required="true"
-                aria-label="Your Input"
+                aria-label="New Todo item"
               />
               <button type="submit" aria-label="Submit Input">Add</button>
             </div>

@@ -1,15 +1,47 @@
 import { TodoList } from './todoList.js';
 
-// Global mustache added in index.html
+/**
+ * Manages a collection of TodoList instances and dispatches custom events on changes.
+ * @class
+ */
 export default class TodoCollection {
+    /**
+     * The custom event name for collection changes.
+     * @type {string}
+     */
     static CHANGE_EVENT = 'list-changed';
+
+    /**
+     * Creates a new TodoCollection.
+     */
     constructor() {
+        /**
+         * Array of TodoList instances.
+         * @type {TodoList[]}
+         */
         this.lists = [];
+        /**
+         * Internal event target for custom event dispatching.
+         * @type {EventTarget}
+         * @private
+         */
         this._eventTarget = document.createElement('span');
     }
+
+    /**
+     * Serializes the collection to a JSON string.
+     * @returns {string} JSON representation of the collection.
+     */
     stringify() {
       return JSON.stringify({lists: this.lists});
     }
+
+    /**
+     * Adds a new TodoList to the collection.
+     * @param {string} newName - The name of the new list.
+     * @throws {Error} If the name is invalid or already exists.
+     * @returns {boolean} True if the list was added.
+     */
     addList(newName) {
         // Only Unicode letters and numbers, max 60 chars.
         const validName = typeof newName === 'string' &&
@@ -36,24 +68,56 @@ export default class TodoCollection {
         this._dispatchChange('add', { listName: newName });
         return true;
     }
+
+    /**
+     * Removes a TodoList from the collection by index.
+     * @param {number} index - The index of the list to remove.
+     */
     removeList(index) {
         if (index >= 0 && index < this.lists.length) {
             const removed = this.lists.splice(index, 1);
             this._dispatchChange('remove', { index, listName: removed[0]?.listName });
         }
     }
+
+    /**
+     * Gets a TodoList by index.
+     * @param {number} index - The index of the list.
+     * @returns {TodoList|null} The TodoList instance or null if not found.
+     */
     getList(index) {
         if (index >= 0 && index < this.lists.length) {
             return this.lists[index];
         }
         return null;
     }
+
+    /**
+     * Adds an event listener for collection changes.
+     * @param {string} type - The event type.
+     * @param {Function} listener - The event handler.
+     * @param {Object|boolean} [options] - Optional options.
+     */
     addEventListener(...args) {
         this._eventTarget.addEventListener(...args);
     }
+
+    /**
+     * Removes an event listener for collection changes.
+     * @param {string} type - The event type.
+     * @param {Function} listener - The event handler.
+     * @param {Object|boolean} [options] - Optional options.
+     */
     removeEventListener(...args) {
         this._eventTarget.removeEventListener(...args);
     }
+
+    /**
+     * Dispatches a custom change event.
+     * @param {string} type - The type of change ('add', 'remove', 'item').
+     * @param {Object} detail - Additional event details.
+     * @private
+     */
     _dispatchChange(type, detail) {
         this._eventTarget.dispatchEvent(new CustomEvent(TodoCollection.CHANGE_EVENT, {
             detail: { type, ...detail },

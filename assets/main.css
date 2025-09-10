@@ -45,7 +45,7 @@ body {
   
 }
 
-.input-row input[type="text"] {
+.input-row .text-input {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ccc;
@@ -54,7 +54,7 @@ body {
   transition: border-color 0.2s;
 }
 
-.input-row input[type="text"]:focus {
+.input-row .text-input:focus {
   border-color: #0078d4;
   outline: none;
 }
@@ -68,7 +68,7 @@ body {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  /* transition: background 0.2s; */
 }
 
 .input-row button:focus,
@@ -89,83 +89,3 @@ fieldset label {
   display: inline-block;
   margin: 0;
 }
-/* 
-.todo-list fieldset {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem;
-  border: none;
-  margin: 1rem 0 0 0;
-  padding: 0;
-}
-
-.todo-list legend {
-  margin-bottom: 0;
-  min-width: 0;
-  flex: 3;
-  font-size: 1rem;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.todo-list .button-group {
-  display: flex;
-  flex-basis:5rem;
-  margin-bottom: 0;
-}
-
-.button-group label {
-  position: relative;
-   gap: 0;
-}
-
-.button-group input[type="radio"] {
-  opacity: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-
-.button-group span {
-  display: block;
-  padding: 0.5rem 1rem;
-  background: #eee;
-  color: #222;
-  border: 1px solid #ccc;
-  border-radius: 0;
-  text-align: center;
-  font-size: 1rem;
-  transition: background 0.2s, border-color 0.2s;
-  cursor: pointer;
-  
-}
-
-.button-group label:first-child span{
-  border-radius: 0.5rem 0 0 0.5rem;
-  border-right: none;
-
-}
-.button-group label:last-child span {
-  border-radius:0 0.5rem 0.5rem 0;
-  border-left: none;
-}
-
-
-
-.button-group input[type="radio"]:checked + span {
-  background: #0078d4;
-  color: #fff;
-  border-color: #0078d4;
-}
-
-.button-group input[type="radio"]:focus + span {
-
-  
-  border-color: #005fa3;
-} */

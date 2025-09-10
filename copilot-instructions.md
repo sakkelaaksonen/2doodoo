@@ -33,6 +33,57 @@ Goal is to have a simple, easy to use and accessible application for managing mu
 
 ## UI guidelines
 
-- A toggle is provided to switch between light and dark mode.
-- Application should have a modern and clean design.
+- Application should have a simple but modern and clean design.
 - WGAC 2.2 AA accessibility compliance.
+
+
+
+
+## 01 Requirements:
+
+The user must be able to:
+
+see a list of task lists
+
+add a new task list
+
+delete a task list
+
+edit a task list's name
+
+select a task list to view its tasks
+
+add a task to a task list (/)
+
+delete a task from a task list (/)
+
+edit a task's description (/)
+
+change a tasks status (/)
+
+filter a task list to show only tasks with
+given status
+
+## 02 Definitions of entities:
+
+a task list has a name that consists only
+of Unicode letters and numbers, and is at
+most 60 characters long
+
+two task lists may not have the same
+name
+
+a task list may contain any number of
+tasks
+
+a task has a description text
+
+a task has a status, which is one of "todo",
+"doing", "done"
+
+## 03 Other requirements:
+the task lists and tasks are stored in the
+browser's localStorage
+the UI texts are in English 
+
+
