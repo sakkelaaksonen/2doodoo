@@ -1,0 +1,63 @@
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.input-row .text-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem 0 0 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.input-row .text-input:focus {
+  border-color: #0078d4;
+  outline: none;
+}
+
+.input-row button {
+  padding: 0.75rem;
+  background: #0078d4;
+  color: #fff;
+  border: none;
+  border-radius: 0 0.5rem 0.5rem 0  ;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  /* transition: background 0.2s; */
+}
+
+.input-row button:focus,
+.input-row button:hover {
+  background: #005fa3;
+  /* outline: 2px solid #005fa3;
+  outline-offset: 2px; */
+}
+
+
+legend {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+fieldset label {
+  display: inline-block;
+  margin: 0;
+}

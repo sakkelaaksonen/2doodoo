@@ -1,0 +1,27 @@
+:root {
+  --color-bg-1: #4e4b77;
+  --color-bg-2: #584468;
+  --color-bg-3: #704b64;
+  --color-bg-4: #7f555c;
+  --color-bg-5: #7f4d35;
+  --color-bg-light: #f9f9f9;
+  --color-text-light: #ffffff;
+  --color-text-dark: #222222;
+}
+
+/* Example usage:
+body {
+  background: var(--color-bg-1);
+  color: var(--color-text-light);
+}
+
+.header {
+  background: var(--color-bg-2);
+  color: var(--color-text-light);
+}
+
+.button {
+  background: var(--color-bg-3);
+  color: var(--color-text-light);
+}
+*/

@@ -69,7 +69,8 @@ export default class TodoCollection extends EventBase {
         const list = new TodoList(newName);
         // Listen for item changes and bubble up
         list.addEventListener(TodoList.CHANGE_EVENT, (e) => {
-            console.log('Item changed in list', newName, e.detail);
+            //call frequency monitoring
+            // console.log('Item changed in list', newName, e.detail);
             this._dispatchChange('item', { listName: newName, item: e.detail });
         });
         this.lists.push(list);

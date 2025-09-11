@@ -53,7 +53,8 @@ class TodoList extends EventBase {
             this.items[index].desc = newDesc;
             this._dispatchChange('edit', { index, newDesc });
         } else {
-          console.error('Invalid index or description for editItem');
+          // silent error for now
+          // console.error('Invalid index or description for editItem');
         }
     }
     getTemplateData() {
