@@ -45,15 +45,15 @@ Act as a senior JavaScript and a18y specialist. Adhere to DRY and KISS and YAGNI
 
 The user must be able to:
 
-see a list of task lists
+see a list of task lists (/)
 
-add a new task list
+add a new task list (/)
 
 delete a task list
 
 edit a task list's name
 
-select a task list to view its tasks
+select a task list to view its tasks (/)
 
 add a task to a task list (/)
 

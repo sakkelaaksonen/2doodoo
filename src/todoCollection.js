@@ -43,17 +43,17 @@ export default class TodoCollection {
      * @returns {boolean} True if the list was added.
      */
     addList(newName) {
-        // Only Unicode letters and numbers, max 60 chars.
+        // Only Unicode letters, numbers, and spaces, max 60 chars.
         const validName = typeof newName === 'string' &&
             newName.length > 0 &&
             newName.length <= 60 &&
-            /^[\p{L}\p{N}]+$/u.test(newName);
+            /^[\p{L}\p{N}\s]+$/u.test(newName);
 
         // Check for duplicate names
         const duplicate = this.lists.some(({listName}) => listName === newName);
 
         if(!validName) {
-            throw new Error('List name must only contain Unicode letters and numbers and be at most 60 characters long.');
+            throw new Error('List name must only contain Unicode letters, numbers, and spaces and be at most 60 characters long.');
         }
         if(duplicate) {
             throw new Error('A list with this name already exists.');

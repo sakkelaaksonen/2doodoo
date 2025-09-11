@@ -29,6 +29,8 @@ export default class TodoApp {
         </div>
       </div></form>{{/items}}
       {{^items}}<p>{{#filter}} No items yet with status "{{filter}}"{{/filter}} {{^filter}}No items yet{{/filter}} </p>{{/items}}`;
+    
+      static LIST_TITLE_TEMPLATE = `Current Todos: <span id="list-name-display">{{listName}}</span> <button id="edit-list-name-btn" type="button" aria-label="Edit list name">✏️</button>`;
 
     constructor({ getSelectedList }) {
         this.filter = TodoApp.DEFAULT_FILTER;
@@ -129,12 +131,36 @@ export default class TodoApp {
                 items: data.items.filter(item => item[this.filter])
             };
         }
-        // Update the Current Todos heading with the list name
+        // Use mustache template for Current Todos heading
         const currentTodosTitle = document.getElementById('current-todos-title');
         if (currentTodosTitle) {
-            currentTodosTitle.textContent = `Current Todos: ${list?.listName || ''}`;
+            currentTodosTitle.innerHTML = mustache.render(TodoApp.LIST_TITLE_TEMPLATE, { listName: list?.listName || '' });
         }
         const container = document.getElementById('current-todos');
         container.innerHTML = mustache.render(TodoApp.TODO_TEMPLATE, data);
+
+        // Add event listener for editing list name
+        const editBtn = document.getElementById('edit-list-name-btn');
+        if (editBtn) {
+            editBtn.onclick = () => {
+                const nameSpan = document.getElementById('list-name-display');
+                if (!nameSpan) return;
+                // Replace span with input
+                nameSpan.innerHTML = `<input id="edit-list-name-input" type="text" value="${list.listName}" maxlength="60" aria-label="Edit list name" style="width: 10em;" />`;
+                const input = document.getElementById('edit-list-name-input');
+                input.focus();
+                input.select();
+                input.onblur = input.onkeydown = (e) => {
+                    if (e.type === 'blur' || (e.type === 'keydown' && e.key === 'Enter')) {
+                        const newName = input.value.trim();
+                        if (newName && newName !== list.listName) {
+                            list.listName = newName;
+                            if (window.listApp) window.listApp.render();
+                        }
+                        this.render();
+                    }
+                };
+            };
+        }
     }
 }

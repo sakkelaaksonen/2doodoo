@@ -27,8 +27,8 @@ export default class ListApp {
                 let errorMsg = '';
                 if (!value) {
                     errorMsg = 'List name is required.';
-                } else if (!/^[\p{L}\p{N}]+$/u.test(value)) {
-                    errorMsg = 'List name must only contain letters and numbers.';
+                } else if (!/^[\p{L}\p{N}\s]+$/u.test(value)) {
+                    errorMsg = 'List name must only contain letters, numbers, and spaces.';
                 } else if (value.length > 60) {
                     errorMsg = 'List name must be at most 60 characters.';
                 } else if (this.collection.lists.some(list => list.listName === value)) {

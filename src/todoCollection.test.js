@@ -1,4 +1,3 @@
-
 import TodoCollection from "./todoCollection.js";
 
 export default function TodoCollectionTests() {
@@ -46,15 +45,15 @@ QUnit.module('TodoCollection', function() {
         assert.equal(list, null, 'Null returned for invalid index');
     });
 
-    QUnit.test('list name must only contain Unicode letters and numbers and be at most 60 characters', function(assert) {
+    QUnit.test('list name must only contain Unicode letters, numbers, and spaces and be at most 60 characters', function(assert) {
         const collection = new TodoCollection();
         // Valid names
         assert.ok(collection.addList('List123'), 'Valid name: letters and numbers');
         assert.ok(collection.addList('ÄäÖö123'), 'Valid name: Unicode letters');
+        assert.ok(collection.addList('List With Spaces'), 'Valid name: contains spaces');
         // Invalid names
-        assert.throws(() => collection.addList('List!@#'), /must only contain Unicode letters and numbers/, 'Invalid name: contains symbols throws error');
-        assert.throws(() => collection.addList('List With Spaces'), /must only contain Unicode letters and numbers/, 'Invalid name: contains spaces throws error');
-        assert.throws(() => collection.addList('A'.repeat(61)), /must only contain Unicode letters and numbers/, 'Invalid name: too long throws error');
+        assert.throws(() => collection.addList('List!@#'), /must only contain Unicode letters, numbers, and spaces/, 'Invalid name: contains symbols throws error');
+        assert.throws(() => collection.addList('A'.repeat(61)), /must only contain Unicode letters, numbers, and spaces/, 'Invalid name: too long throws error');
     });
 
     QUnit.test('cannot add two lists with the same name', function(assert) {
