@@ -35,8 +35,42 @@ export default class TodoApp {
     constructor({ getSelectedList }) {
         this.filter = TodoApp.DEFAULT_FILTER;
         this.getSelectedList = getSelectedList;
+        this._currentList = null;
+        this._attachListListener();
         this.setupEventListeners();
         this.render();
+    }
+
+    _attachListListener() {
+        const list = this.getSelectedList();
+        if (this._currentList) {
+            this._currentList.removeEventListener(TodoList.CHANGE_EVENT, this._onListChange);
+        }
+        this._currentList = list;
+        if (list) {
+            this._onListChange = (e) => {
+                const type = e.detail?.type;
+                // Only rerender for add, remove, edit, or filter change
+                if (type === 'add' || type === 'remove' || type === 'edit') {
+                    this.render();
+                } else if (type === 'status') {
+                    // Only rerender if filter is not 'all' and status change affects visible items
+                    if (this.filter !== TodoApp.DEFAULT_FILTER) {
+                        this.render();
+                    } else {
+                        // Just update checked state, preserve focus
+                        const container = document.getElementById('current-todos');
+                        const index = e.detail?.index;
+                        const status = e.detail?.status;
+                        if (container && index !== undefined && status) {
+                            const radio = container.querySelector(`input[name="status"][data-index="${index}"][value="${status}"]`);
+                            if (radio) radio.checked = true;
+                        }
+                    }
+                }
+            };
+            list.addEventListener(TodoList.CHANGE_EVENT, this._onListChange);
+        }
     }
 
     setupEventListeners() {
@@ -59,7 +93,7 @@ export default class TodoApp {
             if (list && value) {
                 list.addItem(value);
                 input.value = '';
-                this.render();
+                // No render here; handled by event listener
             }
         });
         // Status change
@@ -70,7 +104,7 @@ export default class TodoApp {
                 const list = this.getSelectedList();
                 if (list && index !== null) {
                     list.setItemStatus(index, e.target.value);
-                    this.render();
+                    // No render here; handled by event listener
                 }
             }
         });
@@ -84,7 +118,7 @@ export default class TodoApp {
                 const list = this.getSelectedList();
                 if (list && index !== null && newDesc.trim().length > 0) {
                     list.editItem(Number(index), newDesc.trim());
-                    this.render();
+                    // No render here; handled by event listener
                 }
             }
         });
@@ -95,7 +129,7 @@ export default class TodoApp {
                 const list = this.getSelectedList();
                 if (list && index !== null) {
                     list.removeItem(index);
-                    this.render();
+                    // No render here; handled by event listener
                 }
             }
         });
@@ -110,7 +144,7 @@ export default class TodoApp {
                             list.removeItem(i);
                         }
                     }
-                    this.render();
+                    // No render here; handled by event listener
                 }
             });
         }
@@ -131,8 +165,6 @@ export default class TodoApp {
                 items: data.items.filter(item => item[this.filter])
             };
         }
-        // Remove Current Todos heading logic from todoApp
-        // Only update todo items
         const container = document.getElementById('current-todos');
         container.innerHTML = mustache.render(TodoApp.TODO_TEMPLATE, data);
     }

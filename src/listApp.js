@@ -32,6 +32,8 @@ export default class ListApp {
         const listForm = document.getElementById('new-list-form');
         const input = document.getElementById('list-name-input');
         const errorDiv = document.getElementById('list-name-error');
+
+        //New list submit listener
         if (listForm && input && errorDiv) {
             listForm.addEventListener('submit', (e) => {
                 e.preventDefault();

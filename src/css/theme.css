@@ -1,27 +1,43 @@
 :root {
-  --color-bg-1: #4e4b77;
-  --color-bg-2: #584468;
-  --color-bg-3: #704b64;
-  --color-bg-4: #7f555c;
-  --color-bg-5: #7f4d35;
-  --color-bg-light: #f9f9f9;
-  --color-text-light: #ffffff;
-  --color-text-dark: #222222;
+  /* Light theme (default) */
+  --color-bg-1: #f9f9f9;
+  --color-bg-2: #fff;
+  --color-bg-3: #eaeaea;
+  --color-bg-4: #d6d6d6;
+  --color-bg-5: #c2c2c2;
+  --color-primary: #0078d4;
+  --color-primary-dark: #005fa3;
+  --color-text-light: #fff;
+  --color-text-dark: #222;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-1: #4e4b77;
+    --color-bg-2: #584468;
+    --color-bg-3: #704b64;
+    --color-bg-4: #7f555c;
+    --color-bg-5: #7f4d35;
+    --color-primary: #7f4d35;
+    --color-primary-dark: #704b64;
+    --color-text-light: #fff;
+    --color-text-dark: #eaeaea;
+  }
 }
 
 /* Example usage:
 body {
   background: var(--color-bg-1);
-  color: var(--color-text-light);
+  color: var(--color-text-dark);
 }
 
 .header {
   background: var(--color-bg-2);
-  color: var(--color-text-light);
+  color: var(--color-text-dark);
 }
 
 .button {
-  background: var(--color-bg-3);
+  background: var(--color-primary);
   color: var(--color-text-light);
 }
 */
