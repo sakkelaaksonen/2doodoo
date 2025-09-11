@@ -8,12 +8,12 @@ import mustache from './mustache.mjs';
 export default class ListApp {
     static TITLE_TEMPLATE = `Todos:
       <div class="input-group" style="margin-bottom:0;">
-        <label for="list-name-display" style="font-weight:500;">Edit list name</label>
+        
         <div class="input-row">
           <input id="list-name-display" class="text-input" type="text" value="{{listName}}" maxlength="60" aria-label="Edit list name" required placeholder="Max 60 letters and numbers" aria-describedby="list-name-edit-error" aria-invalid="false" />
-          <button id="remove-list-btn" type="button" aria-label="Remove list" style="color:#b00; border-radius:0 0.5rem 0.5rem 0;">🗑️</button>
+          <button id="remove-list-btn" type="button" aria-label="Remove list" >Remove</button>
         </div>
-        <div id="list-name-edit-error" aria-live="assertive" style="color: #b00; min-height: 1.5em"></div>
+        <div id="list-name-edit-error" aria-live="assertive"></div>
       </div>`;
 
     constructor({ onListSelect }) {

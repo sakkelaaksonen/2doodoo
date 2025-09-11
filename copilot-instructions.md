@@ -37,6 +37,13 @@ Goal is to have a simple, easy to use and accessible application for managing mu
 - WGAC 2.2 AA accessibility compliance.
 - css modules and layers for styling.
 - no inline styles
+- no emoji characters
+- use css variables
+- maintain consistent font sizes and spacing
+- use accessible color contrast ratios
+- ensure all interactive elements are keyboard accessible
+- provide clear and concise error messages
+- use ARIA roles and attributes only where necessary
 
 
 ## AI personality
@@ -51,9 +58,9 @@ see a list of task lists (/)
 
 add a new task list (/)
 
-delete a task list
+delete a task list (/)
 
-edit a task list's name
+edit a task list's name (/)
 
 select a task list to view its tasks (/)
 

@@ -19,7 +19,7 @@
     <div id="loading-overlay"><span>Loading…</span></div>
     <main>
       <section class="container" aria-labelledby="form-title">
-        <h1 id="form-title">Todos: name of list</h1>
+        <h1 id="form-title">Todos: </h1>
         <form id="new-list-form" autocomplete="off">
           <div class="input-group">
             <label for="list-name-input">Add a new TodoList</label>
@@ -51,9 +51,31 @@
             <select id="todo-list-selector" aria-label="Todo List Selector"></select>
           </div>
         </form>
+            <form id="new-item-form" action="#" method="post" autocomplete="off">
+          <div class="input-group">
+            <label for="todo-input">Add todo</label>
+            <div class="input-row">
+              <input
+                class="text-input"
+                id="todo-input"
+                type="text"
+                name="user-input"
+                required
+                minlength="1"
+                maxlength="60"
+                placeholder="Max 60 letters and numbers"
+                aria-errormessage="Only letters and numbers are allowed."
+                aria-required="true"
+                aria-label="New Todo item"
+              />
+              <button type="submit" aria-label="Submit Input">Add</button>
+            </div>
+          </div>
+        </form>
         <form>
+          <h2 id="current-todos-title">Current Todos</h2>
           <div class="todo-list-header">
-            <h2 id="current-todos-title">Current Todos</h2>
+          
             <div class="input-row">
               <div
                 class="toggle-button"
@@ -90,27 +112,7 @@
             <!-- current todo items render target -->
           </div>
         </form>
-        <form id="new-item-form" action="#" method="post" autocomplete="off">
-          <div class="input-group">
-            <label for="todo-input">Add todo</label>
-            <div class="input-row">
-              <input
-                class="text-input"
-                id="todo-input"
-                type="text"
-                name="user-input"
-                required
-                minlength="1"
-                maxlength="60"
-                placeholder="Max 60 letters and numbers"
-                aria-errormessage="Only letters and numbers are allowed."
-                aria-required="true"
-                aria-label="New Todo item"
-              />
-              <button type="submit" aria-label="Submit Input">Add</button>
-            </div>
-          </div>
-        </form>
+    
       </section>
     </main>
   </body>
