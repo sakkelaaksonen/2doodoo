@@ -1,19 +1,31 @@
 import { loadFromLocalStorage, saveToLocalStorage } from './storage.js';
 import TodoCollection from './todoCollection.js';
+import mustache from './mustache.mjs';
 
 /**
  * ListApp manages todo lists: creation, selection, and rendering the list selector.
  */
 export default class ListApp {
+    static TITLE_TEMPLATE = `Todos:
+      <div class="input-group" style="margin-bottom:0;">
+        <label for="list-name-display" style="font-weight:500;">Edit list name</label>
+        <div class="input-row">
+          <input id="list-name-display" class="text-input" type="text" value="{{listName}}" maxlength="60" aria-label="Edit list name" required placeholder="Max 60 letters and numbers" aria-describedby="list-name-edit-error" aria-invalid="false" />
+          <button id="remove-list-btn" type="button" aria-label="Remove list" style="color:#b00; border-radius:0 0.5rem 0.5rem 0;">🗑️</button>
+        </div>
+        <div id="list-name-edit-error" aria-live="assertive" style="color: #b00; min-height: 1.5em"></div>
+      </div>`;
+
     constructor({ onListSelect }) {
         // Load from localStorage if available
-        this.collection = loadFromLocalStorage(TodoCollection);
-        this.selectedIndex = 0;
+        const loaded = loadFromLocalStorage(TodoCollection);
+        this.collection = loaded.collection;
+        this.selectedIndex = loaded.selectedIndex;
         this.onListSelect = onListSelect;
         this.setupEventListeners();
         this.render();
         // Save to localStorage on page unload
-        window.addEventListener('beforeunload', () => saveToLocalStorage(this.collection));
+        window.addEventListener('beforeunload', () => saveToLocalStorage(this.collection, this.selectedIndex));
     }
 
     setupEventListeners() {
@@ -45,7 +57,7 @@ export default class ListApp {
                     input.value = '';
                     this.selectedIndex = this.collection.lists.length - 1;
                     this.render();
-                    saveToLocalStorage(this.collection);
+                    saveToLocalStorage(this.collection, this.selectedIndex);
                     if (this.onListSelect) this.onListSelect(this.selectedIndex);
                 }
             });
@@ -56,7 +68,7 @@ export default class ListApp {
             selector.addEventListener('change', (e) => {
                 this.selectedIndex = Number(e.target.value);
                 this.render();
-                saveToLocalStorage(this.collection);
+                saveToLocalStorage(this.collection, this.selectedIndex);
                 if (this.onListSelect) this.onListSelect(this.selectedIndex);
             });
         }
@@ -64,10 +76,68 @@ export default class ListApp {
 
     render() {
         const selector = document.getElementById('todo-list-selector');
+        if (!this.collection || !Array.isArray(this.collection.lists)) {
+            selector.innerHTML = '';
+            return;
+        }
         selector.innerHTML = this.collection.lists.map((list, i) =>
             `<option value="${i}" ${i === this.selectedIndex ? 'selected' : ''}>${list.listName}</option>`
         ).join('');
-        document.getElementById('form-title').textContent = `Todos: ${this.collection.lists[this.selectedIndex]?.listName || ''}`;
+        // Render list name as directly editable input and remove button using mustache
+        const titleElem = document.getElementById('form-title');
+        const currentList = this.collection.lists[this.selectedIndex];
+        if (titleElem && currentList) {
+            titleElem.innerHTML = mustache.render(ListApp.TITLE_TEMPLATE, { listName: currentList.listName });
+            // Directly editable input logic
+            const input = document.getElementById('list-name-display');
+            const errorDiv = document.getElementById('list-name-edit-error');
+            if (input) {
+                input.onblur = input.onchange = input.onkeydown = (e) => {
+                    let errorMsg = '';
+                    if (e.type === 'blur' || e.type === 'change' || (e.type === 'keydown' && e.key === 'Enter')) {
+                        const newName = input.value.trim();
+                        if (!newName) {
+                            errorMsg = 'List name is required.';
+                            input.setAttribute('aria-invalid', 'true');
+                        } else if (!/^[\p{L}\p{N}\s]+$/u.test(newName)) {
+                            errorMsg = 'List name must only contain letters, numbers, and spaces.';
+                            input.setAttribute('aria-invalid', 'true');
+                        } else if (newName.length > 60) {
+                            errorMsg = 'List name must be at most 60 characters.';
+                            input.setAttribute('aria-invalid', 'true');
+                        } else if (newName !== currentList.listName && this.collection.lists.some(list => list.listName === newName)) {
+                            errorMsg = 'A list with this name already exists.';
+                            input.setAttribute('aria-invalid', 'true');
+                        } else {
+                            input.setAttribute('aria-invalid', 'false');
+                        }
+                        errorDiv.textContent = errorMsg;
+                        if (!errorMsg && newName !== currentList.listName) {
+                            currentList.listName = newName;
+                            saveToLocalStorage(this.collection, this.selectedIndex);
+                            this.render();
+                            if (this.onListSelect) this.onListSelect(this.selectedIndex);
+                        }
+                    }
+                };
+            }
+            // Remove button logic
+            const removeBtn = document.getElementById('remove-list-btn');
+            if (removeBtn) {
+                removeBtn.onclick = () => {
+                    if (this.collection.lists.length === 0) return;
+                    if (confirm(`Are you sure you want to remove the list "${currentList.listName}"? This cannot be undone.`)) {
+                        this.collection.removeList(this.selectedIndex);
+                        this.selectedIndex = Math.max(0, this.selectedIndex - 1);
+                        saveToLocalStorage(this.collection, this.selectedIndex);
+                        this.render();
+                        if (this.onListSelect) this.onListSelect(this.selectedIndex);
+                    }
+                };
+            }
+        } else if (titleElem) {
+            titleElem.textContent = 'Todos:';
+        }
     }
 
     getSelectedList() {

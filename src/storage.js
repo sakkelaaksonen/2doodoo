@@ -3,9 +3,12 @@
 
 const STORAGE_KEY = 'todoCollection';
 
-export function saveToLocalStorage(collection) {
+export function saveToLocalStorage(collection, selectedIndex = 0) {
     try {
-        const data = collection.stringify();
+        const data = JSON.stringify({
+            lists: collection.lists,
+            selectedIndex
+        });
         localStorage.setItem(STORAGE_KEY, data);
     } catch (e) {
         console.error('Failed to save to localStorage', e);
@@ -16,6 +19,7 @@ export function saveToLocalStorage(collection) {
 export function loadFromLocalStorage(TodoCollection) {
     const data = localStorage.getItem(STORAGE_KEY);
     const collection = new TodoCollection();
+    let selectedIndex = 0;
     if (data) {
         try {
             const obj = JSON.parse(data);
@@ -30,6 +34,9 @@ export function loadFromLocalStorage(TodoCollection) {
                     list.setItemStatus(list.items.length - 1, itemData.status);
                 });
             });
+            if (typeof obj.selectedIndex === 'number' && obj.selectedIndex >= 0 && obj.selectedIndex < collection.lists.length) {
+                selectedIndex = obj.selectedIndex;
+            }
         } catch (e) {
             console.error('Failed to load from localStorage', e);
             collection.addList('SampleList');
@@ -37,8 +44,8 @@ export function loadFromLocalStorage(TodoCollection) {
             list.addItem('Sample Task 1');
             list.addItem('Sample Task 2');
             list.setItemStatus(1, 'doing');
-            saveToLocalStorage(collection);
+            saveToLocalStorage(collection, 0);
         }
     }
-    return collection;
+    return { collection, selectedIndex };
 }
