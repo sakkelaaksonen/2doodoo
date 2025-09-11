@@ -36,9 +36,15 @@ export default class TodoApp {
         this.filter = TodoApp.DEFAULT_FILTER;
         this.getSelectedList = getSelectedList;
         this._currentList = null;
+        this._onListChange = null;
         this._attachListListener();
         this.setupEventListeners();
         this.render();
+        // Listen for external list selection changes
+        document.getElementById('todo-list-selector').addEventListener('change', () => {
+            this._attachListListener();
+            this.render();
+        });
     }
 
     _attachListListener() {

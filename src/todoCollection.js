@@ -101,7 +101,14 @@ export default class TodoCollection extends EventBase {
         return null;
     }
 
-  
+    /**
+     * Public method to manually dispatch a collection change event.
+     * @param {string} [type] - Optional type of change.
+     * @param {Object} [detail] - Optional event details.
+     */
+    notifyChange(type = 'manual', detail = {}) {
+        this._dispatchChange(type, detail);
+    }
 
     /**
      * Dispatches a custom change event.
