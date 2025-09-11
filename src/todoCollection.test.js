@@ -52,14 +52,30 @@ QUnit.module('TodoCollection', function() {
         assert.ok(collection.addList('ÄäÖö123'), 'Valid name: Unicode letters');
         assert.ok(collection.addList('List With Spaces'), 'Valid name: contains spaces');
         // Invalid names
-        assert.throws(() => collection.addList('List!@#'), /must only contain Unicode letters, numbers, and spaces/, 'Invalid name: contains symbols throws error');
-        assert.throws(() => collection.addList('A'.repeat(61)), /must only contain Unicode letters, numbers, and spaces/, 'Invalid name: too long throws error');
+        assert.throws(() => collection.addList('List!@#'), /List name must only contain letters, numbers, and spaces/, 'Invalid name: contains symbols throws error');
+        assert.throws(() => collection.addList('A'.repeat(61)), /List name must be at most 60 characters/, 'Invalid name: too long throws error');
     });
 
     QUnit.test('cannot add two lists with the same name', function(assert) {
         const collection = new TodoCollection();
         assert.ok(collection.addList('UniqueName'), 'First list added');
         assert.throws(() => collection.addList('UniqueName'), /already exists/, 'Duplicate list name throws error');
+    });
+
+    QUnit.test('validateListName returns correct error messages and passes valid names', function(assert) {
+        const lists = [ { listName: 'List1' }, { listName: 'ÄäÖö123' } ];
+        // Valid names
+        assert.equal(TodoCollection.validateListName('NewList', lists), '', 'Valid name: NewList');
+        assert.equal(TodoCollection.validateListName('ÄäÖö123', lists, 'ÄäÖö123'), '', 'Valid name: unchanged name allowed');
+        // Invalid: empty and whitespace
+        assert.equal(TodoCollection.validateListName('', lists), 'List name is required.', 'Empty name');
+        assert.equal(TodoCollection.validateListName('   ', lists), 'List name is required.', 'Whitespace only name');
+        // Invalid: symbols
+        assert.equal(TodoCollection.validateListName('List!@#', lists), 'List name must only contain letters, numbers, and spaces.', 'Symbols not allowed');
+        // Invalid: too long
+        assert.equal(TodoCollection.validateListName('A'.repeat(61), lists), 'List name must be at most 60 characters.', 'Too long');
+        // Invalid: duplicate
+        assert.equal(TodoCollection.validateListName('List1', lists), 'A list with this name already exists.', 'Duplicate name');
     });
  });
 

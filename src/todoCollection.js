@@ -1,10 +1,10 @@
 import { TodoList } from './todoList.js';
-
+import EventBase from './EventBase.js';
 /**
  * Manages a collection of TodoList instances and dispatches custom events on changes.
  * @class
  */
-export default class TodoCollection {
+export default class TodoCollection extends EventBase {
     /**
      * The custom event name for collection changes.
      * @type {string}
@@ -15,17 +15,13 @@ export default class TodoCollection {
      * Creates a new TodoCollection.
      */
     constructor() {
+      super();
         /**
          * Array of TodoList instances.
          * @type {TodoList[]}
          */
         this.lists = [];
-        /**
-         * Internal event target for custom event dispatching.
-         * @type {EventTarget}
-         * @private
-         */
-        this._eventTarget = document.createElement('span');
+
     }
 
     /**
@@ -37,32 +33,43 @@ export default class TodoCollection {
     }
 
     /**
+     * Validates a list name and returns an error message if invalid, or empty string if valid.
+     * @param {string} name - The list name to validate.
+     * @param {TodoList[]} lists - The array of lists to check for duplicates.
+     * @param {string} [currentName] - The current name (for edit, to allow unchanged name).
+     * @returns {string} Error message if invalid, or empty string if valid.
+     */
+    static validateListName(name, lists, currentName = undefined) {
+        if (!name || typeof name !== 'string' || name.trim().length === 0) {
+            return 'List name is required.';
+        }
+        if (!/^[\p{L}\p{N}\s]+$/u.test(name)) {
+            return 'List name must only contain letters, numbers, and spaces.';
+        }
+        if (name.length > 60) {
+            return 'List name must be at most 60 characters.';
+        }
+        if (lists.some(list => list.listName === name && name !== currentName)) {
+            return 'A list with this name already exists.';
+        }
+        return '';
+    }
+
+    /**
      * Adds a new TodoList to the collection.
      * @param {string} newName - The name of the new list.
      * @throws {Error} If the name is invalid or already exists.
      * @returns {boolean} True if the list was added.
      */
     addList(newName) {
-        // Only Unicode letters, numbers, and spaces, max 60 chars.
-        const validName = typeof newName === 'string' &&
-            newName.length > 0 &&
-            newName.length <= 60 &&
-            /^[\p{L}\p{N}\s]+$/u.test(newName);
-
-        // Check for duplicate names
-        const duplicate = this.lists.some(({listName}) => listName === newName);
-
-        if(!validName) {
-            throw new Error('List name must only contain Unicode letters, numbers, and spaces and be at most 60 characters long.');
+        const errorMsg = TodoCollection.validateListName(newName, this.lists);
+        if (errorMsg) {
+            throw new Error(errorMsg);
         }
-        if(duplicate) {
-            throw new Error('A list with this name already exists.');
-        }
-
         const list = new TodoList(newName);
         // Listen for item changes and bubble up
         list.addEventListener(TodoList.CHANGE_EVENT, (e) => {
-          console.log('Item changed in list', newName, e.detail);
+            console.log('Item changed in list', newName, e.detail);
             this._dispatchChange('item', { listName: newName, item: e.detail });
         });
         this.lists.push(list);
@@ -93,26 +100,7 @@ export default class TodoCollection {
         return null;
     }
 
-    /**
-     * Adds an event listener for collection changes.
-     * @param {string} type - The event type.
-     * @param {Function} listener - The event handler.
-     * @param {Object|boolean} [options] - Optional options.
-     */
-    addEventListener(...args) {
-        this._eventTarget.addEventListener(...args);
-    }
-
-    /**
-     * Removes an event listener for collection changes.
-     * @param {string} type - The event type.
-     * @param {Function} listener - The event handler.
-     * @param {Object|boolean} [options] - Optional options.
-     */
-    removeEventListener(...args) {
-        //Not needed atm but keeping for symmetry
-        this._eventTarget.removeEventListener(...args);
-    }
+  
 
     /**
      * Dispatches a custom change event.

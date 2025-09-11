@@ -1,3 +1,4 @@
+import EventBase from "./EventBase.js";
 class TodoItem {
     constructor(desc) {
         this.desc = desc;
@@ -5,7 +6,7 @@ class TodoItem {
     }
 }
 
-class TodoList {
+class TodoList extends EventBase {
     static STATUS_TODO = 'todo';
     static STATUS_DOING = 'doing';
     static STATUS_DONE = 'done';    
@@ -21,9 +22,9 @@ class TodoList {
       return TodoList.VALID_STATUSES.includes(status);
     }
     constructor(listName) {
+        super();
         this.listName = listName;
         this.items = [];
-        this._eventTarget = document.createElement('span');
     }
     
     addItem(desc) {
@@ -66,13 +67,7 @@ class TodoList {
         }));
         return {items}
     }
-    addEventListener(...args) {
-        this._eventTarget.addEventListener(...args);
-    }
-    removeEventListener(...args) {
-      //Not needed atm but keeping for symmetry
-        this._eventTarget.removeEventListener(...args);
-    }
+  
     _dispatchChange(type, detail) {
         this._eventTarget.dispatchEvent(new CustomEvent(TodoList.CHANGE_EVENT, {
             detail: { type, ...detail },

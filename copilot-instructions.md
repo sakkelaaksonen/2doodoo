@@ -78,7 +78,7 @@ given status (/)
 ## 02 Definitions of entities:
 
 a task list has a name that consists only
-of Unicode letters and numbers, and is at
+of Unicode letters and numbers and white space, and is at
 most 60 characters long
 
 two task lists may not have the same

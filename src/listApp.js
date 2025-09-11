@@ -36,16 +36,7 @@ export default class ListApp {
             listForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const value = input.value.trim();
-                let errorMsg = '';
-                if (!value) {
-                    errorMsg = 'List name is required.';
-                } else if (!/^[\p{L}\p{N}\s]+$/u.test(value)) {
-                    errorMsg = 'List name must only contain letters, numbers, and spaces.';
-                } else if (value.length > 60) {
-                    errorMsg = 'List name must be at most 60 characters.';
-                } else if (this.collection.lists.some(list => list.listName === value)) {
-                    errorMsg = 'A list with this name already exists.';
-                }
+                const errorMsg = TodoCollection.validateListName(value, this.collection.lists);
                 if (errorMsg) {
                     errorDiv.textContent = errorMsg;
                     input.setAttribute('aria-invalid', 'true');
@@ -93,20 +84,10 @@ export default class ListApp {
             const errorDiv = document.getElementById('list-name-edit-error');
             if (input) {
                 input.onblur = input.onchange = input.onkeydown = (e) => {
-                    let errorMsg = '';
                     if (e.type === 'blur' || e.type === 'change' || (e.type === 'keydown' && e.key === 'Enter')) {
                         const newName = input.value.trim();
-                        if (!newName) {
-                            errorMsg = 'List name is required.';
-                            input.setAttribute('aria-invalid', 'true');
-                        } else if (!/^[\p{L}\p{N}\s]+$/u.test(newName)) {
-                            errorMsg = 'List name must only contain letters, numbers, and spaces.';
-                            input.setAttribute('aria-invalid', 'true');
-                        } else if (newName.length > 60) {
-                            errorMsg = 'List name must be at most 60 characters.';
-                            input.setAttribute('aria-invalid', 'true');
-                        } else if (newName !== currentList.listName && this.collection.lists.some(list => list.listName === newName)) {
-                            errorMsg = 'A list with this name already exists.';
+                        const errorMsg = TodoCollection.validateListName(newName, this.collection.lists, currentList.listName);
+                        if (errorMsg) {
                             input.setAttribute('aria-invalid', 'true');
                         } else {
                             input.setAttribute('aria-invalid', 'false');
