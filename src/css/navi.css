@@ -1,0 +1,48 @@
+/* Sticky top navigation styles */
+.sticky-navi {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--color-bg-2);
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  min-height: 3.2rem;
+}
+.navi-listname {
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70vw;
+}
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+.menu-btn:focus {
+  outline: 2px solid var(--color-primary);
+}
+.menu-panel {
+  display: none;
+  width: 100%;
+  background: var(--color-bg-2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 3.2rem;
+  left: 0;
+  z-index: 99;
+}
+.menu-panel.open {
+  display: block;
+}

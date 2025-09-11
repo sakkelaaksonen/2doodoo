@@ -1,6 +1,6 @@
 import ListApp from './listApp.js';
 import TodoApp from './todoApp.js';
-
+import Menu from './menu.js';
 
 
 function main() {      
@@ -16,7 +16,9 @@ function main() {
     window.todoApp = new TodoApp({
         getSelectedList: () => window.listApp.getSelectedList()
     });
-  
+
+    Menu();
+
 }
 
 

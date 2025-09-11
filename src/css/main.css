@@ -1,5 +1,6 @@
 @import url('theme.css');
 @import url('forms.css');
+@import url('navi.css');
 @import url('togglebutton.css');
 
 body {
@@ -9,9 +10,7 @@ body {
   background: var(--color-bg-1);
   color: var(--color-text-dark);
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
 }
 
 h1 {
@@ -25,8 +24,7 @@ h1 {
   padding: 2rem;
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  width: 100%;
-  max-width: 400px;
+  width: 98vw;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

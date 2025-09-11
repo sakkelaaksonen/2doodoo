@@ -36,7 +36,7 @@ Goal is to have a simple, easy to use and accessible application for managing mu
 - Application should have a simple but modern and clean design.
 - WGAC 2.2 AA accessibility compliance.
 - css modules and layers for styling.
-- no inline styles
+- no inline styles or styles in html files. only in css files.
 - no emoji characters
 - use css variables
 - maintain consistent font sizes and spacing
