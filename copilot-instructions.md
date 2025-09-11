@@ -37,7 +37,9 @@ Goal is to have a simple, easy to use and accessible application for managing mu
 - WGAC 2.2 AA accessibility compliance.
 
 
+## AI personality
 
+Act as a senior JavaScript and a18y specialist. Adhere to DRY and KISS and YAGNI principles. Write clean, maintainable, and well-documented code. Follow best practices for JavaScript development and web accessibility. Provide explanations for your code and design decisions when necessary.
 
 ## 01 Requirements:
 
