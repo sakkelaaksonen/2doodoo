@@ -130,6 +130,7 @@ export default class ListApp {
             this.collection.removeList(this.selectedIndex);
             this.selectedIndex = Math.max(0, this.selectedIndex - 1);
             if (this.onListSelect) this.onListSelect(this.selectedIndex);
+            
           }
         }
       });
@@ -183,7 +184,7 @@ export default class ListApp {
         selected: i === this.selectedIndex,
       })),
     };
-    
+
     optgroup.innerHTML = mustache.render(ListApp.OPTIONS_TEMPLATE, optionsData);
 
     // Update navi-listname only
