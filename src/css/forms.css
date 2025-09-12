@@ -4,13 +4,14 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-}
 
-.input-group label {
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-  display: block;
-  color: var(--color-text-dark);
+
+  label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    display: block;
+    color: var(--color-text-dark);
+  }
 }
 
 .input-row {
@@ -75,15 +76,3 @@
   border-radius: 0.5rem;
 }
 
-legend {
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  color: var(--color-text-dark);
-}
-
-fieldset label {
-  display: inline-block;
-  margin: 0;
-  color: var(--color-text-dark);
-}

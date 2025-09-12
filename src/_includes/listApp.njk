@@ -13,7 +13,15 @@
     <!-- List selector for switching between todo lists -->
     <div class="input-group mb-spacer">
       <label for="todo-list-selector">Select Todo List</label>
-      <select id="todo-list-selector" aria-label="Todo List Selector"></select>
+      <select id="todo-list-selector" aria-label="Todo List Selector">
+        <button>
+          <selectedcontent></selectedcontent>
+          <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
+        <optgroup id="todo-list-options"></optgroup>
+      </select>
     </div>
     <div id="list-title-container"></div>
 

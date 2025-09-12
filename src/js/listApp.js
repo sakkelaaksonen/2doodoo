@@ -117,6 +117,22 @@ export default class ListApp {
         this._handleListNameEdit.bind(this),
         true
       );
+      // Delegate remove-list-btn click
+      titleElem.addEventListener("click", (e) => {
+        if (e.target && e.target.id === "remove-list-btn") {
+          if (this.collection.lists.length === 0) return;
+          const currentList = this.collection.lists[this.selectedIndex];
+          if (
+            confirm(
+              `Are you sure you want to remove the list "${currentList.listName}"? This cannot be undone.`
+            )
+          ) {
+            this.collection.removeList(this.selectedIndex);
+            this.selectedIndex = Math.max(0, this.selectedIndex - 1);
+            if (this.onListSelect) this.onListSelect(this.selectedIndex);
+          }
+        }
+      });
     }
   }
 
@@ -153,9 +169,10 @@ export default class ListApp {
   }
 
   render() {
-    const selector = document.getElementById("todo-list-selector");
+    // Render the list selector options
+    const optgroup = document.getElementById("todo-list-options");
     if (!this.collection || !Array.isArray(this.collection.lists)) {
-      selector.innerHTML = "";
+      optgroup.innerHTML = "";
       return;
     }
     // Use mustache to render the list selector options
@@ -166,7 +183,8 @@ export default class ListApp {
         selected: i === this.selectedIndex,
       })),
     };
-    selector.innerHTML = mustache.render(ListApp.OPTIONS_TEMPLATE, optionsData);
+    
+    optgroup.innerHTML = mustache.render(ListApp.OPTIONS_TEMPLATE, optionsData);
 
     // Update navi-listname only
     const naviListname = document.getElementById("navi-listname");
@@ -183,22 +201,8 @@ export default class ListApp {
       titleElem.innerHTML = mustache.render(ListApp.TITLE_TEMPLATE, {
         listName: currentList.listName,
       });
-      // Remove button logic
-      const removeBtn = document.getElementById("remove-list-btn");
-      if (removeBtn) {
-        removeBtn.onclick = () => {
-          if (this.collection.lists.length === 0) return;
-          if (
-            confirm(
-              `Are you sure you want to remove the list "${currentList.listName}"? This cannot be undone.`
-            )
-          ) {
-            this.collection.removeList(this.selectedIndex);
-            this.selectedIndex = Math.max(0, this.selectedIndex - 1);
-            if (this.onListSelect) this.onListSelect(this.selectedIndex);
-          }
-        };
-      }
+
+  // Remove-button logic is now delegated in setupEventListeners
     }
   }
 
