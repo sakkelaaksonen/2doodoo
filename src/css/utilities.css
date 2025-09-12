@@ -1,0 +1,15 @@
+@layer utilities;
+.spacer {
+  height: var(--spacing-4);
+  border: none;
+  margin-block: var(--spacing-4);
+  height: 0;
+  background: transparent;
+  border:none;
+}
+
+.mb-spacer {
+  margin-block-end: var(--spacing-6);
+}
+ 
+

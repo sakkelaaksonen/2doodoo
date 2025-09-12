@@ -23,6 +23,9 @@
   --spacing-8: 3rem;      /* 48px */
   --spacing-9: 4rem;      /* 64px */
   --spacing-10: 6rem;     /* 96px */
+  --max-width: 1200px;  /* Max content width */
 }
 
-
+* {
+  box-sizing: border-box;
+}

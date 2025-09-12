@@ -16,14 +16,19 @@ h1 {
   color: var(--color-text-dark);
 }
 
-.container {
-  /* background: var(--color-bg-2);
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  width: 98vw;
+.flex-container {
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+  box-sizing: border-box;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem; */
+  align-items: center;
+  justify-content: space-between;
+}
+
+.block-container {
+  max-width: var(--max-width);
+  padding: var(--spacing-4);
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 

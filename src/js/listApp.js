@@ -24,7 +24,8 @@ export default class ListApp {
     `;
 
   static TITLE_TEMPLATE = `
-      <div class="input-group" style="margin-bottom:0;">
+      <div class="input-group mb-spacer">
+       <label for="list-name-display">Selected List Name</label>
         <div class="input-row">
           <input id="list-name-display" class="text-input" type="text" value="{{listName}}" maxlength="60" aria-label="Edit list name" required placeholder="Max 60 letters and numbers" aria-describedby="list-name-edit-error" aria-invalid="false" />
           <button id="remove-list-btn" type="button" aria-label="Remove list" >Remove</button>

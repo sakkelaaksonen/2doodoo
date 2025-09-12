@@ -1,63 +1,43 @@
- <section class="container" aria-labelledby="form-title">
-          <!-- TodoApp UI only -->
-          <form id="new-item-form" action="#" method="post" autocomplete="off">
-            <div class="input-group">
-              <label for="todo-input">Add todo</label>
-              <div class="input-row">
-                <input
-                  class="text-input"
-                  id="todo-input"
-                  type="text"
-                  name="user-input"
-                  required
-                  minlength="1"
-                  maxlength="60"
-                  placeholder="Max 60 letters and numbers"
-                  aria-errormessage="Only letters and numbers are allowed."
-                  aria-required="true"
-                  aria-label="New Todo item"
-                />
-                <button type="submit" aria-label="Submit Input">Add</button>
-              </div>
-            </div>
-          </form>
-          <form>
-            <h2 id="current-todos-title">Filter items</h2>
-            <div class="todo-list-header">
-              <div class="input-row">
-                <div
-                  class="toggle-button"
-                  role="radiogroup"
-                  aria-label="Set status"
-                >
-                  <label class="toggle-buttonlabel">
-                    <input type="radio" name="filter" value="all" checked />
-                    <span>All</span>
-                  </label>
-                  <label class="toggle-buttonlabel">
-                    <input type="radio" name="filter" value="todo" />
-                    <span>Todo</span>
-                  </label>
-                  <label class="toggle-buttonlabel">
-                    <input type="radio" name="filter" value="doing" />
-                    <span>Doing</span>
-                  </label>
-                  <label class="toggle-buttonlabel">
-                    <input type="radio" name="filter" value="done" />
-                    <span>Done</span>
-                  </label>
-                </div>
-                <button
-                  id="clear-completed-button"
-                  type="button"
-                  aria-label="Clear completed todos"
-                >
-                  Clear completed
-                </button>
-              </div>
-            </div>
-            <div id="current-todos" class="todo-list" aria-live="polite">
-              <!-- current todo items render target -->
-            </div>
-          </form>
-        </section>
+<section class="block-container" aria-labelledby="form-title">
+  <!-- TodoApp UI only -->
+  <form id="new-item-form" action="#" method="post" autocomplete="off">
+    <div class="input-group">
+      <label for="todo-input">Add todo</label>
+      <div class="input-row">
+        <input class="text-input" id="todo-input" type="text" name="user-input" required="required" minlength="1" maxlength="60" placeholder="Max 60 letters and numbers" aria-errormessage="Only letters and numbers are allowed." aria-required="true" aria-label="New Todo item"/>
+        <button type="submit" aria-label="Submit Input">Add</button>
+      </div>
+    </div>
+  </form>
+  <form>
+    <h2 id="current-todos-title">Filter items</h2>
+    <div class="todo-list-header">
+      <div class="input-row">
+        <div class="toggle-button" role="radiogroup" aria-label="Set status">
+          <label class="toggle-buttonlabel">
+            <input type="radio" name="filter" value="all" checked="checked"/>
+            <span>All</span>
+          </label>
+          <label class="toggle-buttonlabel">
+            <input type="radio" name="filter" value="todo"/>
+            <span>Todo</span>
+          </label>
+          <label class="toggle-buttonlabel">
+            <input type="radio" name="filter" value="doing"/>
+            <span>Doing</span>
+          </label>
+          <label class="toggle-buttonlabel">
+            <input type="radio" name="filter" value="done"/>
+            <span>Done</span>
+          </label>
+        </div>
+        <button id="clear-completed-button" type="button" aria-label="Clear completed todos">
+          Clear completed
+        </button>
+      </div>
+    </div>
+    <div id="current-todos" class="todo-list" aria-live="polite">
+      <!-- current todo items render target -->
+    </div>
+  </form>
+</section>
