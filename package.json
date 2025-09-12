@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/sakkelaaksonen/2doodoo.git"
   },
-  "license": "ISC",
+  "license": "UNLICENSED",
   "author": "Sakari Laaksonen",
   "type": "module",
   "main": "index.js",
@@ -21,7 +21,7 @@
     "setup:note": "echo 'The setup:mustache copies mustache.mjs to src/js so it can be imported with trivial paths\\n\\n'",
     "setup:mustache": "cp node_modules/mustache/mustache.mjs src/js/mustache.mjs",
     "test": "qunit \"./src/js/nodetest.js\"",
-    "dev": "npm run setup:mustache && npx @11ty/eleventy --serve"
+    "dev": "npm run setup:mustache && eleventy --serve"
   },
   "dependencies": {
     "@11ty/eleventy": "^3.1.2",

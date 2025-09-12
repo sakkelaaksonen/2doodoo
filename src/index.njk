@@ -1,133 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1"  />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Accessible Mobile-Friendly Template</title>
-    <meta
-      name="description"
-      content="A production-ready, accessible, mobile-friendly HTML template with one button and input."
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap"
-    />
-    <link rel="stylesheet" href="/css/main.css" />
+    <meta name="description" content="A production-ready, accessible, mobile-friendly HTML template with one button and input."/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap"/>
+    <link rel="stylesheet" href="/css/main.css"/>
     <script type="module" src="/js/main.js"></script>
   </head>
   <body>
-    <div id="loading-overlay"><span>Loading…</span></div>
-    <nav class="sticky-navi" aria-label="Main navigation">
-      <span class="navi-listname" id="navi-listname">Todos</span>
-      <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu-panel">☰</button>
-    </nav>
-    <div class="wrapper">
-      <div class="menu-panel" id="menu-panel" role="region" aria-label="Menu">
-        <section class="container" aria-labelledby="form-title">
-          <!-- ListApp UI only (list creation, selector, etc) -->
-          <h1 id="form-title">Current list: </h1>
-          <form id="new-list-form" autocomplete="off">
-            <div class="input-group">
-              <label for="list-name-input">Add a new TodoList</label>
-              <div class="input-row">
-                <input
-                  id="list-name-input"
-                  class="text-input"
-                  type="text"
-                  maxlength="60"
-                  aria-describedby="list-name-error"
-                  aria-invalid="false"
-                  required
-                  title="Only letters and numbers are allowed for the list name."
-                  placeholder="Max 60 letters and numbers"
-                  aria-label="List Name"
-                  name="list-name"
-                />
-                <button type="submit">Add</button>
-              </div>
-              <div
-                id="list-name-error"
-                aria-live="assertive"
-                style="color: #b00; min-height: 1.5em"
-              ></div>
-            </div>
-            <!-- List selector for switching between todo lists -->
-            <div class="input-group">
-              <label for="todo-list-selector">Select Todo List</label>
-              <select id="todo-list-selector" aria-label="Todo List Selector"></select>
-            </div>
-          </form>
-        </section>
-      </div>
-      <main>
-        <section class="container" aria-labelledby="form-title">
-          <!-- TodoApp UI only -->
-          <form id="new-item-form" action="#" method="post" autocomplete="off">
-            <div class="input-group">
-              <label for="todo-input">Add todo</label>
-              <div class="input-row">
-                <input
-                  class="text-input"
-                  id="todo-input"
-                  type="text"
-                  name="user-input"
-                  required
-                  minlength="1"
-                  maxlength="60"
-                  placeholder="Max 60 letters and numbers"
-                  aria-errormessage="Only letters and numbers are allowed."
-                  aria-required="true"
-                  aria-label="New Todo item"
-                />
-                <button type="submit" aria-label="Submit Input">Add</button>
-              </div>
-            </div>
-          </form>
-          <form>
-            <h2 id="current-todos-title">Filter items</h2>
-            <div class="todo-list-header">
-              <div class="input-row">
-                <div
-                  class="toggle-button"
-                  role="radiogroup"
-                  aria-label="Set status"
-                >
-                  <label class="toggle-buttonlabel">
-                    <input type="radio" name="filter" value="all" checked />
-                    <span>All</span>
-                  </label>
-                  <label class="toggle-buttonlabel">
-                    <input type="radio" name="filter" value="todo" />
-                    <span>Todo</span>
-                  </label>
-                  <label class="toggle-buttonlabel">
-                    <input type="radio" name="filter" value="doing" />
-                    <span>Doing</span>
-                  </label>
-                  <label class="toggle-buttonlabel">
-                    <input type="radio" name="filter" value="done" />
-                    <span>Done</span>
-                  </label>
-                </div>
-                <button
-                  id="clear-completed-button"
-                  type="button"
-                  aria-label="Clear completed todos"
-                >
-                  Clear completed
-                </button>
-              </div>
-            </div>
-            <div id="current-todos" class="todo-list" aria-live="polite">
-              <!-- current todo items render target -->
-            </div>
-          </form>
-        </section>
-      </main>
-    </div>
-    <script>
-      // Toggle menu panel
-   
-    </script>
+    <div id="loading-overlay">
+      <span>Loading…</span></div>
+    {% include "listApp.njk" %}
+
+    {% include "todoApp.njk" %}
   </body>
 </html>

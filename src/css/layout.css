@@ -17,13 +17,13 @@ h1 {
 }
 
 .container {
-  background: var(--color-bg-2);
+  /* background: var(--color-bg-2);
   padding: 2rem;
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   width: 98vw;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.5rem; */
 }
 

@@ -29,8 +29,6 @@ export default class TodoApp {
         </div>
       </div></form>{{/items}}
       {{^items}}<p>{{#filter}} No items yet with status "{{filter}}"{{/filter}} {{^filter}}No items yet{{/filter}} </p>{{/items}}`;
-    
-      static LIST_TITLE_TEMPLATE = '';
 
     constructor({ getSelectedList }) {
         this.filter = TodoApp.DEFAULT_FILTER;
