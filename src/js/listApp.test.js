@@ -26,20 +26,20 @@ export default function ListAppTests() {
     </form>
   `;
 
-  // Query elements for assertions
-  const optgroup = document.getElementById('todo-list-options');
-  const titleContainer = document.getElementById('list-title-container');
-  const naviListname = document.getElementById('navi-listname');
+    // Query elements for assertions
+    const optgroup = document.getElementById('todo-list-options');
+    const titleContainer = document.getElementById('list-title-container');
+    const naviListname = document.getElementById('navi-listname');
 
-  // Create app with one list
-  const app = new ListApp({});
-  app.collection.addList('TestList');
-  app.selectedIndex = 0;
-  app.render();
+    // Create app with one list
+    const app = new ListApp({});
+    app.collection.addList('TestList');
+    app.selectedIndex = 0;
+    app.render();
 
-  assert.ok(optgroup.innerHTML.includes('TestList'), 'Optgroup contains list name');
-  assert.ok(titleContainer.innerHTML.includes('TestList'), 'Title container contains list name');
-  assert.equal(naviListname.textContent, 'TestList', 'navi-listname updated');
+    assert.ok(optgroup.innerHTML.includes('TestList'), 'Optgroup contains list name');
+    assert.ok(titleContainer.innerHTML.includes('TestList'), 'Title container contains list name');
+    assert.equal(naviListname.textContent, 'TestList', 'navi-listname updated');
 
 
     });

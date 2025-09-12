@@ -2,15 +2,30 @@
 
 :root {
   /* Light theme (default) */
-  --color-bg-1: #f9f9f9;
+  --color-bg-1:  #f9faf7;
   --color-bg-2: #fff;
   --color-bg-3: #eaeaea;
-  --color-bg-4: #d6d6d6;
-  --color-bg-5: #c2c2c2;
-  --color-primary: #0078d4;
-  --color-primary-dark: #005fa3;
+  --color-bg-4: #fefffe;
+  --color-bg-line: #d6d6d6;
+  --color-primary: #004214;
+  --color-primary-dark: #060f05;
   --color-text-light: #fff;
   --color-text-dark: #222;
+
+
+  /* Additional colors for new palette*/
+
+
+  /* CSS Gradient Variables */
+  /* --gradient-top: linear-gradient(0deg, #223127ff, #9c0d38ff, #ce5374ff, #dbbbf5ff, #ddf0ffff);
+  --gradient-right: linear-gradient(90deg, #223127ff, #9c0d38ff, #ce5374ff, #dbbbf5ff, #ddf0ffff);
+  --gradient-bottom: linear-gradient(180deg, #223127ff, #9c0d38ff, #ce5374ff, #dbbbf5ff, #ddf0ffff);
+  --gradient-left: linear-gradient(270deg, #223127ff, #9c0d38ff, #ce5374ff, #dbbbf5ff, #ddf0ffff);
+  --gradient-top-right: linear-gradient(45deg, #223127ff, #9c0d38ff, #ce5374ff, #dbbbf5ff, #ddf0ffff);
+  --gradient-bottom-right: linear-gradient(135deg, #223127ff, #9c0d38ff, #ce5374ff, #dbbbf5ff, #ddf0ffff);
+  --gradient-top-left: linear-gradient(225deg, #223127ff, #9c0d38ff, #ce5374ff, #dbbbf5ff, #ddf0ffff);
+  --gradient-bottom-left: linear-gradient(315deg, #223127ff, #9c0d38ff, #ce5374ff, #dbbbf5ff, #ddf0ffff);
+  --gradient-radial: radial-gradient(#223127ff, #9c0d38ff, #ce5374ff, #dbbbf5ff, #ddf0ffff); */
 
   /* Spacing system */
   --spacing-1: 0.25rem; /* 4px */
@@ -24,6 +39,13 @@
   --spacing-9: 4rem; /* 64px */
   --spacing-10: 6rem; /* 96px */
   --max-width: 1200px; /* Max content width */
+  
+  /* Some ballpark values*/
+  --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);      /* for buttons, inputs, labels */
+  --font-size-heading: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);   /* for headings */
+  --font-size-label: clamp(0.9rem, 0.8rem + 0.3vw, 1.1rem);    /* for labels, small text */
+
+
 }
 
 * {

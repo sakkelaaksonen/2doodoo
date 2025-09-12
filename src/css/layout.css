@@ -7,22 +7,16 @@ body {
   background: var(--color-bg-1);
   color: var(--color-text-dark);
   min-height: 100vh;
-
 }
+
+button, input, label { font-size: var(--font-size-base); }
+h1, h2, h3 { font-size: var(--font-size-heading); }
+label, .small-text { font-size: var(--font-size-label); }
 
 h1 {
-  font-size: 1.5rem;
+
   margin: 0 0 1rem 0;
   color: var(--color-text-dark);
-}
-
-.flex-container {
-  gap: var(--spacing-4);
-  padding: var(--spacing-4);
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .block-container {
