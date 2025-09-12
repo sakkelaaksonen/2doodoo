@@ -1,3 +1,5 @@
+@layer base;
+
 :root {
   /* Light theme (default) */
   --color-bg-1: #f9f9f9;
