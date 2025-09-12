@@ -3,6 +3,7 @@ import { JSDOM } from 'jsdom';
 import TodoCollectionTests  from './todoCollection.test.js';
 import TodoListTests  from './todoList.test.js';
 import ListAppTests from './listApp.test.js';
+
 const { window } = new JSDOM('');
 global.window = window;
 global.document = window.document;
