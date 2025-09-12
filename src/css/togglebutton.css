@@ -11,6 +11,7 @@
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  max-width: calc(var(--spacing-10) * 2);
 }
 
 .toggle-buttonlabel {

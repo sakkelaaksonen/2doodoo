@@ -24,6 +24,7 @@
 .input-row textarea {
   width: 100%;
   padding: 0.75rem;
+  padding: var(--spacing-4);
   border: 1px solid var(--color-bg-4);
   border-radius: 0.5rem;
   font-size: 1rem;
@@ -49,10 +50,11 @@
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  min-width: 3rem;
+  
   box-sizing: border-box;
   transition: background 0.2s, color 0.2s;
   align-self: stretch;
+  min-width: calc(var(--spacing-10) + 1rem);
 }
 
 .input-row button:focus,

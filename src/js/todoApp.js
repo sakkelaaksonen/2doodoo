@@ -4,7 +4,9 @@ import { loadFromLocalStorage, saveToLocalStorage } from './storage.js';
 
 export default class TodoApp {
     static DEFAULT_FILTER = 'all';
-    static TODO_TEMPLATE = `{{#items}}<form> <div class="input-group">
+    static TODO_TEMPLATE = `{{#items}}
+    <form class="mb-spacer-large"> 
+    <div class="input-group" data-index="{{index}}">
       <div class="input-row">
         <input class="text-input" type="text" name="user-input" required minlength="1" maxlength="60" placeholder="Max 60 letters and numbers" aria-errormessage="Only letters and numbers are allowed." aria-required="true" aria-label="New Todo item" value="{{desc}}"/>
       </div>
