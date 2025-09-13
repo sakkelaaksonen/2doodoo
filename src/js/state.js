@@ -1,18 +1,18 @@
+import { proxy } from 'valtio/vanilla';
+
 export const STATUS_TODO = 'todo';
 export const STATUS_DOING = 'doing';
 export const STATUS_DONE = 'done';
 export const VALID_STATUSES = [STATUS_TODO, STATUS_DOING, STATUS_DONE];
+export const DEFAULT_FILTER = 'all';
 
 export function isValidStatus(status) {
   return VALID_STATUSES.includes(status);
 }
 
-
-import { proxy } from 'valtio/vanilla';
-
 function newId() {
   //random enough for this app
-  return Math.random().toString(36).substr(2, 9);
+  return Math.random().toString(36).substring(2, 11);
 }
 
 export function getSampleData() {
@@ -48,10 +48,10 @@ export function validateListName(name, lists, currentName = undefined) {
 export const state = proxy({
   lists: [],
   selected: null,
-  filter: 'all',
+  filter: DEFAULT_FILTER,
   reset() {
     this.lists = getSampleData();
-    this.filter = 'all';
+    this.filter = DEFAULT_FILTER  ;
     this.selected = this.lists.length > 0 ? this.lists[0].id : null;
   },
   addList(name) {

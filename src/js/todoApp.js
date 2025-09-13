@@ -1,4 +1,4 @@
-import { state, STATUS_TODO, STATUS_DOING, STATUS_DONE, isValidStatus } from './state.js';
+import { state, STATUS_TODO, STATUS_DOING, STATUS_DONE, isValidStatus, DEFAULT_FILTER } from './state.js';
 import mustache from 'mustache';
 
 export const TODO_TEMPLATE = `{{#items}}
@@ -41,8 +41,13 @@ export function renderTodoApp() {
       doing: item.status === STATUS_DOING,
       done: item.status === STATUS_DONE
     }));
+
+    // Filter items by state.filter if not 'all'
+    if (state.filter && state.filter !== DEFAULT_FILTER && isValidStatus(state.filter)) {
+      items = items.filter(item => item.status === state.filter);
+    }
   }
-  container.innerHTML = mustache.render(TODO_TEMPLATE, { items });
+  container.innerHTML = mustache.render(TODO_TEMPLATE, { items, filter: state.filter });
 }
 
 export function setupTodoAppEvents() {
@@ -70,6 +75,19 @@ export function setupTodoAppEvents() {
     }
   });
 
+  // Filter change: match _todoApp.js reference
+  const filterGroup = document.querySelector('.toggle-button[role="radiogroup"][aria-label="Set status"]');
+  if (filterGroup) {
+    filterGroup.addEventListener('change', (e) => {
+      if (e.target.matches('input[type="radio"][name="filter"]')) {
+        const filterValue = e.target.value;
+        if (filterValue === DEFAULT_FILTER || isValidStatus(filterValue)) {
+          state.filter = filterValue;
+        }
+      }
+    });
+  }
+
   // Delete item
   container.addEventListener('click', (e) => {
     if (e.target.matches('button.delete-button')) {
@@ -80,6 +98,23 @@ export function setupTodoAppEvents() {
       }
     }
   });
+
+  // Clear completed items
+  const clearCompletedBtn = document.getElementById('clear-completed-button');
+  if (clearCompletedBtn) {
+    clearCompletedBtn.addEventListener('click', () => {
+      const currentList = state.lists.find(list => list.id === state.selected);
+      if (currentList) {
+        // Remove all items with status STATUS_DONE
+        // Iterate backwards to avoid index issues
+        for (let i = currentList.items.length - 1; i >= 0; i--) {
+          if (currentList.items[i].status === STATUS_DONE) {
+            state.removeItem(currentList.id, currentList.items[i].id);
+          }
+        }
+      }
+    });
+  }
 }
 
 export function setupNewItemForm() {
