@@ -2,18 +2,19 @@
   <!-- TodoApp UI only -->
   <form id="new-item-form" action="#" method="post" autocomplete="off">
     <div class="input-group">
-      <label for="todo-input">Add todo</label>
+      <label for="todo-input default-label">Add todo</label>
+
       <div class="input-row">
         <input class="text-input" id="todo-input" type="text" name="user-input" required="required" minlength="1" maxlength="60" placeholder="Max 60 letters and numbers" aria-errormessage="Only letters and numbers are allowed." aria-required="true" aria-label="New Todo item"/>
         <button type="submit" aria-label="Submit Input">Add</button>
       </div>
     </div>
   </form>
+  <hr class="mb-spacer"/>
   <form>
-    <div class="todo-list-header mb-spacer-large" aria-labelledby="current-todos-title" id="todo-list-header">
-      <h2 id="current-todos-title">Show</h2>
+    <h2 class="font-large" id="current-todos-title">Current Todos</h2>
+    <div class="todo-list-header mb-spacer-large row-container" aria-labelledby="current-todos-title" id="todo-list-header">
       <div class="input-row flex-row-center">
-
         <div class="toggle-button" role="radiogroup" aria-label="Set status">
           <label class="toggle-buttonlabel">
             <input type="radio" name="filter" value="all" checked="checked"/>
@@ -33,12 +34,16 @@
           </label>
         </div>
         <div id="current-todos-count" aria-live="polite" class="font-small" aria-atomic="true">0 items</div>
-        <button id="clear-completed-button" type="button" aria-label="Clear completed todos" disabled="disabled">
+      </div>
+      <div class="input-row ">
+
+        <button class="secondary-button" id="clear-completed-button" type="button" aria-label="Clear completed todos" disabled="disabled">
           Clear completed
         </button>
       </div>
     </div>
   </form>
+  <hr class="mb-spacer-large"/>
   <div id="current-todos" class="todo-list" aria-live="polite">
     <!-- current todo items render target -->
   </div>

@@ -3,7 +3,7 @@
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2);
+  gap: var(--spacing-1);
 }
 
 .input-row {
@@ -12,14 +12,12 @@
   align-items: stretch;
 }
 
-.input-row .text-input,
-.input-row textarea {
+.input-row .text-input {
   width: 100%;
-  padding: 0.75rem;
-  padding: var(--spacing-4);
+  padding: var(--spacing-2);
   background: var(--color-bg-4);
-  border-block-end: 2px solid var(--color-primary);
-  border-inline-start: 2px solid var(--color-primary);
+  border-block-end: 1px solid var(--color-primary);
+  border-inline-start: 1px solid var(--color-primary);
   border-block-start: none;
   border-inline-end: none;
   border-radius: 0;
@@ -28,8 +26,16 @@
   box-sizing: border-box;
 }
 
-.input-row .text-input:focus,
-.input-row textarea:focus {
+
+.input-row .text-input[data-status="done"] {
+  border-color: var(--color-primary-dark);
+  background: var(--color-bg-2);
+  color: var(--color-bg-line);
+  text-decoration: line-through;
+  border:0;
+}
+
+.input-row .text-input:focus{
   border-color: var(--color-primary);
   /* outline: 1px 1px 0 0 var(--color-primary); */
     outline: 1px solid var(--color-primary);
@@ -46,10 +52,10 @@
   font-size: var(--font-size-small);
   box-sizing: border-box;
   transition: background 0.2s, color 0.2s;
-  min-width: calc(var(--spacing-10) + 1rem);
+  /* min-width: calc(var(--spacing-10) + 1rem); */
 }
 
-.input-row button:disabled {
+.input-row button:disabled,.input-row button:disabled:focus {
   background: var(--color-bg-4);
   color: var(--color-text-dark);
   cursor: not-allowed;
@@ -66,7 +72,6 @@
 
 .input-row .toggle-button {
   flex: 1 1 auto;
-  /* margin-right: 0.5rem; */
 }
 
 
@@ -86,4 +91,33 @@
 .link-button:focus {
   outline: 1px solid var(--color-primary);
   /* outline-offset: -1px; */
+}
+
+.input-row .secondary-button {
+  background: var(--color-bg-3);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--button-radius, 4px);
+  padding: 0.75rem 1.25rem;
+  font-size: var(--font-size-small);
+  box-sizing: border-box;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.input-row .secondary-button:disabled,
+.input-row .secondary-button:disabled:focus {
+  background: var(--color-bg-4);
+  color: var(--color-text-dark);
+  border-color: var(--color-bg-line);
+  cursor: not-allowed;
+}
+
+.input-row .secondary-button:focus,
+.input-row .secondary-button:hover {
+  background: var(--color-bg-2);
+  color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  outline: 1px solid var(--color-primary);
+  outline-offset: 0;
 }

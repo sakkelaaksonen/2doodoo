@@ -10,7 +10,7 @@ export const TODO_TEMPLATE = `{{#items}}
 <form class="mb-spacer-large"> 
 <div class="input-group" data-id="{{id}}">
   <div class="input-row">
-    <input class="text-input" type="text" name="user-input" required minlength="1" maxlength="60" placeholder="Max 60 letters and numbers" aria-errormessage="Only letters and numbers are allowed." aria-required="true" aria-label="New Todo item" value="{{desc}}"/>
+    <input class="text-input" data-status="{{status}}" type="text" name="user-input" required minlength="1" maxlength="60" placeholder="Max 60 letters and numbers" aria-errormessage="Only letters and numbers are allowed." aria-required="true" aria-label="New Todo item" value="{{desc}}"/>
      <button type="button" class="delete-button" value="delete" data-id="{{id}}" aria-label="Delete todo">Remove</button>
   </div>
   <div class="input-row">
@@ -39,12 +39,15 @@ export function renderTodoApp() {
   if (!container) return;
   let items = [];
   if (currentList) {
-    items = currentList.items.map(item => ({
-      ...item,
-      todo: item.status === STATUS_TODO,
-      doing: item.status === STATUS_DOING,
-      done: item.status === STATUS_DONE
-    }));
+    items = currentList.items
+      .slice() // create a copy to avoid mutating original
+      .reverse() // show latest first
+      .map(item => ({
+        ...item,
+        todo: item.status === STATUS_TODO,
+        doing: item.status === STATUS_DOING,
+        done: item.status === STATUS_DONE
+      }));
 
     // Filter items by state.filter if not 'all'
     if (state.filter && state.filter !== DEFAULT_FILTER && isValidStatus(state.filter)) {
