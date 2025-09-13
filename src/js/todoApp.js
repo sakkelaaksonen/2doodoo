@@ -118,7 +118,6 @@ subscribe(state, () => {
   }
 });
 
-  // Filter change: use unique parent selector to avoid overlap with todo item status
   const filterForm = document.querySelector('#todo-list-header .toggle-button[role="radiogroup"][aria-label="Set status"]');
   if (filterForm) {
     filterForm.addEventListener('change', (e) => {
@@ -144,7 +143,6 @@ subscribe(state, () => {
   });
 
   // Clear completed items
-  // Use a robust selector for the button in case of template changes
   const clearCompletedBtn = document.querySelector('button#clear-completed-button');
   if (clearCompletedBtn) {
     clearCompletedBtn.addEventListener('click', () => {
