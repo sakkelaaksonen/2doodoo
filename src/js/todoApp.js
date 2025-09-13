@@ -58,7 +58,7 @@ export function renderTodoApp() {
   // Render item count in filter title
   const filterTitle = document.getElementById('current-todos-count');
   if (filterTitle) {
-    const titleTemplate = '{{filtered}}/{{total}} items';
+    const titleTemplate = '{{filtered}}/{{total}}';
     const totalCount = currentList ? currentList.items.length : 0;
     filterTitle.innerHTML = mustache.render(titleTemplate, {
       filtered: items.length,
@@ -128,7 +128,6 @@ subscribe(state, () => {
   const filterForm = document.querySelector('#todo-list-header .toggle-button[role="radiogroup"][aria-label="Set status"]');
   if (filterForm) {
     filterForm.addEventListener('change', (e) => {
-      console.log("Filter change event:", e);
       if (e.target.matches('input[type="radio"][name="filter"]')) {
         const filterValue = e.target.value;
         if (filterValue === DEFAULT_FILTER || isValidStatus(filterValue)) {

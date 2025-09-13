@@ -93,28 +93,28 @@
   /* outline-offset: -1px; */
 }
 
-.input-row .secondary-button {
+.input-row button.secondary-button {
   background: var(--color-bg-3);
   color: var(--color-primary);
   border: 1px solid var(--color-primary);
   border-radius: var(--button-radius, 4px);
-  padding: 0.75rem 1.25rem;
+  padding: var(--spacing-1);
   font-size: var(--font-size-small);
   box-sizing: border-box;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   cursor: pointer;
 }
 
-.input-row .secondary-button:disabled,
-.input-row .secondary-button:disabled:focus {
+.input-row button.secondary-button:disabled,
+.input-row button.secondary-button:disabled:focus {
   background: var(--color-bg-4);
   color: var(--color-text-dark);
   border-color: var(--color-bg-line);
   cursor: not-allowed;
 }
 
-.input-row .secondary-button:focus,
-.input-row .secondary-button:hover {
+.input-row button.secondary-button:focus,
+.input-row button.secondary-button:hover {
   background: var(--color-bg-2);
   color: var(--color-primary-dark);
   border-color: var(--color-primary-dark);

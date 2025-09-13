@@ -1,7 +1,7 @@
 @layer components;
 :root {
 --toggle-radius: 4px;
---toggle-width: 300px;
+--toggle-width: 200px;
 }
 /* Three-state toggle switch for todo status */
 .toggle-button[role="radiogroup"] {
