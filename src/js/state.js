@@ -21,7 +21,13 @@ export function saveState(state) {
       selected: state.selected,
       filter: state.filter
     }));
+    console.log("State saved:", JSON.stringify({
+      lists: state.lists,
+      selected: state.selected,
+      filter: state.filter
+    }));
   } catch (e) {
+    console.error("Error saving state", e);
     // ignore
   }
 }

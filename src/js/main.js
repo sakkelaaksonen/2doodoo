@@ -6,9 +6,9 @@ import * as todoApp from './todoApp.js';
 
 
 console.log("main.js loaded");
-
+function main() {
   // Load state from localStorage if available
-  const loaded = loadState && loadState();
+  const loaded = loadState();
   if (loaded && Array.isArray(loaded.lists)) {
     state.lists = loaded.lists;
     state.selected = loaded.selected;
@@ -33,11 +33,13 @@ console.log("main.js loaded");
     console.log("State changed:", a);
     console.log("State after reset:", state.lists);
     saveState(state);
+    
     listApp.renderListApp();
     todoApp.renderTodoApp();
   });
 
   console.log("Subscribed to state changes");
-// ...existing code...
 
-document.addEventListener('DOMContentLoaded', main);
+}
+
+main();

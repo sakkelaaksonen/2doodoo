@@ -1,22 +1,23 @@
-
 # Project Overview
 
-This project is simple Todo of Todos application with pure javascript frontend with mustache rendering and eleventy for asset management and site generation. 
+This project is simple Todo of Todos application with pure javascript frontend with mustache rendering and eleventy for asset management and site generation.
 Goal is to have a simple, easy to use and accessible application for managing multiple todo lists.
-
 
 ## Folder Structure
 
-- `/assets`: Contains the source code for the frontend.
+- `/src`: Contains the source code of the project.
+  - `/src/js`: Contains the JavaScript files.
+  - `/src/css`: Contains the CSS files.
+  - `/src/_includes`: Contains the Mustache templates.
 - `/_site`: Contains the build output of the project.
-
 
 ## Libraries and Frameworks
 
 - Eleventy for static site generation.
 - Mustache for templating.
+- valtio for state management.
+- vanilla js for DOM manipulation.
 - QUnit for testing.
-
 
 ## Coding Standards
 
@@ -44,7 +45,6 @@ Goal is to have a simple, easy to use and accessible application for managing mu
 - ensure all interactive elements are keyboard accessible
 - provide clear and concise error messages
 - use ARIA roles and attributes only where necessary
-
 
 ## AI personality
 
@@ -93,8 +93,7 @@ a task has a status, which is one of "todo",
 "doing", "done"
 
 ## 03 Other requirements:
+
 the task lists and tasks are stored in the
 browser's localStorage
-the UI texts are in English 
-
-
+the UI texts are in English
