@@ -44,6 +44,7 @@
   --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);      /* for buttons, inputs, labels */
   --font-size-heading: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);   /* for headings */
   --font-size-label: clamp(0.9rem, 0.8rem + 0.3vw, 1.1rem);    /* for labels, small text */
+  --font-size-small: clamp(0.75rem, 0.7rem + 0.2vw, 0.9rem);   /* for very small text */
 
 
 }

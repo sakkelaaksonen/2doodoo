@@ -8,5 +8,22 @@ export default function Menu() {
     menuPanel.classList.toggle("open");
   });
 
+  const closeBtn = document.getElementById("menu-close-btn");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuPanel.classList.remove("open");
+      menuBtn.focus();
+    });
+  }
+  
+  // Close menu when clicking outside
+  // document.addEventListener("click", (event) => {
+  //   if (!menuPanel.contains(event.target) && event.target !== menuBtn) {
+  //     menuBtn.setAttribute("aria-expanded", "false");
+  //     menuPanel.classList.remove("open");
+  //   }
+  // });
+
   return { menuBtn, menuPanel };
 }
