@@ -29,7 +29,7 @@ select::picker {
   padding: var(--spacing-1);
   margin-block-start: var(--spacing-1);
   border-radius: 0;
-  box-shadow:none
+  box-shadow:none;
   cursor: default;
   transition: opacity 225ms ease-in-out, transform 225ms ease-in-out;
   transform-origin: top;

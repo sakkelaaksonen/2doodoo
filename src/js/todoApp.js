@@ -80,6 +80,12 @@ export function setupTodoAppEvents() {
   const container = document.getElementById('current-todos');
   if (!container) return;
 
+  // --- Set filter radio to correct state on load ---
+  const filterRadios = document.querySelectorAll('#todo-list-header input[type="radio"][name="filter"]');
+  filterRadios.forEach(radio => {
+    radio.checked = radio.value === state.filter;
+  });
+
   // Status change
   container.addEventListener('change', (e) => {
     if (e.target.matches('input[type="radio"][name="status"]')) {

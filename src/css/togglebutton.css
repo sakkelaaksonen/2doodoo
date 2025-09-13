@@ -1,6 +1,6 @@
 @layer components;
 :root {
---toggle-radius: var(--button-radius);
+--toggle-radius: 4px;
 --toggle-width: 300px;
 }
 /* Three-state toggle switch for todo status */
@@ -22,6 +22,8 @@
   margin: 0;
   position: relative;
   cursor: pointer;
+  min-width: 0;
+  width: 100%;
 }
 
 .toggle-button input[type="radio"] {
@@ -29,8 +31,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
   cursor: pointer;
   z-index: 2;
 }
@@ -44,6 +44,8 @@
   font-size: var(--font-size-small);
   border: none;
   border-radius: 0;
+  min-width: 0;
+  width: 100%;
   
 }
 
@@ -57,13 +59,14 @@
 .toggle-button input[type="radio"]:checked + span {
   background: var(--color-primary);
   color: var(--color-bg-4);
+
   
 }
 
 .toggle-button input[type="radio"]:focus + span {
   background: var(--color-primary-dark);
   color: var(--color-text-light);
-  outline: 1px solid var(--color-primary);
-  outline-offset: -1px;
-  
+  /* outline: 1px solid var(--color-primary);
+  outline-offset: 0; 
+   */
 }
