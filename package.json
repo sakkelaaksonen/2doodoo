@@ -18,15 +18,17 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "setup:note": "echo 'The setup:mustache copies mustache.mjs to src/js so it can be imported with trivial paths\\n\\n'",
-    "setup:mustache": "cp node_modules/mustache/mustache.mjs src/js/mustache.mjs",
-    "test": "qunit \"./src/js/nodetest.js\"",
-    "dev": "npm run setup:mustache && eleventy --serve"
+    "test": "qunit \"./src/js/*.test.js\"",
+    "watch:js": "esbuild src/js/main.js --bundle --outfile=_site/js/main.js --format=esm --watch",
+    "watch:11ty": "npx @11ty/eleventy --serve --watch",
+    "dev": "NODE_ENV=development concurrently  \"npm run watch:js\" \"npm run watch:11ty\""
   },
   "dependencies": {
     "@11ty/eleventy": "^3.1.2",
+    "esbuild": "^0.25.9",
     "jsdom": "^26.1.0",
     "mustache": "^4.2.0",
-    "qunit": "^2.24.1"
+    "qunit": "^2.24.1",
+    "valtio": "^2.1.7"
   }
 }

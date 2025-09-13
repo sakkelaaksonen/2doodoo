@@ -1,12 +1,8 @@
+
 export default function(eleventyConfig) {
 
-  //Just copy css and js files. Keep import paths trivial
+  //Just copy css. Keep import paths trivial
   eleventyConfig.addPassthroughCopy("src/css",);
-  eleventyConfig.addPassthroughCopy("src/js");
-  
-  //QUnit assets
-  eleventyConfig.addPassthroughCopy({"node_modules/qunit/qunit/qunit.js": "/js/qunit.js"});
-  eleventyConfig.addPassthroughCopy({"node_modules/qunit/qunit/qunit.css": "/css/qunit.css"});
   
   
   return {
@@ -17,12 +13,6 @@ export default function(eleventyConfig) {
     }
   };
 
-    // eleventyConfig.addPassthroughCopy("src/main.css");
-    // eleventyConfig.addPassthroughCopy("src/css");
-    // eleventyConfig.addPassthroughCopy("src/*.js");
-    eleventyConfig.addPassthroughCopy({"node_modules/mustache/mustache.mjs": "src/mustache.mjs"});
-    
-    // eleventyConfig.addPassthroughCopy({"node_modules/qunit/qunit/qunit.css": "src/qunit.css"});
-    
+  
 };
 

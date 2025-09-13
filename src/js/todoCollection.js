@@ -1,10 +1,10 @@
+import { proxy } from 'valtio/vanilla';
 import { TodoList } from './todoList.js';
-import EventBase from './EventBase.js';
 /**
  * Manages a collection of TodoList instances and dispatches custom events on changes.
  * @class
  */
-export default class TodoCollection extends EventBase {
+export default class TodoCollection {
     /**
      * The custom event name for collection changes.
      * @type {string}
@@ -15,13 +15,10 @@ export default class TodoCollection extends EventBase {
      * Creates a new TodoCollection.
      */
     constructor() {
-      super();
-        /**
-         * Array of TodoList instances.
-         * @type {TodoList[]}
-         */
-        this.lists = [];
-
+        // Valtio proxy for lists array
+        this.state = proxy({
+            lists: []
+        });
     }
 
     /**
@@ -62,19 +59,12 @@ export default class TodoCollection extends EventBase {
      * @returns {boolean} True if the list was added.
      */
     addList(newName) {
-        const errorMsg = TodoCollection.validateListName(newName, this.lists);
+        const errorMsg = TodoCollection.validateListName(newName, this.state.lists);
         if (errorMsg) {
             throw new Error(errorMsg);
         }
         const list = new TodoList(newName);
-        // Listen for item changes and bubble up
-        list.addEventListener(TodoList.CHANGE_EVENT, (e) => {
-            //call frequency monitoring
-            // console.log('Item changed in list', newName, e.detail);
-            this._dispatchChange('item', { listName: newName, item: e.detail });
-        });
-        this.lists.push(list);
-        this._dispatchChange('add', { listName: newName });
+        this.state.lists.push(list);
         return true;
     }
 
@@ -83,9 +73,8 @@ export default class TodoCollection extends EventBase {
      * @param {number} index - The index of the list to remove.
      */
     removeList(index) {
-        if (index >= 0 && index < this.lists.length) {
-            const removed = this.lists.splice(index, 1);
-            this._dispatchChange('remove', { index, listName: removed[0]?.listName });
+        if (index >= 0 && index < this.state.lists.length) {
+            const removed = this.state.lists.splice(index, 1);
         }
     }
 
@@ -95,31 +84,10 @@ export default class TodoCollection extends EventBase {
      * @returns {TodoList|null} The TodoList instance or null if not found.
      */
     getList(index) {
-        if (index >= 0 && index < this.lists.length) {
-            return this.lists[index];
+        if (index >= 0 && index < this.state.lists.length) {
+            return this.state.lists[index];
         }
         return null;
     }
 
-    /**
-     * Public method to manually dispatch a collection change event.
-     * @param {string} [type] - Optional type of change.
-     * @param {Object} [detail] - Optional event details.
-     */
-    notifyChange(type = 'manual', detail = {}) {
-        this._dispatchChange(type, detail);
-    }
-
-    /**
-     * Dispatches a custom change event.
-     * @param {string} type - The type of change ('add', 'remove', 'item').
-     * @param {Object} detail - Additional event details.
-     * @private
-     */
-    _dispatchChange(type, detail) {
-        this._eventTarget.dispatchEvent(new CustomEvent(TodoCollection.CHANGE_EVENT, {
-            detail: { type, ...detail },
-            bubbles: false
-        }));
-    }
 }

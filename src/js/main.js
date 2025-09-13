@@ -1,24 +1,33 @@
-import ListApp from "./listApp.js";
-import TodoApp from "./todoApp.js";
+import { state } from './state.js';
+import { subscribe } from 'valtio/vanilla';
+import * as listApp from './listApp.js';
 
+
+console.log("main.js loaded");
 function main() {
-        console.log("main.js loaded");   
-      const a = document.createElement("a");
-  console.log(
-    "supports-custom-select",
-    CSS.supports("appearance: base-select")
-  );
 
-  window.listApp = new ListApp({
-    onListSelect: (selectedIndex) => {
-      // Re-render todoApp when list changes
-      if (window.todoApp) window.todoApp.render();
-    },
+  listApp.init();
+
+
+  // Initial render
+  listApp.renderListApp();
+
+  // Setup event listeners
+  listApp.setupListAppEvents();
+
+  // Subscribe to state changes for reactive UI and persistence
+  subscribe(state, (a) => {
+    console.log("State changed:", a);
+    console.log("State after reset:", state.lists);
+    listApp.renderListApp();
   });
 
-  window.todoApp = new TodoApp({
-    getSelectedList: () => window.listApp.getSelectedList(),
-  });
+  console.log("Subcribed to state changes");
+
+  // Initialize menu
+  
+  state.reset();
+
 }
 
-document.addEventListener("DOMContentLoaded", main);
+document.addEventListener('DOMContentLoaded', main);

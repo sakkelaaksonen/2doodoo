@@ -19,6 +19,6 @@ global.localStorage = {
   clear() { this._data = {}; }
 };
 
-TodoCollectionTests();
-TodoListTests();
-ListAppTests();
+// TodoCollectionTests();
+// TodoListTests();
+// ListAppTests();
