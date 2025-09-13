@@ -11,6 +11,7 @@ export const TODO_TEMPLATE = `{{#items}}
 <div class="input-group" data-id="{{id}}">
   <div class="input-row">
     <input class="text-input" type="text" name="user-input" required minlength="1" maxlength="60" placeholder="Max 60 letters and numbers" aria-errormessage="Only letters and numbers are allowed." aria-required="true" aria-label="New Todo item" value="{{desc}}"/>
+     <button type="button" class="delete-button" value="delete" data-id="{{id}}" aria-label="Delete todo">Remove</button>
   </div>
   <div class="input-row">
     <div class="toggle-button" role="radiogroup" aria-label="Set status">
@@ -26,9 +27,6 @@ export const TODO_TEMPLATE = `{{#items}}
           <input type="radio" data-id="{{id}}"  name="status" value="done" {{#done}} checked{{/done}} />
           <span>Done</span>
         </label>
-      </div>
-      <div class="button-group">
-        <button type="button" class="delete-button" value="delete" data-id="{{id}}" aria-label="Delete todo">Remove</button>
       </div>
     </div>
   </div></form>{{/items}}

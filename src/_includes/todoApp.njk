@@ -10,9 +10,10 @@
     </div>
   </form>
   <form>
-    <div class="todo-list-header mb-spacer-large flex-row-center" aria-labelledby="current-todos-title" id="todo-list-header">
+    <div class="todo-list-header mb-spacer-large" aria-labelledby="current-todos-title" id="todo-list-header">
+      <h2 id="current-todos-title">Show</h2>
       <div class="input-row flex-row-center">
-        <h2 id="current-todos-title">Show</h2>
+
         <div class="toggle-button" role="radiogroup" aria-label="Set status">
           <label class="toggle-buttonlabel">
             <input type="radio" name="filter" value="all" checked="checked"/>
@@ -31,7 +32,7 @@
             <span>Done</span>
           </label>
         </div>
-        <div id="current-todos-count" aria-live="polite" aria-atomic="true">0 items</div>
+        <div id="current-todos-count" aria-live="polite" class="font-small" aria-atomic="true">0 items</div>
         <button id="clear-completed-button" type="button" aria-label="Clear completed todos" disabled="disabled">
           Clear completed
         </button>

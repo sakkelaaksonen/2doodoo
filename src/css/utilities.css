@@ -26,3 +26,19 @@
   align-items: center;
   gap: 1rem;
 }
+
+.font-small {
+  font-size: var(--font-size-small);
+}
+.font-base {
+  font-size: var(--font-size-base);
+}
+.font-large {
+  font-size: var(--font-size-large);
+}
+.font-heading {
+  font-size: var(--font-size-heading);
+}
+.font-label {
+  font-size: var(--font-size-label);
+}

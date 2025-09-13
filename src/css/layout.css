@@ -10,7 +10,7 @@ body {
   min-height: 100vh;
 }
 
-button, input, label { font-size: var(--font-size-base); }
+button, input, label  ,select{ font-size: var(--font-size-base); }
 h1, h2, h3 { font-size: var(--font-size-heading); }
 label, .small-text { font-size: var(--font-size-label); }
 

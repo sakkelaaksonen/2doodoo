@@ -46,6 +46,7 @@
   --font-size-label: clamp(0.9rem, 0.8rem + 0.3vw, 1.1rem);    /* for labels, small text */
   --font-size-small: clamp(0.75rem, 0.7rem + 0.2vw, 0.9rem);   /* for very small text */
 
+  --button-radius: 3px; /* Border radius for buttons and inputs */
 
 }
 

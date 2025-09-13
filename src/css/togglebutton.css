@@ -1,4 +1,8 @@
 @layer components;
+:root {
+--toggle-radius: var(--button-radius);
+--toggle-width: 300px;
+}
 /* Three-state toggle switch for todo status */
 .toggle-button[role="radiogroup"] {
   display: flex;
@@ -6,12 +10,11 @@
   justify-content: stretch;
   align-items: center;
   width: 100%;
-  margin: 0.5rem 0;
-  background: #eee;
-  border-radius: 0.5rem;
+  /* margin: var(--spacing-2) 0; */
+  background: var(--color-bg-4);
   overflow: hidden;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-  max-width: calc(var(--spacing-10) * 2);
+  max-width: var(--toggle-width);
+  min-width: var(--toggle-width);
 }
 
 .toggle-buttonlabel {
@@ -34,31 +37,33 @@
 
 .toggle-button span {
   display: block;
-  padding: 0.5rem 0;
+  padding: var(--spacing-2) 0;
   text-align: center;
   background: transparent;
-  color: #222;
-  font-size: 1rem;
+  color: var(--color-text-dark);
+  font-size: var(--font-size-small);
   border: none;
   border-radius: 0;
-  transition: background 0.2s, color 0.2s;
-  z-index: 1;
+  
 }
 
 .toggle-button label:first-child span {
-  border-radius: 0.5rem 0 0 0.5rem;
+  border-radius: var(--toggle-radius) 0 0 var(--toggle-radius);
 }
 .toggle-button label:last-child span {
-  border-radius: 0 0.5rem 0.5rem 0;
+  border-radius: 0 var(--toggle-radius) var(--toggle-radius) 0;
 }
 
 .toggle-button input[type="radio"]:checked + span {
-  background: #0078d4;
-  color: #fff;
-  font-weight: 500;
+  background: var(--color-primary);
+  color: var(--color-bg-4);
+  
 }
 
 .toggle-button input[type="radio"]:focus + span {
-  outline: 2px solid #005fa3;
-  outline-offset: 2px;
+  background: var(--color-primary-dark);
+  color: var(--color-text-light);
+  outline: 1px solid var(--color-primary);
+  outline-offset: -1px;
+  
 }

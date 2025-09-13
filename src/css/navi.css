@@ -19,16 +19,15 @@
 }
 
 .sticky-navi h1 {
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-size: var(--font-size-base);
+  
   margin: 0;
   display: flex;
   align-items: baseline;
   gap: var(--spacing-2);
 }
 .navi-listname {
-  font-weight: 500;
-  font-size: 1.1rem;
+  font-size: var(--font-size-small);
   color: var(--color-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -51,14 +50,15 @@
 .menu-btn {
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: var(--font-size-heading);
   color: var(--color-primary);
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   align-self: baseline;
 }
 .menu-btn:focus {
-  outline: 2px solid var(--color-primary);
+  outline: 1px solid var(--color-primary);
+  outline-offset: -1px;
 }
 .menu-panel {
   display: none;
