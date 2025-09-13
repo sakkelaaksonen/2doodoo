@@ -45,6 +45,12 @@ export function renderListApp() {
       name: currentList.name,
     });
   }
+
+  // Update navi-listname in navigation bar
+  const naviListNameElem = document.getElementById('navi-listname');
+  if (naviListNameElem) {
+    naviListNameElem.textContent = currentList ? currentList.name : '';
+  }
 }
 
 // Event handlers
@@ -127,6 +133,9 @@ function handleListNameEdit(e) {
           currentList.name = newName;
           errorDiv.textContent = '';
         }
+      }
+      if (e.type === 'keydown' && e.key === 'Enter') {
+        input.focus();
       }
     }
   }

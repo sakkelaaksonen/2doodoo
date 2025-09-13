@@ -75,7 +75,7 @@ QUnit.module('state.js', hooks => {
 		assert.equal(state.lists.length, 1, 'Sample data has one list');
 		assert.equal(state.lists[0].name, 'Sample List', 'Sample list name is correct');
 		assert.equal(state.filter, 'all', 'Filter reset to all');
-		assert.equal(state.selected, null, 'Selected reset to null');
+		assert.equal(state.selected, '1aaa', 'Selected reset to null');
 	});
 
 	QUnit.test('addItem adds an item to a list', assert => {

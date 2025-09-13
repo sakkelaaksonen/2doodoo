@@ -15,19 +15,19 @@ function newId() {
   return Math.random().toString(36).substr(2, 9);
 }
 
-  export function getSampleData() {
-    return [
-      {
-        id: 1,
-        name: "Sample List",
-        items: [
-          { desc: "Sample Task 1", status: "todo", id: '1abc' },
-          { desc: "Sample Task 2", status: "in-progress", id: '2abc' },
-          { desc: "Sample Task 3", status: "done", id: '3abc' }
-        ]
-      }
-];
-  }
+export function getSampleData() {
+  return [
+    {
+      id: '1aaa',
+      name: "Sample List",
+      items: [
+        { desc: "Sample Task 1", status: STATUS_TODO, id: '1abc' },
+        { desc: "Sample Task 2", status: STATUS_DOING, id: '2abc' },
+        { desc: "Sample Task 3", status: STATUS_DONE, id: '3abc' }
+      ]
+    }
+  ];
+}
 
 export function validateListName(name, lists, currentName = undefined) {
   if (!name || typeof name !== 'string' || name.trim().length === 0) {
@@ -52,7 +52,7 @@ export const state = proxy({
   reset() {
     this.lists = getSampleData();
     this.filter = 'all';
-    this.selected = null;
+    this.selected = this.lists.length > 0 ? this.lists[0].id : null;
   },
   addList(name) {
     const errorMsg = validateListName(name, this.lists);

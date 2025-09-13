@@ -7,6 +7,7 @@ console.log("main.js loaded");
 function main() {
 
   listApp.init();
+  state.reset();
 
 
   // Initial render
@@ -26,7 +27,6 @@ function main() {
 
   // Initialize menu
   
-  state.reset();
 
 }
 
