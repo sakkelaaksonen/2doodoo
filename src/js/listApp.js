@@ -1,4 +1,4 @@
-import { state } from './state.js';
+import { state,validateListName } from './state.js';
 import mustache from 'mustache';
 import Menu from './menu.js';
 export const OPTIONS_TEMPLATE = `
@@ -27,7 +27,6 @@ export function renderListApp() {
   
   // Render list selector
   const optgroup = document.getElementById('todo-list-options');
-  console.log("state in renderListApp:", state);
   const optionsData = {
     lists: state.lists.map(list => ({
       name: list.name,
@@ -68,6 +67,7 @@ export function setupListAppEvents() {
         const newList = state.lists[state.lists.length - 1];
         state.selected = newList.id;
         input.value = '';
+        errorDiv.textContent = '';
         setTimeout(() => input.focus(), 0);
       } catch (err) {
         errorDiv.textContent = err.message;
@@ -124,9 +124,8 @@ function handleListNameEdit(e) {
     ) {
       const newName = input.value.trim();
       if (newName.length > 0 && newName !== currentList.name) {
-        const errorMsg = state.lists.some(list => list.name === newName && list.id !== currentList.id)
-          ? 'A list with this name already exists.'
-          : '';
+        // Use validateListName for all checks
+        const errorMsg = validateListName(newName, state.lists, currentList.name);
         if (errorMsg) {
           errorDiv.textContent = errorMsg;
         } else {

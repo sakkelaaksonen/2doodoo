@@ -30,15 +30,12 @@ function main() {
 
   // Subscribe to state changes for reactive UI and persistence
   subscribe(state, (a) => {
-    console.log("State changed:", a);
-    console.log("State after reset:", state.lists);
     saveState(state);
     
     listApp.renderListApp();
     todoApp.renderTodoApp();
   });
 
-  console.log("Subscribed to state changes");
 
 }
 

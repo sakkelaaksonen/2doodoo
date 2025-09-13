@@ -45,14 +45,13 @@
 
 .input-row button {
   border-radius:0 var(--button-radius) 0 0;
-  padding: 0.75rem 1.25rem;
+  min-width: 6rem;
   background: var(--color-primary);
   color: var(--color-text-light);
   border: none;
   font-size: var(--font-size-small);
   box-sizing: border-box;
   transition: background 0.2s, color 0.2s;
-  /* min-width: calc(var(--spacing-10) + 1rem); */
 }
 
 .input-row button:disabled,.input-row button:disabled:focus {
