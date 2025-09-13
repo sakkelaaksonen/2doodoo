@@ -20,3 +20,9 @@
 }
  
 
+/* Flex row center utility for horizontal alignment */
+.flex-row-center {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

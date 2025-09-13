@@ -96,5 +96,10 @@ export const state = proxy({
     if (idx !== -1) this.lists.splice(idx, 1);
   },
 
+  getSelectedListItemCount() {
+    const list = this.lists.find(l => l.id === this.selected);
+    return list ? list.items.length : 0;
+  }
+
 });
 // removeList function no longer needed, use state.removeList(listId)

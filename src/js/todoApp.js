@@ -1,3 +1,8 @@
+import { subscribe } from 'valtio/vanilla';
+
+// Track last status change for focus restoration
+let lastStatusChange = null;
+
 import { state, STATUS_TODO, STATUS_DOING, STATUS_DONE, isValidStatus, DEFAULT_FILTER } from './state.js';
 import mustache from 'mustache';
 
@@ -30,6 +35,7 @@ export const TODO_TEMPLATE = `{{#items}}
   {{^items}}<p>{{#filter}} No items yet with status "{{filter}}"{{/filter}} {{^filter}}No items yet{{/filter}} </p>{{/items}}`;
 
 export function renderTodoApp() {
+
   const currentList = state.lists.find(list => list.id === state.selected);
   const container = document.getElementById('current-todos');
   if (!container) return;
@@ -47,6 +53,28 @@ export function renderTodoApp() {
       items = items.filter(item => item.status === state.filter);
     }
   }
+
+  // Render item count in filter title
+  const filterTitle = document.getElementById('current-todos-count');
+  if (filterTitle) {
+    const titleTemplate = '{{filtered}}/{{total}} items';
+    const totalCount = currentList ? currentList.items.length : 0;
+    filterTitle.innerHTML = mustache.render(titleTemplate, {
+      filtered: items.length,
+      total: totalCount
+    });
+  }
+
+  // Enable/disable clear completed button
+  const clearCompletedBtn = document.getElementById('clear-completed-button');
+  if (clearCompletedBtn) {
+    let hasCompleted = false;
+    if (currentList && currentList.items.some(item => item.status === STATUS_DONE)) {
+      hasCompleted = true;
+    }
+    clearCompletedBtn.disabled = !hasCompleted;
+  }
+
   container.innerHTML = mustache.render(TODO_TEMPLATE, { items, filter: state.filter });
 }
 
@@ -60,8 +88,11 @@ export function setupTodoAppEvents() {
       const itemId = e.target.getAttribute('data-id');
       const status = e.target.value;
       const currentList = state.lists.find(list => list.id === state.selected);
+      // Store the active element to restore focus after state update
+      const activeElement = document.activeElement;
       if (currentList && itemId && isValidStatus(status)) {
-        state.setItemStatus(currentList.id, itemId, status);
+  lastStatusChange = { itemId, status };
+  state.setItemStatus(currentList.id, itemId, status);
       }
     }
     // Edit description
@@ -74,11 +105,24 @@ export function setupTodoAppEvents() {
       }
     }
   });
+// Subscribe to state changes to restore focus after status change
+subscribe(state, () => {
+  if (lastStatusChange) {
+    // After rerender, restore focus to the changed radio input
+    setTimeout(() => {
+      const { itemId, status } = lastStatusChange;
+      const radio = document.querySelector(`input[type="radio"][name="status"][data-id="${itemId}"][value="${status}"]`);
+      if (radio) radio.focus();
+      lastStatusChange = null;
+    }, 0);
+  }
+});
 
-  // Filter change: match _todoApp.js reference
-  const filterGroup = document.querySelector('.toggle-button[role="radiogroup"][aria-label="Set status"]');
-  if (filterGroup) {
-    filterGroup.addEventListener('change', (e) => {
+  // Filter change: use unique parent selector to avoid overlap with todo item status
+  const filterForm = document.querySelector('#todo-list-header .toggle-button[role="radiogroup"][aria-label="Set status"]');
+  if (filterForm) {
+    filterForm.addEventListener('change', (e) => {
+      console.log("Filter change event:", e);
       if (e.target.matches('input[type="radio"][name="filter"]')) {
         const filterValue = e.target.value;
         if (filterValue === DEFAULT_FILTER || isValidStatus(filterValue)) {
@@ -100,7 +144,8 @@ export function setupTodoAppEvents() {
   });
 
   // Clear completed items
-  const clearCompletedBtn = document.getElementById('clear-completed-button');
+  // Use a robust selector for the button in case of template changes
+  const clearCompletedBtn = document.querySelector('button#clear-completed-button');
   if (clearCompletedBtn) {
     clearCompletedBtn.addEventListener('click', () => {
       const currentList = state.lists.find(list => list.id === state.selected);

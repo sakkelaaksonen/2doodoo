@@ -7,6 +7,20 @@ import { subscribe } from 'valtio/vanilla';
 
 
 QUnit.module('state.js', hooks => {
+	QUnit.test('getSelectedListItemCount returns correct count', assert => {
+		state.addList('Groceries');
+		const listId = state.lists[0].id;
+		state.selected = listId;
+		assert.equal(state.getSelectedListItemCount(), 0, 'Count is 0 for empty list');
+		state.addItem(listId, 'Milk');
+		assert.equal(state.getSelectedListItemCount(), 1, 'Count is 1 after adding one item');
+		state.addItem(listId, 'Bread');
+		assert.equal(state.getSelectedListItemCount(), 2, 'Count is 2 after adding two items');
+		// Remove one item
+		const itemId = state.lists[0].items[0].id;
+		state.removeItem(listId, itemId);
+		assert.equal(state.getSelectedListItemCount(), 1, 'Count is 1 after removing one item');
+	});
 	QUnit.test('setItemStatus sets todo status', assert => {
 		state.addList('Groceries');
 		const listId = state.lists[0].id;
