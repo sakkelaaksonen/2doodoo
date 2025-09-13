@@ -18,7 +18,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "qunit \"./src/js/*.test.js\"",
+    "test": "qunit \"./src/js/nodetest.js\"",
     "watch:js": "esbuild src/js/main.js --bundle --outfile=_site/js/main.js --format=esm --watch",
     "watch:11ty": "npx @11ty/eleventy --serve --watch",
     "dev": "NODE_ENV=development concurrently  \"npm run watch:js\" \"npm run watch:11ty\""

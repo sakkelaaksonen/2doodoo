@@ -1,8 +1,6 @@
 
 import { JSDOM } from 'jsdom';
-import TodoCollectionTests  from './todoCollection.test.js';
-import TodoListTests  from './todoList.test.js';
-import ListAppTests from './listApp.test.js';
+import StateTest from './state.test.js';
 
 const { window } = new JSDOM('');
 global.window = window;
@@ -19,6 +17,5 @@ global.localStorage = {
   clear() { this._data = {}; }
 };
 
-// TodoCollectionTests();
-// TodoListTests();
-// ListAppTests();
+
+StateTest();

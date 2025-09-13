@@ -1,10 +1,9 @@
 import { validateListName, STATUS_TODO, STATUS_DOING, STATUS_DONE } from './state.js';
-
-
 import QUnit from "qunit";
 import { state } from './state.js';
 import { subscribe } from 'valtio/vanilla';
 
+export default function(){
 
 QUnit.module('state.js', hooks => {
 	QUnit.test('getSelectedListItemCount returns correct count', assert => {
@@ -168,3 +167,4 @@ QUnit.module('state.js', hooks => {
 
 
 
+}
