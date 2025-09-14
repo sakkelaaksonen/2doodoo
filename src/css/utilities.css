@@ -1,5 +1,9 @@
 @layer utilities;
 
+.hidden {
+  display: none;
+}
+
 .spacer {
   height: var(--spacing-4);
   border: none;

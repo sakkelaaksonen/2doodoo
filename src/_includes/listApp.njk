@@ -22,7 +22,15 @@
 
     <form id="new-list-form" autocomplete="off">
       <div class="input-group mb-spacer">
-        <label for="list-name-input">Add a new TodoList</label>
+        <label for="list-name-input">
+
+          <span class="title">
+            Add a new TodoList
+          </span>
+          <span class="message" id="list-added-message" aria-live="polite" role="status">
+            New Todo-list added</span>
+
+        </label>
         <div class="input-row">
           <input id="list-name-input" class="text-input" type="text" maxlength="60" aria-describedby="list-name-error" aria-invalid="false" required="required" title="Only letters and numbers are allowed for the list name." placeholder="Max 60 letters and numbers" aria-label="List Name" name="list-name"/>
           <button type="submit">Add</button>

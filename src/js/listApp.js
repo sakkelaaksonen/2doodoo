@@ -69,6 +69,14 @@ export function setupListAppEvents() {
         input.value = '';
         errorDiv.textContent = '';
         setTimeout(() => input.focus(), 0);
+        //show label message and hide title.
+  const label = document.querySelector('label[for="list-name-input"]');
+  if (label) {
+    label.classList.add('success');
+    setTimeout(() => {
+      label.classList.remove('success');
+    }, 1500);
+  }
       } catch (err) {
         errorDiv.textContent = err.message;
       }

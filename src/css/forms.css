@@ -5,6 +5,26 @@
   flex-direction: column;
   gap: var(--spacing-1);
 }
+label .message {
+  display: inline;
+  opacity: 0;
+  transform: translateY(1rem);
+  /* No transition here, so message disappears instantly */
+}
+
+label.success .message {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s cubic-bezier(0.4, 0.2, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+label .title {
+  display: inline;
+}
+label.success .title {
+  display: none;
+}
+
 
 .input-row {
   display: flex;

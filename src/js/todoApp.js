@@ -6,6 +6,8 @@ let lastStatusChange = null;
 import { state, STATUS_TODO, STATUS_DOING, STATUS_DONE, isValidStatus, DEFAULT_FILTER } from './state.js';
 import mustache from 'mustache';
 
+let setupDone = false;
+
 export const TODO_TEMPLATE = `{{#items}}
 <form class="mb-spacer-large"> 
 <div class="input-group" data-id="{{id}}">
@@ -80,8 +82,16 @@ export function renderTodoApp() {
 }
 
 export function setupTodoAppEvents() {
+  if(setupDone) {
+    console.error("setupTodoAppEvents already called");
+    return;
+  }
+
   const container = document.getElementById('current-todos');
-  if (!container) return;
+  if (!container) {
+    console.error("No current-todos container found");
+    return;
+  }
 
   // --- Set filter radio to correct state on load ---
   const filterRadios = document.querySelectorAll('#todo-list-header input[type="radio"][name="filter"]');
@@ -164,19 +174,33 @@ subscribe(state, () => {
       }
     });
   }
+  setupDone = true;
 }
 
 export function setupNewItemForm() {
   const itemForm = document.getElementById('new-item-form');
   if (!itemForm) return;
-  itemForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const input = document.getElementById('todo-input');
-    const value = input.value.trim();
-    const currentList = state.lists.find(list => list.id === state.selected);
-    if (currentList && value) {
-      state.addItem(currentList.id, value);
-      input.value = '';
-    }
-  });
+  itemForm.addEventListener('submit',handleAddNewItem );
+
 }
+
+function handleAddNewItem(e) {
+  e.preventDefault();
+  const input = document.getElementById('todo-input');
+  const value = input.value.trim();
+  const currentList = state.lists.find(list => list.id === state.selected);
+  if (currentList && value) {
+    state.addItem(currentList.id, value);
+    input.value = '';
+  }
+  //show label message and hide title.
+  const label = document.querySelector('label[for="todo-input"]');
+  if (label) {
+    label.classList.add('success');
+    setTimeout(() => {
+      label.classList.remove('success');
+    }, 1500);
+  }
+
+
+  }

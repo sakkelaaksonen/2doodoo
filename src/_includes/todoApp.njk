@@ -2,10 +2,16 @@
   <!-- TodoApp UI only -->
   <form id="new-item-form" action="#" method="post" autocomplete="off">
     <div class="input-group">
-      <label for="todo-input default-label">Add todo</label>
+      <label for="todo-input">
+        <span class="title">
+          Add todo item
+        </span>
+        <span class="message" id="item-added-message" aria-live="polite" role="status">
+          New Todo-item added</span>
+      </label>
 
       <div class="input-row">
-        <input class="text-input" id="todo-input" type="text" name="user-input" required="required" minlength="1" maxlength="60" placeholder="Max 60 letters and numbers" aria-errormessage="Only letters and numbers are allowed." aria-required="true" aria-label="New Todo item"/>
+        <input class="text-input" id="todo-input" type="text" name="user-input" required="required" minlength="1" maxlength="60" placeholder="Max 60 letters and numbers" aria-errormessage="Only letters and numbers are allowed." aria-required="true"/>
         <button type="submit" aria-label="Submit Input">Add</button>
       </div>
     </div>
