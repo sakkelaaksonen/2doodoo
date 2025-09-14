@@ -16,7 +16,7 @@ export default function Menu() {
       menuBtn.focus();
     });
   }
-  
+
   // Close menu when clicking outside
   // document.addEventListener("click", (event) => {
   //   if (!menuPanel.contains(event.target) && event.target !== menuBtn) {

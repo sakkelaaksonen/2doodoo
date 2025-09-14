@@ -1,4 +1,3 @@
-
-import StateTest from './state.test.js';
+import StateTest from "./state.test.js";
 
 StateTest();

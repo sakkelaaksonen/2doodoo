@@ -1,6 +1,6 @@
-import { state,validateListName } from './state.js';
-import mustache from 'mustache';
-import Menu from './menu.js';
+import { state, validateListName } from "./state.js";
+import mustache from "mustache";
+import Menu from "./menu.js";
 export const OPTIONS_TEMPLATE = `
   {{#lists}}
   <option value="{{id}}" {{#selected}}selected{{/selected}}>{{name}}</option>
@@ -24,11 +24,10 @@ export function init() {
 }
 
 export function renderListApp() {
-  
   // Render list selector
-  const optgroup = document.getElementById('todo-list-options');
+  const optgroup = document.getElementById("todo-list-options");
   const optionsData = {
-    lists: state.lists.map(list => ({
+    lists: state.lists.map((list) => ({
       name: list.name,
       id: list.id,
       selected: list.id === state.selected,
@@ -37,8 +36,8 @@ export function renderListApp() {
   optgroup.innerHTML = mustache.render(OPTIONS_TEMPLATE, optionsData);
 
   // Render title
-  const titleElem = document.getElementById('list-title-container');
-  const currentList = state.lists.find(list => list.id === state.selected);
+  const titleElem = document.getElementById("list-title-container");
+  const currentList = state.lists.find((list) => list.id === state.selected);
   if (titleElem && currentList) {
     titleElem.innerHTML = mustache.render(TITLE_TEMPLATE, {
       name: currentList.name,
@@ -46,37 +45,41 @@ export function renderListApp() {
   }
 
   // Update navi-listname in navigation bar
-  const naviListNameElem = document.getElementById('navi-listname');
+  const naviListNameElem = document.getElementById("navi-listname");
   if (naviListNameElem) {
-    naviListNameElem.textContent = currentList ? currentList.name : '';
+    naviListNameElem.textContent = currentList ? currentList.name : "";
   }
 }
 
 // Event handlers
 export function setupListAppEvents() {
   // Add new list
-  const listForm = document.getElementById('new-list-form');
-  const input = document.getElementById('list-name-input');
-  const errorDiv = document.getElementById('list-name-error');
+  const listForm = document.getElementById("new-list-form");
+  const input = document.getElementById("list-name-input");
+  const errorDiv = document.getElementById("list-name-error");
   if (listForm && input && errorDiv) {
-    listForm.addEventListener('submit', (e) => {
+    listForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const value = input.value.trim();
       try {
         state.addList(value);
         const newList = state.lists[state.lists.length - 1];
         state.selected = newList.id;
-        input.value = '';
-        errorDiv.textContent = '';
+        input.value = "";
+        errorDiv.textContent = "";
         setTimeout(() => input.focus(), 0);
         //show label message and hide title.
-  const label = document.querySelector('label[for="list-name-input"]');
-  if (label) {
-    label.classList.add('success');
-    setTimeout(() => {
-      label.classList.remove('success');
-    }, 1500);
-  }
+        const label = document.querySelector('label[for="list-name-input"]');
+        if (label) {
+          label.classList.add("success");
+          const messageSpan = label.querySelector("span.message");
+          messageSpan.textContent = "New list added";
+
+          setTimeout(() => {
+            label.classList.remove("success");
+            messageSpan.textContent = "";
+          }, 1500);
+        }
       } catch (err) {
         errorDiv.textContent = err.message;
       }
@@ -84,22 +87,26 @@ export function setupListAppEvents() {
   }
 
   // List selection
-  const selector = document.getElementById('todo-list-selector');
+  const selector = document.getElementById("todo-list-selector");
   if (selector) {
-    selector.addEventListener('change', (e) => {
+    selector.addEventListener("change", (e) => {
       state.selected = e.target.value;
     });
   }
 
   // Remove list
-  const titleElem = document.getElementById('list-title-container');
+  const titleElem = document.getElementById("list-title-container");
   if (titleElem) {
-    titleElem.addEventListener('click', (e) => {
-      if (e.target && e.target.id === 'remove-list-btn') {
+    titleElem.addEventListener("click", (e) => {
+      if (e.target && e.target.id === "remove-list-btn") {
         if (state.lists.length === 0) return;
-        const currentList = state.lists.find(list => list.id === state.selected);
+        const currentList = state.lists.find(
+          (list) => list.id === state.selected
+        );
         if (
-          confirm(`Are you sure you want to remove the list "${currentList.name}"? This cannot be undone.`)
+          confirm(
+            `Are you sure you want to remove the list "${currentList.name}"? This cannot be undone.`
+          )
         ) {
           state.removeList(currentList.id);
           if (state.lists.length > 0) {
@@ -114,34 +121,38 @@ export function setupListAppEvents() {
 
   // Edit list name
   if (titleElem) {
-    titleElem.addEventListener('blur', handleListNameEdit, true);
-    titleElem.addEventListener('change', handleListNameEdit, true);
-    titleElem.addEventListener('keydown', handleListNameEdit, true);
+    titleElem.addEventListener("blur", handleListNameEdit, true);
+    titleElem.addEventListener("change", handleListNameEdit, true);
+    titleElem.addEventListener("keydown", handleListNameEdit, true);
   }
 }
 
 function handleListNameEdit(e) {
   const input = e.target;
-  if (input.id === 'list-name-display') {
-    const currentList = state.lists.find(list => list.id === state.selected);
-    const errorDiv = document.getElementById('list-name-edit-error');
+  if (input.id === "list-name-display") {
+    const currentList = state.lists.find((list) => list.id === state.selected);
+    const errorDiv = document.getElementById("list-name-edit-error");
     if (
-      e.type === 'blur' ||
-      e.type === 'change' ||
-      (e.type === 'keydown' && e.key === 'Enter')
+      e.type === "blur" ||
+      e.type === "change" ||
+      (e.type === "keydown" && e.key === "Enter")
     ) {
       const newName = input.value.trim();
       if (newName.length > 0 && newName !== currentList.name) {
         // Use validateListName for all checks
-        const errorMsg = validateListName(newName, state.lists, currentList.name);
+        const errorMsg = validateListName(
+          newName,
+          state.lists,
+          currentList.name
+        );
         if (errorMsg) {
           errorDiv.textContent = errorMsg;
         } else {
           currentList.name = newName;
-          errorDiv.textContent = '';
+          errorDiv.textContent = "";
         }
       }
-      if (e.type === 'keydown' && e.key === 'Enter') {
+      if (e.type === "keydown" && e.key === "Enter") {
         input.focus();
       }
     }

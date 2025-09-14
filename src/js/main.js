@@ -1,9 +1,7 @@
-
-import { state, saveState, loadState } from './state.js';
-import { subscribe } from 'valtio/vanilla';
-import * as listApp from './listApp.js';
-import * as todoApp from './todoApp.js';
-
+import { state, saveState, loadState } from "./state.js";
+import { subscribe } from "valtio/vanilla";
+import * as listApp from "./listApp.js";
+import * as todoApp from "./todoApp.js";
 
 console.log("main.js loaded");
 function main() {
@@ -31,12 +29,10 @@ function main() {
   // Subscribe to state changes for reactive UI and persistence
   subscribe(state, (a) => {
     saveState(state);
-    
+
     listApp.renderListApp();
     todoApp.renderTodoApp();
   });
-
-
 }
 
 main();
