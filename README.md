@@ -2,6 +2,8 @@
 
 A mimimal library Todo app with Valtio state management
 
+https://sakkelaaksonen.github.io/2doodoo/
+
 ## Tech Stack
 
 - Valtio
@@ -12,14 +14,17 @@ A mimimal library Todo app with Valtio state management
 
 ## Start
 
+    npm test
     npm run dev
+
+or
+
     npm run build
     npm start
 
 ## QUnit
 
-- Browser runner at /qunit/
-- npm run tests
+Browser runner at https://sakkelaaksonen.github.io/2doodoo/qunit/
 
 ## Synopsis
 
