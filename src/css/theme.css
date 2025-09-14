@@ -1,6 +1,10 @@
 @layer base;
 
 :root {
+
+  --max-width: 920px; /* Max content width. No separate desktop folding for this one. */
+  --min-width: 240px; /* Min content width , extreme to ensure consistent folding */
+
   /* Light theme (default) */
   --color-bg-1:  #f9faf7;
   --color-bg-2: #fff;
@@ -39,7 +43,7 @@
   --spacing-8: 3rem; /* 48px */
   --spacing-9: 4rem; /* 64px */
   --spacing-10: 6rem; /* 96px */
-  --max-width: 1200px; /* Max content width */
+  
   
   /* Some ballpark values*/
   --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);      /* for buttons, inputs, labels */
@@ -54,6 +58,9 @@
   --outline-width: 1px;
   --outline-light: var(--outline-width) solid var(--outline-color-light);
   --outline-dark: var(--outline-width) solid var(--outline-color-dark);
+
+
+  --color-error: #d93025;
 }
 
 * {
