@@ -376,5 +376,43 @@ export default function () {
         done();
       }, 10);
     });
+
+    QUnit.test(
+      "getFilteredItems works with sample data after reset",
+      (assert) => {
+        state.reset();
+        const listId = state.lists[0].id;
+        // Filter for STATUS_TODO
+        let filtered = state.getFilteredItems(listId, STATUS_TODO);
+        assert.equal(filtered.length, 1, "One item with status TODO");
+        assert.equal(
+          filtered[0].desc,
+          "Sample Task 1",
+          "Correct TODO item returned"
+        );
+
+        // Filter for STATUS_DOING
+        filtered = state.getFilteredItems(listId, STATUS_DOING);
+        assert.equal(filtered.length, 1, "One item with status DOING");
+        assert.equal(
+          filtered[0].desc,
+          "Sample Task 2",
+          "Correct DOING item returned"
+        );
+
+        // Filter for STATUS_DONE
+        filtered = state.getFilteredItems(listId, STATUS_DONE);
+        assert.equal(filtered.length, 1, "One item with status DONE");
+        assert.equal(
+          filtered[0].desc,
+          "Sample Task 3",
+          "Correct DONE item returned"
+        );
+
+        // Filter for DEFAULT_FILTER (all)
+        filtered = state.getFilteredItems(listId, "all");
+        assert.equal(filtered.length, 3, "All items returned for 'all' filter");
+      }
+    );
   });
 }

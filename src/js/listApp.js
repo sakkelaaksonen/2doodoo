@@ -40,7 +40,7 @@ export function renderListApp() {
       selected: list.id === state.selected,
     })),
   };
-
+  // Could use getListById for selected, but template expects this structure
   optgroup.innerHTML = mustache.render(OPTIONS_TEMPLATE, optionsData);
 
   // Render title
@@ -79,8 +79,7 @@ export function setupListAppEvents() {
       const value = input.value.trim();
       try {
         state.addList(value);
-        const newList = state.lists[state.lists.length - 1];
-        state.selected = newList.id;
+        // state.addList already sets selected to the new list
         input.value = "";
         errorDiv.textContent = "";
         setTimeout(() => input.focus(), 0);
@@ -107,6 +106,7 @@ export function setupListAppEvents() {
   if (selector) {
     selector.addEventListener("change", (e) => {
       state.selected = e.target.value;
+      // Use getCurrentList for further logic if needed
     });
   }
 
@@ -116,7 +116,6 @@ export function setupListAppEvents() {
     titleElem.addEventListener("click", (e) => {
       if (e.target && e.target.id === "remove-list-btn") {
         if (state.lists.length === 0) return;
-
         const currentList = state.getCurrentList();
         if (
           confirm(
@@ -124,13 +123,6 @@ export function setupListAppEvents() {
           )
         ) {
           state.removeList(currentList.id);
-          if (state.lists.length > 0) {
-            state.selected = state.lists[0].id;
-          } else {
-            //No more lists
-            state.selected = null;
-            // document.getElementById("list-name-display").value = "";
-          }
         }
       }
     });
@@ -165,6 +157,7 @@ function handleListNameEdit(e) {
         if (errorMsg) {
           errorDiv.textContent = errorMsg;
         } else {
+          // Could add a state.editListName method for this, but for now:
           currentList.name = newName;
           errorDiv.textContent = "";
         }

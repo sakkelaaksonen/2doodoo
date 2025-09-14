@@ -171,5 +171,23 @@ export const state = proxy({
     const list = this.getListById(this.selected);
     return list ? list.items.length : 0;
   },
+
+  getFilteredItems(listId, filter) {
+    const list = this.getListById(listId);
+    if (!list) return [];
+    if (!filter || filter === DEFAULT_FILTER) return list.items;
+    if (!isValidStatus(filter)) return [];
+    return list.items.filter((item) => item.status === filter);
+  },
+
+  removeCompletedItems(listId) {
+    const list = this.getListById(listId);
+    if (!list) return;
+    // Remove all items with status STATUS_DONE
+    for (let i = list.items.length - 1; i >= 0; i--) {
+      if (list.items[i].status === STATUS_DONE) {
+        list.items.splice(i, 1);
+      }
+    }
+  },
 });
-// removeList function no longer needed, use state.removeList(listId)

@@ -57,7 +57,9 @@ export function renderTodoApp() {
   if (!container) return;
   let items = [];
   if (currentList) {
-    items = currentList.items
+    // Use state.getFilteredItems for filtering
+    items = state
+      .getFilteredItems(currentList.id, state.filter)
       .slice() // create a copy to avoid mutating original
       .reverse() // show latest first
       .map((item) => ({
@@ -66,15 +68,6 @@ export function renderTodoApp() {
         doing: item.status === STATUS_DOING,
         done: item.status === STATUS_DONE,
       }));
-
-    // Filter items by state.filter if not 'all'
-    if (
-      state.filter &&
-      state.filter !== DEFAULT_FILTER &&
-      isValidStatus(state.filter)
-    ) {
-      items = items.filter((item) => item.status === state.filter);
-    }
   }
 
   // Render item count in filter title
@@ -198,13 +191,7 @@ export function setupTodoAppEvents() {
     clearCompletedBtn.addEventListener("click", () => {
       const currentList = state.getCurrentList();
       if (currentList) {
-        // Remove all items with status STATUS_DONE
-        // Iterate backwards to avoid index issues
-        for (let i = currentList.items.length - 1; i >= 0; i--) {
-          if (currentList.items[i].status === STATUS_DONE) {
-            state.removeItem(currentList.id, currentList.items[i].id);
-          }
-        }
+        state.removeCompletedItems(currentList.id);
       }
     });
   }
