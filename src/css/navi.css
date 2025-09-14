@@ -13,14 +13,14 @@
   gap: var(--spacing-4);
   padding: var(--spacing-2) var(--spacing-4);
   min-height: var(--spacing-8);
-  
+
   border-block-end: 1px solid var(--color-bg-line);
-  box-shadow: 0 1px 2px 2px rgba(0,0,0,0.02);
+  box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.02);
 }
 
 .sticky-navi h1 {
   font-size: var(--font-size-base);
-  
+
   margin: 0;
   display: flex;
   align-items: baseline;
@@ -35,7 +35,6 @@
   max-width: 70vw;
 }
 
-
 .menu-bar-container {
   padding: var(--spacing-4);
   max-width: var(--max-width);
@@ -45,7 +44,6 @@
   align-items: baseline;
   justify-content: space-between;
 }
-
 
 .menu-btn {
   background: none;
@@ -58,25 +56,26 @@
   border-radius: 5rem;
   height: 3rem;
   width: 3rem;
-    display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .menu-btn:hover {
   background: var(--color-bg-1);
-  border:1px solid var(--color-bg-line)
+  border: 1px solid var(--color-bg-line);
 }
 
 .menu-btn:focus {
-  outline: var(--outline-dark);  outline-offset: -1px;
+  outline: var(--outline-dark);
+  outline-offset: -1px;
 }
 .menu-panel {
   display: none;
   width: 100%;
   background: var(--color-bg-2);
   border-block-end: 1px solid var(--color-bg-line);
-  box-shadow: 0 1px 2px 2px rgba(0,0,0,0.02);
+  box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.02);
   position: sticky;
   top: 3.2rem;
   left: 0;

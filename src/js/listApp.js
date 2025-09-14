@@ -82,6 +82,7 @@ export function setupListAppEvents() {
         // state.addList already sets selected to the new list
         input.value = "";
         errorDiv.textContent = "";
+        input.closest(".input-row").classList.remove("error");
         setTimeout(() => input.focus(), 0);
         //show label message and hide title.
         const label = document.querySelector('label[for="list-name-input"]');
@@ -97,6 +98,7 @@ export function setupListAppEvents() {
         }
       } catch (err) {
         errorDiv.textContent = err.message;
+        input.closest(".input-row").classList.add("error");
       }
     });
   }
@@ -156,10 +158,12 @@ function handleListNameEdit(e) {
         );
         if (errorMsg) {
           errorDiv.textContent = errorMsg;
+          input.closest(".input-row").classList.add("error");
         } else {
           // Could add a state.editListName method for this, but for now:
           currentList.name = newName;
           errorDiv.textContent = "";
+          input.closest(".input-row").classList.remove("error");
         }
       }
       if (e.type === "keydown" && e.key === "Enter") {

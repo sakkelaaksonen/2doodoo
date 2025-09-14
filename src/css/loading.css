@@ -17,12 +17,21 @@
   animation: loading-fadeout 0.4s ease-in-out 0s forwards;
 }
 @keyframes loading-fadeout {
-  0% { opacity: 1; pointer-events: all; }
-  92% { opacity: 1; pointer-events: all; }
-  100% { opacity: 0; pointer-events: none; }
+  0% {
+    opacity: 1;
+    pointer-events: all;
+  }
+  92% {
+    opacity: 1;
+    pointer-events: all;
+  }
+  100% {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 #loading-overlay span {
-  font-size:var(--font-size-large);
+  font-size: var(--font-size-large);
   color: var(--color-primary);
 }

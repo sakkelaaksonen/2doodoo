@@ -1,12 +1,11 @@
 @layer base;
 
 :root {
-
   --max-width: 920px; /* Max content width. No separate desktop folding for this one. */
   --min-width: 240px; /* Min content width , extreme to ensure consistent folding */
 
   /* Light theme (default) */
-  --color-bg-1:  #f9faf7;
+  --color-bg-1: #f9faf7;
   --color-bg-2: #fff;
   --color-bg-3: #eaeaea;
   --color-bg-4: #fefffe;
@@ -17,9 +16,7 @@
   --color-text-light: #fff;
   --color-text-dark: #222;
 
-
   /* Additional colors for new palette*/
-
 
   /* CSS Gradient Variables */
   /* --gradient-top: linear-gradient(0deg, #223127ff, #9c0d38ff, #ce5374ff, #dbbbf5ff, #ddf0ffff);
@@ -43,13 +40,24 @@
   --spacing-8: 3rem; /* 48px */
   --spacing-9: 4rem; /* 64px */
   --spacing-10: 6rem; /* 96px */
-  
-  
+
   /* Some ballpark values*/
-  --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);      /* for buttons, inputs, labels */
-  --font-size-heading: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);   /* for headings */
-  --font-size-label: clamp(0.9rem, 0.8rem + 0.3vw, 1.1rem);    /* for labels, small text */
-  --font-size-small: clamp(0.75rem, 0.7rem + 0.2vw, 0.9rem);   /* for very small text */
+  --font-size-base: clamp(
+    1rem,
+    0.9rem + 0.5vw,
+    1.25rem
+  ); /* for buttons, inputs, labels */
+  --font-size-heading: clamp(1.5rem, 1.2rem + 1vw, 2.25rem); /* for headings */
+  --font-size-label: clamp(
+    0.9rem,
+    0.8rem + 0.3vw,
+    1.1rem
+  ); /* for labels, small text */
+  --font-size-small: clamp(
+    0.75rem,
+    0.7rem + 0.2vw,
+    0.9rem
+  ); /* for very small text */
   --font-size-fixed: 1rem; /* fixed size, no scaling */
   --font-size-fixed-large: 2rem; /* fixed size, no scaling */
   --button-radius: 3px; /* Border radius for buttons and inputs */
@@ -59,7 +67,6 @@
   --outline-width: 1px;
   --outline-light: var(--outline-width) solid var(--outline-color-light);
   --outline-dark: var(--outline-width) solid var(--outline-color-dark);
-
 
   --color-error: #d93025;
 }

@@ -15,7 +15,8 @@ label .message {
 label.success .message {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.4s cubic-bezier(0.4, 0.2, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transition: opacity 0.4s cubic-bezier(0.4, 0.2, 0.2, 1),
+    transform 0.4s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 
 label .title {
@@ -24,7 +25,6 @@ label .title {
 label.success .title {
   display: none;
 }
-
 
 .input-row {
   display: flex;
@@ -52,9 +52,8 @@ label.success .title {
   position: relative;
   padding-right: 2.5rem; /* space for icon */
 
-border-radius:var(--button-radius) 0 0 var(--button-radius);
+  border-radius: var(--button-radius) 0 0 var(--button-radius);
   /* padding-right: 2.5rem;  space for icon */
-
 }
 
 /* Error icon (SVG) shown at end of input when error */
