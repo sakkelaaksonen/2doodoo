@@ -50,7 +50,7 @@
 .menu-btn {
   background: none;
   border: none;
-  font-size: var(--font-size-heading);
+  font-size: var(--font-size-fixed-large);
   color: var(--color-primary);
   cursor: pointer;
   padding: 0.25rem 0.5rem;
@@ -58,7 +58,9 @@
   border-radius: 5rem;
   height: 3rem;
   width: 3rem;
-  
+    display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .menu-btn:hover {

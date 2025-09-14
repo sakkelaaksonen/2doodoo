@@ -50,7 +50,8 @@
   --font-size-heading: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);   /* for headings */
   --font-size-label: clamp(0.9rem, 0.8rem + 0.3vw, 1.1rem);    /* for labels, small text */
   --font-size-small: clamp(0.75rem, 0.7rem + 0.2vw, 0.9rem);   /* for very small text */
-
+  --font-size-fixed: 1rem; /* fixed size, no scaling */
+  --font-size-fixed-large: 2rem; /* fixed size, no scaling */
   --button-radius: 3px; /* Border radius for buttons and inputs */
 
   --outline-color-light: var(--color-primary-light);
