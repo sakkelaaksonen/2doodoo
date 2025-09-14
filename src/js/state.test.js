@@ -5,11 +5,160 @@ import {
   STATUS_DONE,
 } from "./state.js";
 import QUnit from "qunit";
-import { state } from "./state.js";
+import { state, saveState, loadState } from "./state.js";
 import { subscribe } from "valtio/vanilla";
 
 export default function () {
   QUnit.module("state.js", (hooks) => {
+    QUnit.test(
+      "initFromStorage loads from localStorage or falls back to sample data",
+      (assert) => {
+        // Case 1: localStorage contains valid state
+        localStorage.removeItem("2doodoo-state");
+        const testState = {
+          lists: [
+            {
+              id: "testid",
+              name: "Test List",
+              items: [{ id: "itemid", desc: "Test Item", status: STATUS_TODO }],
+            },
+          ],
+          selected: "testid",
+          filter: "all",
+        };
+        localStorage.setItem("2doodoo-state", JSON.stringify(testState));
+        state.initFromStorage();
+        assert.equal(state.lists.length, 1, "Loaded lists length matches");
+        assert.equal(
+          state.lists[0].name,
+          "Test List",
+          "Loaded list name matches"
+        );
+        assert.equal(
+          state.lists[0].items[0].desc,
+          "Test Item",
+          "Loaded item description matches"
+        );
+        assert.equal(state.selected, "testid", "Loaded selected matches");
+        assert.equal(state.filter, "all", "Loaded filter matches");
+
+        // Case 2: localStorage is empty, should fallback to sample data
+        localStorage.removeItem("2doodoo-state");
+        state.initFromStorage();
+        assert.equal(state.lists.length, 1, "Sample data has one list");
+        assert.equal(
+          state.lists[0].name,
+          "Sample List",
+          "Sample list name is correct"
+        );
+        assert.equal(
+          state.selected,
+          "1aaa",
+          "Selected is set to sample list id"
+        );
+        assert.equal(state.filter, "all", "Filter is set to all");
+      }
+    );
+
+    QUnit.test("saveState persists mutated state to localStorage", (assert) => {
+      localStorage.removeItem("2doodoo-state");
+      state.reset();
+      state.addList("Groceries");
+      state.addItem(state.lists[1].id, "Milk");
+      state.selected = state.lists[1].id;
+      saveState(state);
+      const raw = localStorage.getItem("2doodoo-state");
+      assert.ok(raw, "Raw state is saved to localStorage");
+      const parsed = JSON.parse(raw);
+      assert.equal(parsed.lists.length, 2, "Saved lists length matches");
+      assert.equal(
+        parsed.lists[1].name,
+        "Groceries",
+        "Saved list name matches"
+      );
+      assert.equal(
+        parsed.lists[1].items[0].desc,
+        "Milk",
+        "Saved item description matches"
+      );
+      assert.equal(
+        parsed.selected,
+        state.lists[1].id,
+        "Saved selected matches"
+      );
+    });
+
+    QUnit.test("loadState loads mutated state from localStorage", (assert) => {
+      localStorage.removeItem("2doodoo-state");
+      // Save a known mutated state
+      const testState = {
+        lists: [
+          { id: "1aaa", name: "Sample List", items: [] },
+          {
+            id: "g1",
+            name: "Groceries",
+            items: [{ id: "i1", desc: "Milk", status: STATUS_TODO }],
+          },
+        ],
+        selected: "g1",
+        filter: "all",
+      };
+      localStorage.setItem("2doodoo-state", JSON.stringify(testState));
+      const loaded = loadState();
+      assert.ok(loaded, "Loaded state is not null");
+      assert.equal(loaded.lists.length, 2, "Loaded lists length matches");
+      assert.equal(
+        loaded.lists[1].name,
+        "Groceries",
+        "Loaded list name matches"
+      );
+      assert.equal(
+        loaded.lists[1].items[0].desc,
+        "Milk",
+        "Loaded item description matches"
+      );
+      assert.equal(loaded.selected, "g1", "Loaded selected matches");
+    });
+    QUnit.test("getListById returns correct sample list", (assert) => {
+      state.reset();
+      const sampleList = state.lists[0];
+      const list = state.getListById(sampleList.id);
+      assert.ok(list, "List found by id");
+      assert.equal(list.id, "1aaa", "Returned list has correct id");
+      assert.equal(list.name, "Sample List", "Returned list has correct name");
+    });
+
+    QUnit.test("getCurrentList returns sample selected list", (assert) => {
+      state.reset();
+      state.selected = "1aaa";
+      const currentList = state.getCurrentList();
+      assert.ok(currentList, "Current list found");
+      assert.equal(currentList.id, "1aaa", "Current list id matches sample");
+      assert.equal(
+        currentList.name,
+        "Sample List",
+        "Current list name matches sample"
+      );
+    });
+
+    QUnit.test("getItemById returns correct sample item", (assert) => {
+      state.reset();
+      const sampleList = state.lists[0];
+      const sampleItem = sampleList.items[0];
+      const item = state.getItemById(sampleList, sampleItem.id);
+      assert.ok(item, "Item found by id");
+      assert.equal(item.id, "1abc", "Returned item has correct id");
+      assert.equal(
+        item.desc,
+        "Sample Task 1",
+        "Returned item has correct description"
+      );
+      assert.equal(
+        item.status,
+        STATUS_TODO,
+        "Returned item has correct status"
+      );
+    });
     QUnit.test("getSelectedListItemCount returns correct count", (assert) => {
       state.addList("Groceries");
       const listId = state.lists[0].id;

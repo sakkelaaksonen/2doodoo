@@ -91,6 +91,16 @@ if (!initial.selected && initial.lists.length > 0) {
 }
 
 export const state = proxy({
+  initFromStorage() {
+    const loaded = loadState();
+    if (loaded && Array.isArray(loaded.lists)) {
+      state.lists = loaded.lists;
+      state.selected = loaded.selected;
+      state.filter = loaded.filter;
+    } else {
+      state.reset();
+    }
+  },
   getCurrentList() {
     return this.getListById(this.selected);
   },

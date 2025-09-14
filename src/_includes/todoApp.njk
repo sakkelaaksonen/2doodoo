@@ -1,4 +1,4 @@
-<section class="block-container" aria-labelledby="form-title">
+<section class="block-container" id="todo-app">
   <!-- TodoApp UI only -->
   <form id="new-item-form" action="#" method="post" autocomplete="off">
     <div class="input-group">
@@ -14,9 +14,10 @@
         <button type="submit" aria-label="Submit Input">Add</button>
       </div>
     </div>
+    <hr class="mb-spacer"/>
   </form>
-  <hr class="mb-spacer"/>
-  <form>
+
+  <form id="filter-form" action="#" method="get">
     <h2 class="font-large" id="current-todos-title">Current Todos</h2>
     <div class="todo-list-header row-container" aria-labelledby="current-todos-title" id="todo-list-header">
       <div class="input-row flex-row-center">
@@ -47,8 +48,9 @@
         </button>
       </div>
     </div>
+    <hr class="mb-spacer-large"/>
   </form>
-  <hr class="mb-spacer-large"/>
+
   <div id="current-todos" class="todo-list" aria-live="polite">
     <!-- current todo items render target -->
   </div>

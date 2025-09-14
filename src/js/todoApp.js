@@ -44,6 +44,16 @@ export const TODO_TEMPLATE = `{{#items}}
 export function renderTodoApp() {
   const currentList = state.getCurrentList();
   const container = document.getElementById("current-todos");
+  const staticForms = document.querySelectorAll("#new-item-form, #filter-form");
+
+  if (!currentList) {
+    staticForms.forEach((form) => form.classList.add("hidden"));
+    container.innerHTML = `<p>Please select or create a list to get started.</p>`;
+    return;
+  } else {
+    staticForms.forEach((form) => form.classList.remove("hidden"));
+  }
+
   if (!container) return;
   let items = [];
   if (currentList) {

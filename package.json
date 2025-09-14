@@ -19,10 +19,10 @@
   "main": "index.js",
   "scripts": {
     "test": "qunit \"./src/js/nodetest.js\"",
-    "watch:js": "esbuild src/js/main.js --bundle --outfile=_site/js/main.js --format=esm --watch",
+    "watch:js": "esbuild src/js/main.js src/js/browsertest.js --bundle --minify --sourcemap --format=esm --outdir=_site/js --watch",
     "watch:11ty": "eleventy --serve --watch",
     "dev": "NODE_ENV=development concurrently  \"npm run watch:js\" \"npm run watch:11ty\"",
-    "build:js": "esbuild src/js/main.js --bundle --minify --sourcemap --outfile=_site/js/main.js --format=esm",
+    "build:js": "esbuild src/js/main.js src/js/browsertest.js --bundle --minify --sourcemap --format=esm --outdir=_site/js ",
     "build:11ty": "eleventy",
     "build": "npm run build:js && npm run build:11ty",
     "start": "eleventy --serve"

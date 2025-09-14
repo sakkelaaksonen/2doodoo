@@ -8,7 +8,7 @@ export const OPTIONS_TEMPLATE = `
 `;
 
 export const TITLE_TEMPLATE = `
-  <div class="input-group mb-spacer">
+<div class="input-group mb-spacer">
    <label for="list-name-display">Selected List Name</label>
     <div class="input-row">
       <input id="list-name-display" class="text-input" type="text" value="{{name}}" maxlength="60" aria-label="Edit list name" required placeholder="Max 60 letters and numbers" aria-describedby="list-name-edit-error" aria-invalid="false" />
@@ -25,7 +25,14 @@ export function init() {
 
 export function renderListApp() {
   // Render list selector
+
+  const selector = document.getElementById("todo-list-selector-group");
   const optgroup = document.getElementById("todo-list-options");
+  if (!selector || !optgroup) {
+    console.error("Todo list selector or options not found");
+    return;
+  }
+
   const optionsData = {
     lists: state.lists.map((list) => ({
       name: list.name,
@@ -33,17 +40,26 @@ export function renderListApp() {
       selected: list.id === state.selected,
     })),
   };
+
   optgroup.innerHTML = mustache.render(OPTIONS_TEMPLATE, optionsData);
 
   // Render title
   const titleElem = document.getElementById("list-title-container");
   const currentList = state.getCurrentList();
-  if (titleElem && currentList) {
-    titleElem.innerHTML = mustache.render(TITLE_TEMPLATE, {
-      name: currentList.name,
-    });
+  if (!currentList) {
+    selector.classList.add("hidden");
+  } else {
+    selector.classList.remove("hidden");
   }
 
+  if (titleElem && currentList) {
+    titleElem.innerHTML = mustache.render(TITLE_TEMPLATE, {
+      //name doesnt exist if no list is selected. template handles that.
+      name: currentList.name,
+    });
+  } else if (titleElem) {
+    titleElem.innerHTML = "";
+  }
   // Update navi-listname in navigation bar
   const naviListNameElem = document.getElementById("navi-listname");
   if (naviListNameElem) {
@@ -111,7 +127,9 @@ export function setupListAppEvents() {
           if (state.lists.length > 0) {
             state.selected = state.lists[0].id;
           } else {
+            //No more lists
             state.selected = null;
+            // document.getElementById("list-name-display").value = "";
           }
         }
       }
