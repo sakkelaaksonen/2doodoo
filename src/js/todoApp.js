@@ -42,7 +42,7 @@ export const TODO_TEMPLATE = `{{#items}}
   {{^items}}<p>{{#filter}} No items yet with status "{{filter}}"{{/filter}} {{^filter}}No items yet{{/filter}} </p>{{/items}}`;
 
 export function renderTodoApp() {
-  const currentList = state.lists.find((list) => list.id === state.selected);
+  const currentList = state.getCurrentList();
   const container = document.getElementById("current-todos");
   if (!container) return;
   let items = [];
@@ -122,9 +122,7 @@ export function setupTodoAppEvents() {
     if (e.target.matches('input[type="radio"][name="status"]')) {
       const itemId = e.target.getAttribute("data-id");
       const status = e.target.value;
-      const currentList = state.lists.find(
-        (list) => list.id === state.selected
-      );
+      const currentList = state.getCurrentList();
       // Store the active element to restore focus after state update
       const activeElement = document.activeElement;
       if (currentList && itemId && isValidStatus(status)) {
@@ -136,9 +134,7 @@ export function setupTodoAppEvents() {
     if (e.target.matches("input.text-input")) {
       const itemId = e.target.closest(".input-group").getAttribute("data-id");
       const newDesc = e.target.value;
-      const currentList = state.lists.find(
-        (list) => list.id === state.selected
-      );
+      const currentList = state.getCurrentList();
       if (currentList && itemId && newDesc.trim().length > 0) {
         state.editItem(currentList.id, itemId, newDesc.trim());
       }
@@ -160,7 +156,7 @@ export function setupTodoAppEvents() {
   });
 
   const filterForm = document.querySelector(
-    '#todo-list-header .toggle-button[role="radiogroup"][aria-label="Set status"]'
+    '#todo-list-header .toggle-button[role="radiogroup"]'
   );
   if (filterForm) {
     filterForm.addEventListener("change", (e) => {
@@ -177,9 +173,7 @@ export function setupTodoAppEvents() {
   container.addEventListener("click", (e) => {
     if (e.target.matches("button.delete-button")) {
       const itemId = e.target.getAttribute("data-id");
-      const currentList = state.lists.find(
-        (list) => list.id === state.selected
-      );
+      const currentList = state.getCurrentList();
       if (currentList && itemId) {
         state.removeItem(currentList.id, itemId);
       }
@@ -192,9 +186,7 @@ export function setupTodoAppEvents() {
   );
   if (clearCompletedBtn) {
     clearCompletedBtn.addEventListener("click", () => {
-      const currentList = state.lists.find(
-        (list) => list.id === state.selected
-      );
+      const currentList = state.getCurrentList();
       if (currentList) {
         // Remove all items with status STATUS_DONE
         // Iterate backwards to avoid index issues
@@ -219,7 +211,7 @@ function handleAddNewItem(e) {
   e.preventDefault();
   const input = document.getElementById("todo-input");
   const value = input.value.trim();
-  const currentList = state.lists.find((list) => list.id === state.selected);
+  const currentList = state.getCurrentList();
   if (currentList && value) {
     state.addItem(currentList.id, value);
     input.value = "";

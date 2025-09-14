@@ -27,7 +27,7 @@ function main() {
   todoApp.setupNewItemForm();
 
   // Subscribe to state changes for reactive UI and persistence
-  subscribe(state, (a) => {
+  subscribe(state, () => {
     saveState(state);
 
     listApp.renderListApp();

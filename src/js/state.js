@@ -1,5 +1,11 @@
 import { proxy } from "valtio/vanilla";
 
+/**
+ *
+ * Choosing valtio for state management for its simplicity and reactivity.
+ * Could do reducer actions wrappers but not really needed for this app.
+ */
+
 const STORAGE_KEY = "2doodoo-state";
 
 export function loadState() {
@@ -26,7 +32,7 @@ export function saveState(state) {
     );
   } catch (e) {
     console.error("Error saving state", e);
-    // ignore
+    // ignore on this demo app
   }
 }
 
@@ -85,6 +91,15 @@ if (!initial.selected && initial.lists.length > 0) {
 }
 
 export const state = proxy({
+  getCurrentList() {
+    return this.getListById(this.selected);
+  },
+  getItemById(list, itemId) {
+    return list.items.find((i) => i.id === itemId);
+  },
+  getListById(listId) {
+    return this.lists.find((l) => l.id === listId);
+  },
   lists: initial.lists,
   selected: initial.selected,
   filter: initial.filter,
@@ -104,7 +119,7 @@ export const state = proxy({
     this.selected = id;
   },
   addItem(listId, desc) {
-    const list = this.lists.find((l) => l.id === listId);
+    const list = this.getListById(listId);
     if (list) {
       const id = newId();
       list.items.push({ id, desc, status: STATUS_TODO });
@@ -112,21 +127,21 @@ export const state = proxy({
   },
   setItemStatus(listId, itemId, status) {
     if (!isValidStatus(status)) return;
-    const list = this.lists.find((l) => l.id === listId);
+    const list = this.getListById(listId);
     if (list) {
-      const item = list.items.find((i) => i.id === itemId);
+      const item = this.getItemById(list, itemId);
       if (item) item.status = status;
     }
   },
   editItem(listId, itemId, newDesc) {
-    const list = this.lists.find((l) => l.id === listId);
+    const list = this.getListById(listId);
     if (list) {
-      const item = list.items.find((i) => i.id === itemId);
+      const item = this.getItemById(list, itemId);
       if (item) item.desc = newDesc;
     }
   },
   removeItem(listId, itemId) {
-    const list = this.lists.find((l) => l.id === listId);
+    const list = this.getListById(listId);
     if (list) {
       const idx = list.items.findIndex((i) => i.id === itemId);
       if (idx !== -1) list.items.splice(idx, 1);
@@ -143,7 +158,7 @@ export const state = proxy({
   },
 
   getSelectedListItemCount() {
-    const list = this.lists.find((l) => l.id === this.selected);
+    const list = this.getListById(this.selected);
     return list ? list.items.length : 0;
   },
 });

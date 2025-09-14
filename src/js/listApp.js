@@ -37,7 +37,7 @@ export function renderListApp() {
 
   // Render title
   const titleElem = document.getElementById("list-title-container");
-  const currentList = state.lists.find((list) => list.id === state.selected);
+  const currentList = state.getCurrentList();
   if (titleElem && currentList) {
     titleElem.innerHTML = mustache.render(TITLE_TEMPLATE, {
       name: currentList.name,
@@ -100,9 +100,8 @@ export function setupListAppEvents() {
     titleElem.addEventListener("click", (e) => {
       if (e.target && e.target.id === "remove-list-btn") {
         if (state.lists.length === 0) return;
-        const currentList = state.lists.find(
-          (list) => list.id === state.selected
-        );
+
+        const currentList = state.getCurrentList();
         if (
           confirm(
             `Are you sure you want to remove the list "${currentList.name}"? This cannot be undone.`
@@ -130,7 +129,7 @@ export function setupListAppEvents() {
 function handleListNameEdit(e) {
   const input = e.target;
   if (input.id === "list-name-display") {
-    const currentList = state.lists.find((list) => list.id === state.selected);
+    const currentList = state.getCurrentList();
     const errorDiv = document.getElementById("list-name-edit-error");
     if (
       e.type === "blur" ||
