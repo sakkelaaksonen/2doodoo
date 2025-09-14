@@ -97,23 +97,3 @@ a task has a status, which is one of "todo",
 the task lists and tasks are stored in the
 browser's localStorage
 the UI texts are in English
-
-## CHECKLIST FOR THE DELIVERABLE
-
-It works. Can we accomplish all required tasks?
-
-It looks decent. We will not argue about matters of taste, and this is a test for UX Engineers rather that
-visual designers, but the application should look clean and tidy.
-
-It is responsive. Does it look and work equally well on different size screens from mobile to large desktop?
-
-It is usable. While the requirements do not specify details, the application should help the user avoid
-errors, and recover from those. It should also be easy and pleasant to use.
-
-It is accessible. Could a blind person use it? How well does it comply with WCAG 2.2 AA?
-
-It is maintainable. Is the code clear, concise and understandable? Is the use of external dependencies
-reasonable? Does it have tests?
-
-It is simple. You are free to use any frameworks and libraries you wish, but bear in mind that we appreciate
-simplicity.
