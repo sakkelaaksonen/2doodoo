@@ -44,13 +44,15 @@
   background: transparent;
   color: var(--color-text-dark);
   font-size: var(--font-size-small);
-  border: none;
+  border: 1px solid transparent;
   border-radius: 0;
   min-width: 0;
   width: 100%;
   
 }
-
+.toggle-button span:hover {
+background-color: var(--color-bg-1);
+}
 .toggle-button label:first-child span {
   border-radius: var(--toggle-radius) 0 0 var(--toggle-radius);
 }
@@ -66,10 +68,11 @@
 }
 
 .toggle-button input[type="radio"]:focus + span {
-  background: var(--color-primary-dark);
+  background: var(--color-primary-light);
   color: var(--color-text-light);
-  outline: 1px solid var(--color-text-dark);
-  /* outline: 1px solid var(--color-primary);
-  outline-offset: 0; 
-   */
+  outline: var(--outline-light);
+  border: 1px solid var(--color-primary);
+
+  
+  
 }

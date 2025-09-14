@@ -9,6 +9,7 @@
   --color-bg-line: #d6d6d6;
   --color-primary: #05501c;
   --color-primary-dark: #060f05;
+  --color-primary-light: #157431;
   --color-text-light: #fff;
   --color-text-dark: #222;
 
@@ -48,6 +49,11 @@
 
   --button-radius: 3px; /* Border radius for buttons and inputs */
 
+  --outline-color-light: var(--color-primary-light);
+  --outline-color-dark: var(--color-primary-dark);
+  --outline-width: 1px;
+  --outline-light: var(--outline-width) solid var(--outline-color-light);
+  --outline-dark: var(--outline-width) solid var(--outline-color-dark);
 }
 
 * {
