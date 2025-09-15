@@ -2,9 +2,10 @@
 :root {
   --toggle-radius: 4px;
   --toggle-width: 200px;
+  --toggle-height: auto;
 }
-/* Three-state toggle switch for todo status */
-.toggle-button[role="radiogroup"] {
+
+.toggle-button {
   display: flex;
   flex-direction: row;
   justify-content: stretch;
@@ -17,6 +18,11 @@
   min-width: var(--toggle-width);
   border: 1px solid var(--color-bg-line);
   border-radius: var(--toggle-radius);
+  height: var(--toggle-height);
+
+  &.toggle-small {
+    --toggle-height: var(--spacing-5);
+  }
 }
 
 .toggle-buttonlabel {
@@ -48,11 +54,13 @@
   border-radius: 0;
   min-width: 0;
   width: 100%;
+
+  &:hover {
+    background-color: var(--color-bg-1);
+  }
 }
-.toggle-button span:hover {
-  background-color: var(--color-bg-1);
-}
-.toggle-button label:first-child span {
+
+s.toggle-button label:first-child span {
   border-radius: var(--toggle-radius) 0 0 var(--toggle-radius);
 }
 .toggle-button label:last-child span {

@@ -1,13 +1,13 @@
 <nav class="sticky-navi" aria-label="Main navigation">
   <div class="menu-bar-container">
     <button class="menu-btn" id="menu-btn" title="Show all Todo-lists" aria-label="Open menu" aria-expanded="false" aria-controls="menu-panel">
-      <svg width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/>
-        <rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/>
-        <rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/>
+      <svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect y="4" width="20" height="2.5" rx="1.25" fill="currentColor"/>
+        <rect y="10" width="20" height="2.5" rx="1.25" fill="currentColor"/>
+        <rect y="16" width="20" height="2.5" rx="1.25" fill="currentColor"/>
       </svg>
     </button>
-    <h1>2DooDoo:
+    <h1>My Todos
       <span class="navi-listname" id="navi-listname"></span>
     </h1>
   </div>
@@ -23,18 +23,18 @@
       </select>
     </div>
     <div id="list-title-container"></div>
-
+    <hr class="mb-spacer"/>
     <form id="new-list-form" autocomplete="off">
       <div class="input-group mb-spacer">
         <label for="list-name-input">
           <span class="title">
-            Add a new TodoList
+            Add TodoList
           </span>
           <span class="message" id="list-added-message" aria-live="polite" role="status" aria-hidden="true"></span>
         </label>
         <div class="input-row">
           <input id="list-name-input" class="text-input" type="text" maxlength="60" aria-describedby="list-name-error" aria-invalid="false" required="required" title="Only letters and numbers are allowed for the list name." placeholder="Max 60 letters and numbers" aria-label="List Name" name="list-name"/>
-          <button type="submit">Add</button>
+          <button type="submit" class="icon-btn icon-add" aria-label="Add list"></button>
         </div>
         <div id="list-name-error" aria-live="assertive"></div>
       </div>

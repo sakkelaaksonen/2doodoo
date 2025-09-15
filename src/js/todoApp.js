@@ -20,10 +20,10 @@ export const TODO_TEMPLATE = `{{#items}}
 <div class="input-group" data-id="{{id}}">
   <div class="input-row">
     <input class="text-input" data-status="{{status}}" type="text" name="user-input" required minlength="1" maxlength="60" placeholder="Max 60 letters and numbers" aria-errormessage="Only letters and numbers are allowed." aria-required="true" aria-label="New Todo item" value="{{desc}}"/>
-     <button type="button" class="delete-button" value="remove" data-id="{{id}}" >Remove</button>
+  <button type="button" class="js-remove icon-btn icon-remove" value="remove" data-id="{{id}}" aria-label="Remove todo item"></button>
   </div>
   <div class="input-row">
-    <div class="toggle-button" role="radiogroup" aria-label="Set status">
+    <div class="toggle-button toggle-small" role="radiogroup" aria-label="Set status">
         <label class="toggle-buttonlabel">
           <input type="radio" data-id="{{id}}" name="status" value="todo" {{#todo}} checked{{/todo}} />
           <span>Todo</span>
@@ -174,7 +174,7 @@ export function setupTodoAppEvents() {
 
   // Delete item
   container.addEventListener("click", (e) => {
-    if (e.target.matches("button.delete-button")) {
+    if (e.target.matches("button.js-remove")) {
       const itemId = e.target.getAttribute("data-id");
       const currentList = state.getCurrentList();
       if (currentList && itemId) {

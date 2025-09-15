@@ -12,7 +12,7 @@ export const TITLE_TEMPLATE = `
    <label for="list-name-display">Selected List Name</label>
     <div class="input-row">
       <input id="list-name-display" class="text-input" type="text" value="{{name}}" maxlength="60" aria-label="Edit list name" required placeholder="Max 60 letters and numbers" aria-describedby="list-name-edit-error" aria-invalid="false" />
-      <button id="remove-list-btn" type="button" aria-label="Remove list" >Remove</button>
+  <button id="remove-list-btn" type="button" class="icon-btn icon-remove" aria-label="Remove list"></button>
     </div>
     <div id="list-name-edit-error" aria-live="assertive"></div>
   </div>`;
